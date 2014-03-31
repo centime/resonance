@@ -1,0 +1,24 @@
+html, body,div,ul {
+    margin: 0;
+    padding: 0;
+    border:0;
+}
+
+#messages {
+    float: left;
+    width: 85%;
+    height: 90%;
+}
+#users-list {
+    float: right;
+    overflow: auto;
+    width: 10%;
+    height: 80%;
+}
+#messages-list {
+    height: 90%;
+    overflow: auto;
+}
+#new-message {
+    width: 100%
+}
