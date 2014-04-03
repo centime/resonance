@@ -1,0 +1,16 @@
+#app {
+    border:0px;
+    margin:0px;
+}
+li {
+    border-bottom : 1px groove ;
+    margin : 3px;
+}
+button {
+    float : right;
+}
+#new {
+    background-color: #FFFFFF;
+    border: 5px solid;
+    width: 100%;
+}

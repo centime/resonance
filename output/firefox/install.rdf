@@ -12,7 +12,7 @@
         </em:targetApplication>
         <em:bootstrap>true</em:bootstrap>
         <em:description>Extension description</em:description>
-        <em:creator>Kango</em:creator>
+        <em:creator>Resonance</em:creator>
         <em:homepageURL>https://github.com/centime/resonance</em:homepageURL>
         <em:iconURL>chrome://kango-b6638211-cb76-47ee-9cec-04a3988ec776/content/icons/icon32.png</em:iconURL>
         

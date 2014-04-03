@@ -1,10 +1,10 @@
 {
     "kango_version": "1.3.1 ba4b80d08b67", 
     "content_scripts": [
-        "todo.js"
+        "content-built.js"
     ], 
     "description": "Extension description", 
-    "creator": "Kango", 
+    "creator": "Resonance", 
     "kango_package_id": "dev", 
     "developer_id": "YOUR_SAFARI_DEVELOPER_ID", 
     "background_scripts": [

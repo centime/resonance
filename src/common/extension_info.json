@@ -1,9 +1,9 @@
 {
     "content_scripts": [
-        "todo.js"
+        "content-built.js"
     ],
     "description": "Extension description", 
-    "creator": "Kango", 
+    "creator": "Resonance", 
     "background_scripts": [
         "main.js"
     ], 
