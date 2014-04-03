@@ -1,2 +1,1 @@
-resonance
-=========
+Browser plugin to discuss with the other visitors of the same page.

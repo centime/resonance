@@ -1,0 +1,18 @@
+{
+    "content_scripts": [
+        "todo.js"
+    ],
+    "description": "Extension description", 
+    "creator": "Kango", 
+    "background_scripts": [
+        "main.js"
+    ], 
+    "homepage_url": "https://github.com/centime/resonance", 
+    "version": "0.0.1", 
+    "browser_button": {
+        "caption": "Resonance", 
+        "icon": "icons/logo_pourri.jpe", 
+        "tooltipText": "Resonance"
+    }, 
+    "name": "Resonance"
+}
