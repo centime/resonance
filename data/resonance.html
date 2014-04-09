@@ -1,0 +1,12 @@
+<div id='content' ng-app='todoApp' ng-controller='MainController'>
+    <ul>
+        <li ng-repeat='todo in todos'>
+              {{todo}}
+            <button ng-click='del(todo)'>X</button>
+        </li>
+    </ul>
+    <br>
+    <form ng-submit='addNew()'>
+        <input id='new' type='text' ng-model='newTodo' />
+    </form>
+</div>
