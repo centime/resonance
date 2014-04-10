@@ -21,57 +21,54 @@ $('body').css('margin-bottom',SIZE)
 /* Just run the build.sh script.
 /***************************************************************************/
 var content = "\
-<style>\html, body,div,ul {\
-    margin: 0;\
-    padding: 0;\
-    border:0;\
-}\
-\
-#messages {\
-    float: left;\
-    width: 85%;\
-    height: 90%;\
-}\
-#users-list {\
-    float: right;\
-    overflow: auto;\
-    width: 10%;\
-    height: 80%;\
-}\
-#messages-list {\
-    height: 90%;\
-    overflow: auto;\
-}\
-#new-message {\
-    width: 100%\
-}#app {\
+<style>\div, ul, li {\
     border:0px;\
     margin:0px;\
+    padding: 0;\
 }\
-li {\
-    border-bottom : 1px groove ;\
-    margin : 3px;\
+#messages {\
+    float: left;\
+    width: 80%;\
+    height: 100%;\
+    background-color: blue;\
 }\
-button {\
-    float : right;\
+#messages .list {\
+    height: 70%;\
 }\
-#new {\
-    background-color: #FFFFFF;\
-    border: 5px solid;\
+#messages input {\
+    height: 30%;\
     width: 100%;\
 }\
+#users {\
+    float: right;\
+    width: 20%;\
+    height: 100%;\
+    background-color: red;\
+\
+}\
+.list {\
+    overflow: auto;\
+}\
+\
 </style>\
-<div id='content' ng-app='todoApp' ng-controller='MainController'>\
-    <ul>\
-        <li ng-repeat='todo in todos'>\
-              {{todo}}\
-            <button ng-click='del(todo)'>X</button>\
-        </li>\
-    </ul>\
-    <br>\
-    <form ng-submit='addNew()'>\
-        <input id='new' type='text' ng-model='newTodo' />\
-    </form>\
+<div ng-app='resonance' id='content'>\
+    <div ng-controller='MessagesController' id='messages' >\
+        <ul class='list'>\
+            <li ng-repeat='message in history'>\
+                  {{message}}\
+            </li>\
+        </ul>\
+        <form ng-submit='submitNewMessage()'>\
+            <input type='text' ng-model='newMessage'/>\
+        </form>\
+    </div>\
+    <div ng-controller='UsersController' id='users'>\
+        <ul class='list'>\
+            <li ng-repeat='user in users'>\
+                  {{user}}\
+            </li>\
+        </ul>\
+    </div>\
 </div>\
 ";
 
