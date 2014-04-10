@@ -1,7 +1,10 @@
 
 app.controller('UsersController', function($scope){
+    $scope.users = [];
     self.port.on("names", function (channel,nicks) {
-            console.log(nicks)
+            for (nick in nicks){
+                $scope.users.push(nick);
+            };
+            $scope.$apply()
         });
-    $scope.users = ['NoOne','Really'];
 });
