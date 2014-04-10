@@ -1,18 +1,18 @@
-main = file('src/common/content.js').read()
-css = file('src/common/resonance.css').read().replace('\n', '\\\n').replace('"', "'")
-html = file('src/common/resonance.html').read().replace('\n', '\\\n').replace('"', "'")
+main = file('data/content.js').read()
+css = file('data/resonance.css').read().replace('\n', '\\\n').replace('"', "'")
+html = file('data/resonance.html').read().replace('\n', '\\\n').replace('"', "'")
 
 output = main.replace('<style>\\','<style>\\'+css+'\\').replace('</style>\\','</style>\\\n'+html+'\\')
 
-open('src/common/content-built.js','w').write(output)
+open('data/content-built.js','w').write(output)
 
 log='''
 concat :
-    src/common/content.js
-    src/common/resonance.css
-    src/common/resonance.html
+    data/content.js
+    data/resonance.css
+    data/resonance.html
 into :
-    src/common/content-built.js
+    data/content-built.js
 
 '''
 print(log)

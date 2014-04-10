@@ -1,2 +1,3 @@
-./build.sh
-firefox output/resonance*.xpi
+python2 concat.py
+cfx xpi &
+cfx run

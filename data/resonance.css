@@ -1,0 +1,28 @@
+div, ul, li {
+    border:0px;
+    margin:0px;
+    padding: 0;
+}
+#messages {
+    float: left;
+    width: 80%;
+    height: 100%;
+    background-color: blue;
+}
+#messages .list {
+    height: 70%;
+}
+#messages input {
+    height: 30%;
+    width: 100%;
+}
+#users {
+    float: right;
+    width: 20%;
+    height: 100%;
+    background-color: red;
+
+}
+.list {
+    overflow: auto;
+}

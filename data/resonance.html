@@ -1,0 +1,19 @@
+<div ng-app='resonance' id='content'>
+    <div ng-controller='MessagesController' id='messages' >
+        <ul class='list'>
+            <li ng-repeat='message in messages track by $index'>
+                  {{message}}
+            </li>
+        </ul>
+        <form ng-submit='submitNewMessage()'>
+            <input type='text' ng-model='newMessage'/>
+        </form>
+    </div>
+    <div ng-controller='UsersController' id='users'>
+        <ul class='list'>
+            <li ng-repeat='user in users track by $index'>
+                  {{user}}
+            </li>
+        </ul>
+    </div>
+</div>
