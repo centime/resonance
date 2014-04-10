@@ -62,6 +62,11 @@ var content = "\
             <input type='text' ng-model='newMessage'/>\
         </form>\
     </div>\
+    <div ng-controller='SettingsController' id='settings'>\
+        <form ng-submit='changeNick()'>\
+            <input type='text' ng-model='newNick'/>\
+        </form>\
+    </div>\
     <div ng-controller='UsersController' id='users'>\
         <ul class='list'>\
             <li ng-repeat='user in users track by $index'>\
