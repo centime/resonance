@@ -54,7 +54,7 @@ var content = "\
 <div ng-app='resonance' id='content'>\
     <div ng-controller='MessagesController' id='messages' >\
         <ul class='list'>\
-            <li ng-repeat='message in messages'>\
+            <li ng-repeat='message in messages track by $index'>\
                   {{message}}\
             </li>\
         </ul>\
@@ -64,7 +64,7 @@ var content = "\
     </div>\
     <div ng-controller='UsersController' id='users'>\
         <ul class='list'>\
-            <li ng-repeat='user in users'>\
+            <li ng-repeat='user in users track by $index'>\
                   {{user}}\
             </li>\
         </ul>\
