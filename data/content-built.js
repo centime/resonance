@@ -22,6 +22,12 @@ $('body').css('margin-bottom',SIZE)
 /***************************************************************************/
 var content = "\
 <style>\
+messages > ul {background: blue}\
+controls {background: red}\
+users {background: green}\
+settings {background: yellow}\
+topPages {background: purple}\
+\
 resonance {\
     height: 100% ;\
     width: 100% ;\
@@ -31,72 +37,48 @@ resonance * {\
     padding : 0px;\
     margin : 0px;\
 }\
-\
-messages > ul {background: blue}\
-controls {background: red}\
-users {background: green}\
-settings {background: black}\
-\
-.flex\
-   {\
-      /* flexbox setup */\
-      display: -webkit-flex;\
-      display: flex;\
-   }\
-.row\
-    {\
-        -webkit-flex-direction: row;\
-        flex-direction: row;\
-    }\
-.column\
-    {\
-    -webkit-flex-flow: column;\
-            flex-flow: column;\
-            flex-direction: column;\
-    }\
+.flex {\
+    display: flex;\
+}\
+.row {\
+    flex-direction: row;\
+}\
+.column {\
+    flex-flow: column;\
+    flex-direction: column;\
+}\
 #resonance_left {\
-    -webkit-flex: 1 6 80%;\
     flex: 1 6 80%;\
-    -webkit-order: 1;\
     order: 1;\
+}\
+#resonance_right {\
+    flex: 1 6 20%;\
+    order: 2;\
 }\
 #resonance_left > * {\
     height: 100% ;\
 }\
-#resonance_right {\
-    -webkit-flex: 1 6 20%;\
-    flex: 1 6 20%;\
-    -webkit-order: 2;\
-    order: 2;\
-}\
-controls{\
-    -webkit-flex: 1 6 20%;\
-    flex: 1 6 20%;\
-    -webkit-order: 1;\
-    order: 1;\
-}\
-users{\
-    -webkit-flex: 1 6 80%;\
-    flex: 1 6 80%;\
-    -webkit-order: 2;\
-    order: 2;\
-}\
 messages > ul {\
-    -webkit-flex: 1 6 80%;\
     flex: 1 6 80%;\
-    -webkit-order: 1;\
     order: 1;\
 }\
 messages > form {\
-    -webkit-flex: 1 6 20%;\
     flex: 1 6 20%;\
-    -webkit-order: 2;\
     order: 2;\
 }\
 messages input {\
     width: 100% ;\
     height: 100% ;\
 }\
+controls{\
+    flex: 1 6 30px;\
+    order: 1;\
+}\
+users{\
+    flex: 1 6 80%;\
+    order: 2;\
+}\
+\
 </style>\
 <resonance ng-app='resonance' ng-controller='ResonanceController' class='flex row'>\
     <div id='resonance_left'>\
@@ -110,16 +92,21 @@ messages input {\
                 <input type='text' ng-model='newMessage'/>\
             </form>\
         </messages>\
-        <settings ng-controller='SettingsController' ng-show='display==2'>\
-            <form ng-submit='changeNick()'>\
-                <input type='text' ng-model='newNick'/>\
+        <topPages ng-controller='TopPagesController' ng-show='display==2' class='column'>\
+        </topPages>\
+        <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
+            <form >\
+                <input type='text' ng-model='newNick'></input>\
+                <br>\
+                <button ng-click='saveSettings();$parent.display=1'>save</button>\
             </form>\
        </settings>\
 \
     </div>\
     <div id='resonance_right' class='flex column'>\
         <controls>\
-            <button ng-click='display=(display==2)?1:2'>settings</button>\
+            <button ng-click='display=(display==2)?1:2'>top pages</button>\
+            <button ng-click='display=(display==3)?1:3'>settings</button>\
         </controls>\
         <users ng-controller='UsersController'>\
             <ul class='list'>\
