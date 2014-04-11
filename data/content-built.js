@@ -50,6 +50,7 @@ var content = "\
     overflow: auto;\
 }\
 \
+\
 </style>\
 <div ng-app='resonance' id='content'>\
     <div ng-controller='MessagesController' id='messages' >\
@@ -75,6 +76,7 @@ var content = "\
         </ul>\
     </div>\
 </div>\
+\
 ";
 
 document.getElementById("app").innerHTML = content ;
