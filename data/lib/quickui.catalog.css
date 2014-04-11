@@ -1,0 +1,1604 @@
+/*
+ * QuickUI Catalog
+ * Version 0.9.4.0
+ * Modular web control framework
+ * http://quickui.org
+ *
+ * Copyright 2009-2013 Jan Miksovsky
+ * Licensed under the MIT license.
+ */
+
+
+.AdPlaceholder {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: table;
+  /* Generic appearance */
+
+}
+.AdPlaceholder .container {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.AdPlaceholder.generic {
+  background: gray;
+  color: white;
+}
+.AdPlaceholder.generic .label {
+  font-weight: bold;
+}
+
+.ArrayTable {
+  display: table;
+}
+.ArrayTable > * {
+  display: table-row;
+}
+.ArrayTable > * > * {
+  display: table-cell;
+}
+
+.AutoSizeTextBox {
+  position: relative;
+}
+.AutoSizeTextBox .textBox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  resize: none;
+  top: 0;
+  width: 100%;
+}
+.AutoSizeTextBox .textCopy {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  visibility: hidden;
+  white-space: pre-wrap;
+  /* So lines wrap */
+
+  width: 100%;
+}
+
+.BasicButton {
+  background: none;
+  /* Better to start with no background than a browser-dependent one. */
+
+  border: none;
+  /* Many button styles don't want a border by default. */
+
+  border-width: 0;
+  /* IE8 thinks there's a border width even when border is none. */
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: inherit;
+  /* Suppress browser's use of special button text color. */
+
+  cursor: pointer;
+  /* Improves consistency */
+
+  margin: 0;
+  /* Addresses margins set differently in IE6/7, FF3+, S5, Chrome */
+
+  overflow: visible;
+  /* Removes inner spacing in IE8 without affecting normal text inputs */
+
+  text-align: left;
+  /* Many more things behave like buttons than want to be center-aligned like a stock button. */
+
+  vertical-align: baseline;
+  /* Improves appearance and consistency in all browsers */
+
+  /*
+   * Removes inner padding and border in FF3+
+   * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/
+   */
+
+  /*
+   * Generic apperance
+   * By design, this is fairly plain, with just a bit of 3D, in order to fit in
+   * reasonably well in many contexts. Inspired by Twitter Bootstrap's buttons.
+   */
+
+  /* Opt out of border, background, etc. in the normal state. */
+
+}
+.BasicButton.disabled {
+  cursor: default;
+  /* Re-set default cursor for disabled buttons */
+
+}
+.BasicButton::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.BasicButton.generic {
+  background: whitesmoke;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(top, #ffffff, #e6e6e6);
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: #333;
+  font-family: sans-serif;
+  /* Addresses font-family inconsistency between 'textarea' and other form elements. */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffffff, endColorstr=#e6e6e6);
+  padding: 0.3em 0.6em;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  vertical-align: middle;
+  /* 
+     * We use ".hover" as well as ":hover" so the hover state can be
+     * programmatically applied.
+     */
+
+}
+.BasicButton.generic:focus {
+  outline: thin dotted #333 \9;
+  /* IE 8/9 */
+
+}
+.BasicButton.generic:hover,
+.BasicButton.generic.hover {
+  background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);
+  background-image: -ms-linear-gradient(top, #ffffff, #eeeeee);
+  background-image: -webkit-linear-gradient(top, #ffffff, #eeeeee);
+  background-image: linear-gradient(top, #ffffff, #eeeeee);
+  border-bottom-color: #ccc;
+  border-left-color: #ddd;
+  border-right-color: #ddd;
+  border-top-color: #e0e0e0;
+  color: #222;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+  text-shadow: 0 1px 3px white;
+}
+.BasicButton.generic:active,
+.BasicButton.generic.active {
+  background-color: #d9d9d9;
+  background-color: #d0d0d0 \9;
+  /* IE 8/9 */
+
+  background-image: none;
+  border-color: #aaa;
+  box-shadow: inset 0 1px 4px 2 gba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: #111;
+  filter: none;
+  outline: 0;
+}
+.BasicButton.generic.disabled,
+.BasicButton.generic[disabled] {
+  background: whitesmoke;
+  border: 1px solid #ccc;
+  box-shadow: none;
+  color: #999;
+  text-shadow: none;
+}
+.BasicButton.generic.quiet.disabled,
+.BasicButton.generic.quiet[disabled] {
+  background: none;
+  border-color: transparent;
+}
+.BasicButton.quiet {
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.BlogPost {
+  /* Generic appearance */
+
+}
+.BlogPost.generic .BlogPost_postTitle {
+  color: inherit;
+  font-size: larger;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.CalendarDay {
+  /* Subclasses can extend these */
+
+  /* Can vary by culture */
+
+  /* Generic appearance */
+
+}
+.CalendarDay.generic {
+  border: 1px solid transparent;
+  font-family: sans-serif;
+  padding: 4px;
+  text-align: right;
+}
+.CalendarDay.generic.today {
+  color: darkred;
+  font-weight: bold;
+}
+
+.CalendarDayButton {
+  /* Generic appearance */
+
+}
+.CalendarDayButton .button {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.CalendarDayButton.generic {
+  border: none;
+  padding: 0;
+}
+.CalendarDayButton.generic .button {
+  border-radius: 0;
+  line-height: 1.2;
+  /* Helps button stay same height when bold is applied */
+
+  padding: 4px;
+  text-align: right;
+}
+.CalendarDayButton.generic.outsideMonth .button {
+  color: #bbb;
+}
+.CalendarDayButton.generic.selected .button {
+  background-color: #ddd;
+  font-weight: bold;
+}
+.CalendarDayButton.generic.today.insideMonth .button {
+  color: darkred;
+  font-weight: bold;
+}
+
+.CalendarMonth {
+  display: table-row-group;
+  /* Generic appearance */
+
+}
+.CalendarMonth.generic .CalendarDay.generic.outsideMonth {
+  visibility: hidden;
+}
+.CalendarMonth .CalendarWeek.hidden {
+  display: none;
+}
+
+.CalendarMonthNavigator {
+  display: table;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Generic appearance */
+
+}
+.CalendarMonthNavigator .navigator {
+  margin-bottom: 0.5em;
+}
+.CalendarMonthNavigator .navigator .panels {
+  white-space: nowrap;
+}
+.CalendarMonthNavigator .navigator .monthHeading {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  line-height: 1.0;
+  font-weight: bold;
+}
+.CalendarMonthNavigator .calendar {
+  width: 100%;
+}
+.CalendarMonthNavigator.generic {
+  font-family: sans-serif;
+}
+.CalendarMonthNavigator.generic .monthHeading {
+  text-align: center;
+}
+.CalendarMonthNavigator.generic .calendar .CalendarDay.generic.outsideMonth {
+  visibility: visible;
+  color: #aaa;
+}
+.CalendarMonthNavigator.generic .todayContainer {
+  padding-top: 0.25em;
+  text-align: center;
+}
+
+.CalendarMonthWithHeadings {
+  /* Generic appearance */
+
+}
+.CalendarMonthWithHeadings .monthAndYear {
+  display: block;
+}
+.CalendarMonthWithHeadings .monthTable {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+.CalendarMonthWithHeadings .daysOfWeek {
+  display: table-header-group;
+}
+.CalendarMonthWithHeadings.generic {
+  display: inline-block;
+  font-family: sans-serif;
+}
+.CalendarMonthWithHeadings.generic .monthAndYear {
+  font-weight: bold;
+  padding: 4px;
+  text-align: center;
+}
+.CalendarMonthWithHeadings.generic .daysOfWeek {
+  font-size: smaller;
+}
+
+.CalendarWeek {
+  display: table-row;
+  /* Subclasses can extend these */
+
+}
+.CalendarWeek > * {
+  display: table-cell;
+  width: 14.2%;
+  /* One seventh */
+
+}
+
+.Collapsible {
+  /* Subclasses can add their own rules for this class. */
+
+  /* Generic appearance */
+
+}
+.Collapsible .Collapsible_heading {
+  clear: both;
+  cursor: pointer;
+}
+.Collapsible.generic {
+  border: 1px solid lightgray;
+  /*
+     * The animation seems to work better if the top/bottom padding is actually
+     * implemented as top/bottom margin on the content. So we apply left/right
+     * padding to the container, but top/bottom margin on the content.
+     */
+
+}
+.Collapsible.generic .Collapsible_heading {
+  background: #f0f0f0;
+  font-weight: bold;
+  padding: 0.5em 0.5em 0.5em 1em;
+}
+.Collapsible.generic .Collapsible_content {
+  overflow: auto;
+  padding: 1em;
+}
+.Collapsible.generic .Collapsible_content > *:first-child {
+  margin-top: 0;
+}
+.Collapsible.generic .Collapsible_content > *:last-child {
+  margin-bottom: 0;
+}
+
+.CollapsibleWithHeadingButton {
+  /* Generic appearance */
+
+}
+.CollapsibleWithHeadingButton .headingButton {
+  float: right;
+}
+.CollapsibleWithHeadingButton .Collapsible_content {
+  clear: both;
+}
+.CollapsibleWithHeadingButton .collapsedButtonContent {
+  display: none;
+}
+.CollapsibleWithHeadingButton .expandedButtonContent {
+  display: block;
+}
+.CollapsibleWithHeadingButton.collapsed .collapsedButtonContent {
+  display: block;
+}
+.CollapsibleWithHeadingButton.collapsed .expandedButtonContent {
+  display: none;
+}
+.CollapsibleWithHeadingButton.generic .CollapsibleWithHeadingButton_heading {
+  background: #f0f0f0;
+  /* Fader requires explicit background color. */
+
+}
+.CollapsibleWithHeadingButton.generic .headingButton {
+  font-weight: normal;
+  margin-left: 1em;
+}
+.CollapsibleWithHeadingButton.generic .headingButton.BasicButton.generic {
+  padding: 0 0.25em;
+}
+
+.ColorSwatch {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 1.25em;
+  margin: 3px;
+  width: 1.25em;
+}
+.ColorSwatch.none {
+  border: 1px solid lightgray;
+}
+
+.ColorSwatchTextBox {
+  display: inline-block;
+}
+.ColorSwatchTextBox > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+.ColorSwatchTextBox .swatch {
+  margin-left: 6px;
+}
+
+.ComboBox {
+  display: inline-block;
+  /* Generic appearance */
+
+}
+.ComboBox .PopupSource_content {
+  position: relative;
+}
+.ComboBox .PopupSource_popup {
+  outline: none;
+}
+.ComboBox .ComboBox_content {
+  margin-right: 1.5em;
+  /* HACK to avoid overlapping button. Not general enough. */
+
+}
+.ComboBox .ComboBox_content[type='text'],
+.ComboBox .ComboBox_content input[type='text'] {
+  border: none;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  padding: 2px;
+}
+.ComboBox .dropdownButton {
+  bottom: 0;
+  height: 100%;
+  outline: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+.ComboBox.generic {
+  border: 1px solid lightgray;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ComboBox.generic .dropdownButton {
+  border: none;
+  border-left: 1px solid transparent;
+  border-radius: 0;
+  padding: 0 0.25em;
+  /* Tighter padding that normal */
+
+}
+.ComboBox.generic:hover .dropdownButton {
+  border-left-color: lightgray;
+}
+
+.DaysOfWeek {
+  /* Generic appearance */
+
+}
+.DaysOfWeek .dayOfWeek {
+  display: table-cell;
+}
+.DaysOfWeek.generic .dayOfWeek {
+  text-align: center;
+}
+
+.Fader {
+  background-color: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+.Fader .Fader_content {
+  white-space: nowrap;
+}
+.Fader .gradient {
+  position: absolute;
+}
+.Fader.horizontal .gradient {
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: 1.5em;
+}
+.Fader.vertical .Fader_content {
+  white-space: inherit;
+}
+.Fader.vertical .gradient {
+  bottom: 0;
+  height: 1.5em;
+  width: 100%;
+}
+
+.FlickrInterestingDay {
+  background: white;
+  padding: 3px;
+  text-align: left;
+  vertical-align: top;
+}
+.FlickrInterestingDay .FlickrInterestingDay_content {
+  color: white;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  padding-left: 4px;
+  position: absolute;
+  text-shadow: black 1px 1px 0;
+  z-index: 1;
+}
+.FlickrInterestingDay .link {
+  text-decoration: none;
+}
+.FlickrInterestingDay .image {
+  border: none;
+  /* For IE */
+
+  display: block;
+  height: 75px;
+  padding: 1px;
+  width: 75px;
+}
+.FlickrInterestingDay.past {
+  border-color: #7e7262;
+}
+.FlickrInterestingDay.today,
+.FlickrInterestingDay.future {
+  border-color: #e5e5e5;
+}
+.FlickrInterestingDay.today .FlickrInterestingDay_content,
+.FlickrInterestingDay.future .FlickrInterestingDay_content {
+  color: #e5e5e5;
+  text-shadow: none;
+}
+.FlickrInterestingDay.today .image,
+.FlickrInterestingDay.future .image {
+  visibility: hidden;
+}
+
+.FlickrInterestingNavigator {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 800px;
+}
+.FlickrInterestingNavigator .navigator {
+  border-bottom: 1px dotted #ddd;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+.FlickrInterestingNavigator .navigator,
+.FlickrInterestingNavigator .navigator button {
+  font-size: 12px;
+}
+.FlickrInterestingNavigator .navigator .monthButtonName {
+  color: #0063dc;
+  display: inline;
+}
+.FlickrInterestingNavigator .navigator .monthHeading {
+  color: #ff0084;
+  font-weight: normal !important;
+  text-align: center;
+}
+.FlickrInterestingNavigator .dayOfWeek {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: left;
+  text-transform: uppercase;
+}
+.FlickrInterestingNavigator .calendar {
+  border-collapse: collapse;
+  font-size: 18px;
+  font-weight: bold;
+}
+.FlickrInterestingNavigator .BasicButton.disabled .monthButtonName {
+  background-color: inherit;
+  color: black;
+  text-decoration: none;
+}
+.FlickrInterestingNavigator .chevron {
+  color: #ff0084;
+  font-weight: bold;
+}
+.FlickrInterestingNavigator .FlickrInterestingDay.insideMonth {
+  border-style: solid;
+  border-width: 1px;
+}
+.FlickrInterestingNavigator .FlickrInterestingDay.outsideMonth {
+  visibility: hidden;
+}
+
+.HighlightEffects {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* No tap highlight */
+
+}
+
+.HintTextBox {
+  cursor: text;
+  display: inline-block;
+  position: relative;
+  /* Generic appearance */
+
+}
+.HintTextBox .HintTextBox_textBox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 1em;
+  width: 100%;
+}
+.HintTextBox .HintTextBox_hint {
+  bottom: 0;
+  left: 4px;
+  height: 1.25em;
+  margin: auto 0;
+  position: absolute;
+  overflow: hidden;
+  right: 4px;
+  top: 0;
+}
+.HintTextBox.generic .HintTextBox_hint {
+  color: #aaa;
+}
+
+.LabeledColorSwatch > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.LabeledInput {
+  white-space: nowrap;
+  /* Keep input and label on same line */
+
+}
+.LabeledInput > input {
+  margin-right: 0;
+  /* Don't leave unclickable gap to right of input */
+
+}
+.LabeledInput .LabeledInput_content {
+  padding-left: 3px;
+  /* Restore normal gap suppressed above */
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: inherit;
+  /* Allow wrapping */
+
+}
+
+.LateralNavigator {
+  /*
+  The center style currently hacks into SimpleFlexBox. Instead, SimpleFlexBox
+  should expose its own center alignment capability. Unfortunately, it's hard to
+  come up with a way to do that that works in both the constrainHeight="true"
+  and normal cases.
+  */
+
+}
+.LateralNavigator.generic .panels {
+  outline: none;
+  /* Keyboard feedback is nice, but distracting to mouse users */
+
+}
+.LateralNavigator.center .SimpleFlexBox.panels {
+  -webkit-box-align: center;
+  box-align: center;
+}
+.LateralNavigator.center .SimpleFlexBox.panels > * {
+  vertical-align: middle;
+}
+
+.ListBox {
+  overflow-y: auto;
+  /* Optional selection highlighting. */
+
+  /* Generic appearance */
+
+}
+.ListBox > * {
+  display: block;
+  outline: none;
+}
+.ListBox.highlightSelection > .selected {
+  background: highlight;
+  color: highlighttext;
+}
+.ListBox.generic {
+  border: 1px solid lightgray;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: default;
+  /* Handle common case where a generic control (e.g., button) is used as a list item. */
+
+}
+.ListBox.generic > * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0.25em;
+  width: 100%;
+}
+
+.ListComboBox {
+  /* Generic appearance */
+
+}
+.ListComboBox .list {
+  border: none;
+  -moz-outline: none;
+  outline: none;
+}
+.ListComboBox .list > * {
+  display: block;
+}
+.ListComboBox.generic .BasicButton {
+  border: none;
+}
+
+.ListInlay {
+  /* Generic appearance */
+
+}
+.ListInlay.generic > * {
+  padding: inherit;
+}
+
+.Log {
+  margin: 0;
+  overflow: auto;
+}
+.Log .Log_content {
+  margin: 0;
+}
+
+.LoremIpsum {
+  /*
+   * Remove the top/bottom margins from the first/last child. It's too problematic
+   * for a host to style a control whose *children* have margins that affect
+   * things outside of the control. The host ends up having to style the control's
+   * children, which requires knowledge of the children and is therefore generally
+   * bad practice.
+   */
+}
+.LoremIpsum > p:first-child {
+  margin-top: 0;
+}
+.LoremIpsum > p:last-child {
+  margin-bottom: 0;
+}
+
+.Menu {
+  cursor: default;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Generic appearance */
+
+}
+.Menu .PopupSource_content {
+  white-space: nowrap;
+}
+.Menu .shield {
+  display: none;
+  /* Shield isn't shown unless it's requested. */
+
+  position: absolute;
+  z-index: 0;
+}
+.Menu .PopupSource_popup.popupAlignLeft .shield {
+  left: 0;
+}
+.Menu .PopupSource_popup.popupAlignRight .shield {
+  right: 0;
+}
+.Menu.generic {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.Menu.generic .PopupSource_content {
+  border: 1px solid transparent;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0.5em;
+}
+.Menu.generic .PopupSource_content:hover {
+  background: #eee;
+}
+.Menu.generic .shield {
+  background: white;
+  /* Same as menu's background color */
+
+  height: 1px;
+  /* Same as this menu's border-top-width */
+
+  top: -1px;
+  /* Same as border-top-width but negative */
+
+}
+.Menu.generic .PopupSource_popup.popupAppearsBelow .shield {
+  display: block;
+}
+.Menu.generic .PopupSource_popup {
+  cursor: default;
+  margin: 0;
+  outline: none;
+  padding: 0.5em 0;
+}
+.Menu.generic.opened .PopupSource_content {
+  background: white;
+  border-color: #ccc;
+  /* IE8 */
+
+  border-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: transparent;
+  /* Hides bottom border */
+
+}
+
+.MenuBar {
+  position: relative;
+  /* Necessary to get overlay behind the whole menu bar */
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Subclasses can extend this style */
+
+  /* Generic appearance */
+
+}
+.MenuBar.generic {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.MenuItem {
+  cursor: default;
+  padding: 0.5em 1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+  /* Generic appearance */
+
+}
+.MenuItem.generic {
+  padding: 0.5em 1em;
+}
+.MenuItem.generic:hover {
+  background: #eee;
+}
+.MenuItem.generic.disabled {
+  color: #999;
+}
+.MenuItem.generic.disabled:hover {
+  background: inherit;
+}
+
+.MenuSeparator {
+  border-top: 1px solid lightgray;
+  margin: 0.5em 0;
+}
+
+.MobileLink {
+  color: inherit;
+  display: block;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.MobileLink:active,
+.MobileLink.tapFeedback {
+  background-color: #194fdb !important;
+  color: white !important;
+}
+
+.MobileLinkList {
+  margin: 0;
+  outline: none;
+  -webkit-padding-start: 0;
+}
+.MobileLinkList > * {
+  background: url(http://quickui.org/release/resources/mobileDisclosureIndicator.png) no-repeat right center;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  padding: 0.5em;
+}
+.MobileLinkList > *:active,
+.MobileLinkList > .selected {
+  background-color: #194fdb;
+  background-image: url(http://quickui.org/release/resources/mobileDisclosureIndicatorSelected.png);
+  color: white !important;
+}
+.MobileLinkList > :last-child {
+  border-bottom: none;
+}
+.MobileLinkList li {
+  list-style: none;
+}
+
+.MobileListBox {
+  margin: 0;
+  outline: none;
+  -webkit-padding-start: 0;
+}
+.MobileListBox.generic {
+  font-weight: bold;
+}
+.MobileListBox.generic > * {
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  padding: 0.5em;
+}
+.MobileListBox.generic > .selected {
+  background: url(http://quickui.org/release/resources/mobileCheckmark.png) no-repeat right center;
+  color: #385487;
+}
+.MobileListBox.generic > :last-child {
+  border-bottom: none;
+}
+.MobileListBox li {
+  list-style: none;
+}
+.MobileListBox a {
+  color: inherit;
+}
+
+.Modes > .inactive {
+  display: none !important;
+}
+.Modes.maximize {
+  position: relative;
+}
+.Modes.maximize > .active {
+  visiblity: visible;
+}
+.Modes.maximize > .inactive {
+  display: inherit !important;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+}
+
+.MultiListInlay {
+  /* Generic appearance */
+
+}
+.MultiListInlay.generic > * {
+  padding: inherit;
+}
+
+.Overlay {
+  bottom: 0;
+  cursor: default;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.PackedColumns {
+  position: relative;
+}
+.PackedColumns > * {
+  position: absolute;
+}
+
+.Page {
+  margin: 0;
+  /* Generic appearance */
+
+}
+.Page.fill {
+  height: 100%;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+.Page.generic {
+  font-family: sans-serif;
+  /* From normalize.css: Prevents iOS text size adjust after orientation
+    change, without disabling user zoom. */
+
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+.PageWithQuadrants {
+  margin: 0;
+}
+.PageWithQuadrants .table {
+  border-collapse: collapse;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.PageWithQuadrants .row {
+  display: table-row;
+}
+.PageWithQuadrants .cell {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.PanelWithOverflow {
+  position: relative;
+}
+.PanelWithOverflow .PanelWithOverflow_content {
+  position: relative;
+  /* Simplifies layout calcs */
+
+  overflow: hidden;
+  white-space: nowrap;
+  /* By default, contents are arranged in inline layout */
+
+}
+.PanelWithOverflow .PanelWithOverflow_content > * {
+  display: inline-block;
+}
+.PanelWithOverflow .PanelWithOverflow_content > .overflowed {
+  visibility: hidden;
+}
+.PanelWithOverflow .menuButton {
+  float: right;
+  /* In the menu, contents layout switches to vertical arrangement. */
+
+}
+.PanelWithOverflow .menuButton .PopupSource_popup > * {
+  display: block;
+}
+
+.PersistentPanel {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* Generic appearance */
+
+}
+.PersistentPanel .PersistentPanel_content {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.PersistentPanel.docked .PersistentPanel_content {
+  position: fixed;
+}
+.PersistentPanel.generic .PersistentPanel_content {
+  background: white;
+  z-index: 1;
+}
+
+.Popup {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  /* Generic appearance */
+
+}
+.Popup.opened {
+  display: block;
+}
+.Popup.generic {
+  background: white;
+  border: 1px solid #ccc;
+  /* IE8 */
+
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: .25em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.PopupButton {
+  display: inline-block;
+}
+.PopupButton .PopupButton_content,
+.PopupButton .indicator {
+  display: inline-block;
+}
+.PopupButton .PopupButton_content {
+  display: none;
+}
+
+.SimpleFlexBox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* display: -moz-box; */
+
+  display: -webkit-box;
+  display: box;
+  /* noFlexBox will be applied where flexbox is unsupported or known to be buggy. */
+
+}
+.SimpleFlexBox > * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  /* So elements contained by panels can fill panels. */
+
+}
+.SimpleFlexBox .SimpleFlexBox_content {
+  /* -moz-box-flex: 1; */
+
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+.SimpleFlexBox.horizontal {
+  /* -moz-box-orient: horizontal; */
+
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
+}
+.SimpleFlexBox.vertical {
+  /* -moz-box-orient: vertical; */
+
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+}
+.SimpleFlexBox.constrainHeight {
+  /* This can be overridden, but seems like a useful default. */
+
+  height: 100%;
+}
+.SimpleFlexBox.noFlexBox {
+  position: relative;
+}
+.SimpleFlexBox.noFlexBox.horizontal {
+  display: table;
+  width: 100%;
+}
+.SimpleFlexBox.noFlexBox.horizontal > * {
+  display: table-cell;
+  vertical-align: top;
+}
+.SimpleFlexBox.noFlexBox.horizontal > .panel {
+  width: 0;
+  /* Forces panel to its minimum width; not actually zero width. */
+
+  /*
+         * In Mozilla, the contents of the main content panel end up wider than the
+         * content panel itself (likely an issue with using position: absolute
+         * within a table cell). This can cause the side panels to end up behind the
+         * main panel, rendering the contents of the side panels inaccessible. So,
+         * try to force the side panels on top of the main panel.
+         */
+
+  z-index: 1;
+}
+.SimpleFlexBox.noFlexBox.constrainHeight {
+  display: inherit;
+}
+.SimpleFlexBox.noFlexBox.constrainHeight > * {
+  display: inherit;
+  position: absolute;
+  vertical-align: inherit;
+}
+.SimpleFlexBox.noFlexBox.constrainHeight > .panel {
+  width: auto;
+}
+
+.SlidingPanels {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 0;
+  /* Prevent anything from appearing until we've set width. */
+
+}
+.SlidingPanels .SlidingPanels_content {
+  position: relative;
+  /* So we can shift it over */
+
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  /* Same as jQuery's "fast" */
+
+  white-space: nowrap;
+}
+.SlidingPanels .SlidingPanels_content > * {
+  display: inline-block;
+}
+
+.SlidingPanelsWithDots {
+  display: inline-block;
+  /* Size to content */
+  overflow: hidden;
+  /* Generic appearance */
+
+}
+.SlidingPanelsWithDots .buttonPanel {
+  text-align: center;
+}
+.SlidingPanelsWithDots .pageButtons {
+  display: inline-block;
+  margin: 0 auto;
+}
+.SlidingPanelsWithDots.generic .buttonPanel {
+  padding: 5px;
+}
+.SlidingPanelsWithDots.generic .pageButtons > .BasicButton {
+  background: white;
+  border: 1px solid #888;
+  border-radius: 5px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 10px;
+  margin: 2px;
+  padding: 5px;
+  width: 10px;
+}
+.SlidingPanelsWithDots.generic .pageButtons > .BasicButton:hover {
+  background: #ddd;
+}
+.SlidingPanelsWithDots.generic .pageButtons > .BasicButton.selected {
+  background: #bbb;
+}
+
+.Sprite {
+  background-repeat: no-repeat;
+}
+
+.SpriteButton {
+  display: inline-block;
+  outline: none;
+  position: relative;
+}
+.SpriteButton .Sprite {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  /* 
+     * Each sprite covers half the background
+     */
+
+  width: 50%;
+  z-index: 0;
+}
+.SpriteButton .backgroundLeft {
+  background-position: 0 0;
+  left: 0;
+}
+.SpriteButton .backgroundRight {
+  background-position: right 0;
+  /*
+     * Use left: 50% instead of right: 0, as the latter doesn't work exactly right on WebKit.
+     */
+
+  left: 50%;
+}
+.SpriteButton .SpriteButton_content {
+  position: relative;
+}
+
+.Tab {
+  /*
+   * Forcing a tiny bit of padding (instead of zero) helps in the case where
+   * a surrounding Tabs is trying to determine the height of a Tab that
+   * contains a paragraph (or, presumably, other elements) that have top and
+   * bottom margins. In that case, the Tab's outerHeight() will fail to
+   * include the paragraph's margins, with the result that the Tabs can
+   * incorrectly calculate the height it needs to be. Forcing some padding
+   * seems to work around this problem.
+   */
+
+  padding: 1px;
+}
+
+.Tabs {
+  position: relative;
+  /* Generic appearance */
+
+}
+.Tabs .tabButtons {
+  white-space: nowrap;
+  /* So tabs don't wrap. */
+
+}
+.Tabs.generic .Tabs_content {
+  border: 1px solid #888;
+  height: 100%;
+}
+.Tabs.generic .tabButtons {
+  position: relative;
+  top: 1px;
+  z-index: 1;
+}
+.Tabs.generic .tabButtons .BasicButton.generic {
+  background: none;
+  border-color: #bbb;
+  border-bottom-color: transparent;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: #444;
+  filter: none;
+  margin-right: 0.25em;
+  outline: none;
+}
+.Tabs.generic .tabButtons .BasicButton.generic.selected {
+  border-color: #888;
+  border-bottom-color: white;
+  color: inherit;
+}
+
+.Tag {
+  display: inline;
+  font-family: Courier, Courier New, monospace;
+}
+
+.TextBoxWithButton .SimpleFlexBox_content {
+  padding-right: 0.25em;
+  vertical-align: middle !important;
+}
+.TextBoxWithButton .TextBoxWithButton_textBox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.TextCondenser {
+  overflow: hidden;
+  white-space: nowrap;
+  /*
+   * To hide a copy of the text, we set its visibility to hidden so that its width
+   * will still be valid. We use position absolute on the hidden text to pull it
+   * out of the flow.
+   */
+
+}
+.TextCondenser .condensed {
+  visibility: hidden;
+  position: absolute;
+}
+.TextCondenser.condensed .normal {
+  visibility: hidden;
+  position: absolute;
+}
+.TextCondenser.condensed .condensed {
+  visibility: visible;
+  position: relative;
+}
+
+.ToggleButton {
+  /* Generic appearance */
+
+}
+.ToggleButton.generic.selected {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: #eee;
+  background-image: -webkit-linear-gradient(top, #e0e0e0, #d8d8d8);
+  background-image: -moz-linear-gradient(top, #e0e0e0, #d8d8d8);
+  background-image: -ms-linear-gradient(top, #e0e0e0, #d8d8d8);
+  background-image: -o-linear-gradient(top, #e0e0e0, #d8d8d8);
+  background-image: linear-gradient(top, #e0e0e0, #d8d8d8);
+  border-color: #ccc;
+}
+.ToggleButton.generic.selected:hover {
+  background-color: #f0f0f0;
+  background-image: -webkit-linear-gradient(top, #e8e8e8, #e0e0e0);
+  background-image: -moz-linear-gradient(top, #e8e8e8, #e0e0e0);
+  background-image: -ms-linear-gradient(top, #e8e8e8, #e0e0e0);
+  background-image: -o-linear-gradient(top, #e8e8e8, #e0e0e0);
+  background-image: linear-gradient(top, #e8e8e8, #e0e0e0);
+}
+
+.TransientMessage {
+  /* Generic appearance */
+
+}
+.TransientMessage.generic {
+  background: #444;
+  /* IE8 */
+
+  background: rgba(0, 0, 0, 0.5);
+  border-color: white;
+  border-top-style: none;
+  color: white;
+  padding: .75em;
+  position: fixed;
+  top: 0;
+}
+
+.ValidatingTextBox {
+  /* Generic appearance */
+
+}
+.ValidatingTextBox.generic.invalid {
+  background-color: pink;
+}
+
+.VerticalAlign {
+  -webkit-box-align: center;
+  box-align: center;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: box;
+}
+
+.VerticalPanels.constrainHeight .SimpleFlexBox_content {
+  overflow-y: auto;
+}
+.VerticalPanels.constrainHeight.noFlexBox > * {
+  left: 0;
+  right: 0;
+}
+.VerticalPanels.constrainHeight.noFlexBox .SimpleFlexBox_panel1 {
+  top: 0;
+}
+.VerticalPanels.constrainHeight.noFlexBox .SimpleFlexBox_panel2 {
+  bottom: 0;
+}
+
+
+.ColorSwatchComboBox {
+  /* Generic appearance */
+
+}
+.ColorSwatchComboBox.generic .LabeledColorSwatch.generic {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.DateTextBox {
+  width: 6em;
+}
+
+.Dialog {
+  position: fixed;
+  /* Generic appearance */
+
+}
+.Dialog.generic {
+  padding: 1.5em;
+}
+
+.Editable {
+  /* Generic appearance */
+
+}
+.Editable > * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+.Editable.generic .Editable_read {
+  outline: none;
+}
+
+.EditableText {
+  /* Generic appearance */
+
+}
+.EditableText.generic {
+  /*
+     * Assuming the read portion is just a div, and the edit portion has some
+     * input, try to match the standard border and padding of input elements so that
+     * contents don't appear to shift position when changing the editing state.
+     */
+
+}
+.EditableText.generic .Editable_read {
+  border: 2px solid transparent;
+  cursor: text;
+  margin: 0;
+  min-height: 2em;
+  /* So user can still click on it if it's empty. */
+
+  padding: 1px;
+}
+.EditableText.generic .Editable_edit {
+  margin: 0;
+}
+
+.HorizontalPanels.noFlexBox.constrainHeight > * {
+  top: 0;
+  bottom: 0;
+}
+.HorizontalPanels.noFlexBox.constrainHeight .SimpleFlexBox_panel1 {
+  left: 0;
+}
+.HorizontalPanels.noFlexBox.constrainHeight .SimpleFlexBox_panel2 {
+  right: 0;
+}
+.HorizontalPanels.constrainHeight .SimpleFlexBox_content {
+  overflow-y: auto;
+}
+
+.ModalOverlay {
+  /* Generic appearance */
+
+}
+.ModalOverlay.generic {
+  background: black;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+  /* IE8 */
+
+  opacity: 0.25;
+}
+
+.RotatingPanelsWithDots .letter {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 96px;
+  font-weight: bold;
+  padding: 40px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.SearchBox {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  /* Generic appearance */
+
+}
+.SearchBox .SimpleFlexBox_content {
+  padding-right: 1px;
+}
+.SearchBox .TextBoxWithButton_textBox {
+  border: none;
+  display: block;
+}
+.SearchBox .TextBoxWithButton_textBox input {
+  margin: 0;
+  /* For WebKit */
+
+  padding-right: 1.3em;
+  /* Avoid overlap with icon */
+
+}
+.SearchBox .TextBoxWithButton_goButton {
+  padding: 0;
+}
+.SearchBox .TextBoxWithButton_goButton .searchIcon {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  /* Remove inline padding */
+
+  height: 1.3em;
+  /* Try to scale icon to text size */
+
+  padding: 0.2em;
+  width: 1.3em;
+}
+.SearchBox.generic {
+  background: white;
+  border: 1px solid lightgray;
+}
+.SearchBox.generic .TextBoxWithButton_goButton.generic {
+  border: none;
+}
+.SearchBox.generic .TextBoxWithButton_goButton.generic.disabled .searchIcon {
+  opacity: 0.5;
+}
