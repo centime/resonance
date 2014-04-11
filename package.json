@@ -1,9 +1,9 @@
 {
   "name": "resonance",
-  "title": "Resonance",
+  "title": "resonance",
   "id": "jid1-9XiRXEqpBmuUrA",
-  "description": "Just saying",
-  "author": "Us",
+  "description": "a basic add-on",
+  "author": "",
   "license": "MPL 2.0",
   "version": "0.1",
     "permissions" : {

@@ -1,6 +1,14 @@
+resonance {
+    height: 100% ;
+    width: 100% ;
+}
+resonance * {
+    border : 0px;
+    padding : 0px;
+    margin : 0px;
+}
 
-messageslist {background: blue}
-newmessage {background: yellow}
+messages > ul {background: blue}
 controls {background: red}
 users {background: green}
 
@@ -59,4 +67,8 @@ messages > form {
     flex: 1 6 20%;
     -webkit-order: 2;
     order: 2;
+}
+input {
+    width: 100% ;
+    height: 100% ;
 }

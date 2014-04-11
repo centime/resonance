@@ -1,14 +1,14 @@
 var SIZE = '100px';
 
 var app = $(document.createElement('div')).attr({
-    id: 'app',
+    id: 'resonance_container',
 }).css({
     position: 'fixed',
     bottom: '0px',
     height: SIZE,
     width: '100%',
     background: 'white',
-    'z-index': '10000'
+    'z-index': '9999999999999999999999999999999999999999999999' //tofix
 })
 .appendTo(document.body);
 
@@ -21,9 +21,18 @@ $('body').css('margin-bottom',SIZE)
 /* Just run the build.sh script.
 /***************************************************************************/
 var content = "\
-<style>\\
-messageslist {background: blue}\
-newmessage {background: yellow}\
+<style>\
+resonance {\
+    height: 100% ;\
+    width: 100% ;\
+}\
+resonance * {\
+    border : 0px;\
+    padding : 0px;\
+    margin : 0px;\
+}\
+\
+messages > ul {background: blue}\
 controls {background: red}\
 users {background: green}\
 \
@@ -83,10 +92,14 @@ messages > form {\
     -webkit-order: 2;\
     order: 2;\
 }\
+input {\
+    width: 100% ;\
+    height: 100% ;\
+}\
 </style>\
-<resonance ng-app='resonance' class='flex row'>\
+<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex row'>\
     <div id='resonance_left'>\
-        <messages ng-controller='MessagesController' class='flex column'>\
+        <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>\
             <ul class='list'>\
                 <li ng-repeat='message in messages track by $index'>\
                       {{message}}\
@@ -96,14 +109,16 @@ messages > form {\
                 <input type='text' ng-model='newMessage'/>\
             </form>\
         </messages>\
+        <settings ng-show='display==2'>\
+            settings\
+       </settings>\
+\
     </div>\
     <div id='resonance_right' class='flex column'>\
-        <controls ng-controller='SettingsController' id='settings'>\
-            <form ng-submit='changeNick()'>\
-                <input type='text' ng-model='newNick'/>\
-            </form>\
+        <controls>\
+            <button ng-click='display=(display==2)?1:2'>settings</button>\
         </controls>\
-        <users ng-controller='UsersController' id='users'>\
+        <users ng-controller='UsersController'>\
             <ul class='list'>\
                 <li ng-repeat='user in users track by $index'>\
                       {{user}}\
@@ -116,4 +131,4 @@ messages > form {\
   \
 ";
 
-document.getElementById("app").innerHTML = content ;
+document.getElementById("resonance_container").innerHTML = content ;
