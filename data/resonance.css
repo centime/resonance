@@ -1,28 +1,62 @@
-div, ul, li {
-    border:0px;
-    margin:0px;
-    padding: 0;
-}
-#messages {
-    float: left;
-    width: 80%;
-    height: 100%;
-    background-color: blue;
-}
-#messages .list {
-    height: 70%;
-}
-#messages input {
-    height: 30%;
-    width: 100%;
-}
-#users {
-    float: right;
-    width: 20%;
-    height: 100%;
-    background-color: red;
 
+messageslist {background: blue}
+newmessage {background: yellow}
+controls {background: red}
+users {background: green}
+
+.flex
+   {
+      /* flexbox setup */
+      display: -webkit-flex;
+      display: flex;
+   }
+.row
+    {
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+.column
+    {
+    -webkit-flex-flow: column;
+            flex-flow: column;
+            flex-direction: column;
+    }
+#resonance_left {
+    -webkit-flex: 1 6 80%;
+    flex: 1 6 80%;
+    -webkit-order: 1;
+    order: 1;
 }
-.list {
-    overflow: auto;
+#resonance_left > * {
+    height: 100% ;
+}
+#resonance_right {
+    -webkit-flex: 1 6 20%;
+    flex: 1 6 20%;
+    -webkit-order: 2;
+    order: 2;
+}
+controls{
+    -webkit-flex: 1 6 20%;
+    flex: 1 6 20%;
+    -webkit-order: 1;
+    order: 1;
+}
+users{
+    -webkit-flex: 1 6 80%;
+    flex: 1 6 80%;
+    -webkit-order: 2;
+    order: 2;
+}
+messages > ul {
+    -webkit-flex: 1 6 80%;
+    flex: 1 6 80%;
+    -webkit-order: 1;
+    order: 1;
+}
+messages > form {
+    -webkit-flex: 1 6 20%;
+    flex: 1 6 20%;
+    -webkit-order: 2;
+    order: 2;
 }

@@ -1,24 +1,30 @@
-<div ng-app='resonance' id='content'>
-    <div ng-controller='MessagesController' id='messages' >
-        <ul class='list'>
-            <li ng-repeat='message in messages track by $index'>
-                  {{message}}
-            </li>
-        </ul>
-        <form ng-submit='submitNewMessage()'>
-            <input type='text' ng-model='newMessage'/>
-        </form>
+<resonance ng-app='resonance' class='flex row'>
+    <div id='resonance_left'>
+        <messages ng-controller='MessagesController' class='flex column'>
+            <ul class='list'>
+                <li ng-repeat='message in messages track by $index'>
+                      {{message}}
+                </li>
+            </ul>
+            <form ng-submit='submitNewMessage()'>
+                <input type='text' ng-model='newMessage'/>
+            </form>
+        </messages>
     </div>
-    <div ng-controller='SettingsController' id='settings'>
-        <form ng-submit='changeNick()'>
-            <input type='text' ng-model='newNick'/>
-        </form>
+    <div id='resonance_right' class='flex column'>
+        <controls ng-controller='SettingsController' id='settings'>
+            <form ng-submit='changeNick()'>
+                <input type='text' ng-model='newNick'/>
+            </form>
+        </controls>
+        <users ng-controller='UsersController' id='users'>
+            <ul class='list'>
+                <li ng-repeat='user in users track by $index'>
+                      {{user}}
+                </li>
+            </ul>
+        </users>
     </div>
-    <div ng-controller='UsersController' id='users'>
-        <ul class='list'>
-            <li ng-repeat='user in users track by $index'>
-                  {{user}}
-            </li>
-        </ul>
-    </div>
-</div>
+</resonance>
+
+  

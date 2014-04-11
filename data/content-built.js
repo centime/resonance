@@ -21,60 +21,99 @@ $('body').css('margin-bottom',SIZE)
 /* Just run the build.sh script.
 /***************************************************************************/
 var content = "\
-<style>\div, ul, li {\
-    border:0px;\
-    margin:0px;\
-    padding: 0;\
-}\
-#messages {\
-    float: left;\
-    width: 80%;\
-    height: 100%;\
-    background-color: blue;\
-}\
-#messages .list {\
-    height: 70%;\
-}\
-#messages input {\
-    height: 30%;\
-    width: 100%;\
-}\
-#users {\
-    float: right;\
-    width: 20%;\
-    height: 100%;\
-    background-color: red;\
+<style>\\
+messageslist {background: blue}\
+newmessage {background: yellow}\
+controls {background: red}\
+users {background: green}\
 \
+.flex\
+   {\
+      /* flexbox setup */\
+      display: -webkit-flex;\
+      display: flex;\
+   }\
+.row\
+    {\
+        -webkit-flex-direction: row;\
+        flex-direction: row;\
+    }\
+.column\
+    {\
+    -webkit-flex-flow: column;\
+            flex-flow: column;\
+            flex-direction: column;\
+    }\
+#resonance_left {\
+    -webkit-flex: 1 6 80%;\
+    flex: 1 6 80%;\
+    -webkit-order: 1;\
+    order: 1;\
 }\
-.list {\
-    overflow: auto;\
+#resonance_left > * {\
+    height: 100% ;\
 }\
-\
+#resonance_right {\
+    -webkit-flex: 1 6 20%;\
+    flex: 1 6 20%;\
+    -webkit-order: 2;\
+    order: 2;\
+}\
+controls{\
+    -webkit-flex: 1 6 20%;\
+    flex: 1 6 20%;\
+    -webkit-order: 1;\
+    order: 1;\
+}\
+users{\
+    -webkit-flex: 1 6 80%;\
+    flex: 1 6 80%;\
+    -webkit-order: 2;\
+    order: 2;\
+}\
+messages > ul {\
+    -webkit-flex: 1 6 80%;\
+    flex: 1 6 80%;\
+    -webkit-order: 1;\
+    order: 1;\
+}\
+messages > form {\
+    -webkit-flex: 1 6 20%;\
+    flex: 1 6 20%;\
+    -webkit-order: 2;\
+    order: 2;\
+}\
 </style>\
-<div ng-app='resonance' id='content'>\
-    <div ng-controller='MessagesController' id='messages' >\
-        <ul class='list'>\
-            <li ng-repeat='message in messages track by $index'>\
-                  {{message}}\
-            </li>\
-        </ul>\
-        <form ng-submit='submitNewMessage()'>\
-            <input type='text' ng-model='newMessage'/>\
-        </form>\
+<resonance ng-app='resonance' class='flex row'>\
+    <div id='resonance_left'>\
+        <messages ng-controller='MessagesController' class='flex column'>\
+            <ul class='list'>\
+                <li ng-repeat='message in messages track by $index'>\
+                      {{message}}\
+                </li>\
+            </ul>\
+            <form ng-submit='submitNewMessage()'>\
+                <input type='text' ng-model='newMessage'/>\
+            </form>\
+        </messages>\
     </div>\
-    <div ng-controller='SettingsController' id='settings'>\
-        <form ng-submit='changeNick()'>\
-            <input type='text' ng-model='newNick'/>\
-        </form>\
+    <div id='resonance_right' class='flex column'>\
+        <controls ng-controller='SettingsController' id='settings'>\
+            <form ng-submit='changeNick()'>\
+                <input type='text' ng-model='newNick'/>\
+            </form>\
+        </controls>\
+        <users ng-controller='UsersController' id='users'>\
+            <ul class='list'>\
+                <li ng-repeat='user in users track by $index'>\
+                      {{user}}\
+                </li>\
+            </ul>\
+        </users>\
     </div>\
-    <div ng-controller='UsersController' id='users'>\
-        <ul class='list'>\
-            <li ng-repeat='user in users track by $index'>\
-                  {{user}}\
-            </li>\
-        </ul>\
-    </div>\
-</div>\
+</resonance>\
+\
+  \
 ";
 
 document.getElementById("app").innerHTML = content ;
