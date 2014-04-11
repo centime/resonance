@@ -35,6 +35,7 @@ resonance * {\
 messages > ul {background: blue}\
 controls {background: red}\
 users {background: green}\
+settings {background: black}\
 \
 .flex\
    {\
@@ -92,7 +93,7 @@ messages > form {\
     -webkit-order: 2;\
     order: 2;\
 }\
-input {\
+messages input {\
     width: 100% ;\
     height: 100% ;\
 }\
@@ -109,8 +110,10 @@ input {\
                 <input type='text' ng-model='newMessage'/>\
             </form>\
         </messages>\
-        <settings ng-show='display==2'>\
-            settings\
+        <settings ng-controller='SettingsController' ng-show='display==2'>\
+            <form ng-submit='changeNick()'>\
+                <input type='text' ng-model='newNick'/>\
+            </form>\
        </settings>\
 \
     </div>\

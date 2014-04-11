@@ -10,8 +10,10 @@
                 <input type='text' ng-model='newMessage'/>
             </form>
         </messages>
-        <settings ng-show='display==2'>
-            settings
+        <settings ng-controller='SettingsController' ng-show='display==2'>
+            <form ng-submit='changeNick()'>
+                <input type='text' ng-model='newNick'/>
+            </form>
        </settings>
 
     </div>
