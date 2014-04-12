@@ -92,7 +92,7 @@ users{\
                 <input type='text' ng-model='newMessage'/>\
             </form>\
         </messages>\
-        <topPages ng-controller='TopPagesController' ng-show='display==2' class='column'>\
+        <topPages ng-controller='TopPagesController' ng-show='display==2' class='flex'>\
         </topPages>\
         <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
             <form >\
