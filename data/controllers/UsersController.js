@@ -14,13 +14,13 @@ app.controller('UsersController', function($scope){
             $scope.$apply()
         });
     // Listen for the message sent by the server when someone enters the chan
-    self.port.on("joined", function (channel,nick) {
+    self.port.on("join", function (channel,nick) {
             $scope.users.push(nick);
             $scope.$apply()
 
         });
     // Listen for the message sent by the server when someone leaves the chan.
-    self.port.on("left", function (channel,nick) {
+    self.port.on("part", function (channel,nick) {
             $scope.users.splice($scope.users.indexOf(nick),1);
             $scope.$apply()
         });

@@ -54,3 +54,6 @@ users{
     flex: 1 6 80%;
     order: 2;
 }
+.list{
+    overflow: auto;
+}

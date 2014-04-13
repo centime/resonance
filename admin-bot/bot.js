@@ -12,7 +12,7 @@ bot.addListener('error', function(message) {
 });
 
 // The structure in which are kept the pages visited.
-var visits = {'here':100,'there':300,'da':30}; // page:visitors
+var visits = {'test':0, 'test1':1}; // page:visitors
 
 // When the bot receives a private message.
 // Todo : security.
@@ -34,10 +34,13 @@ bot.addListener('pm', function(nick, message) {
     // todo Slow. Not suited for scaling.
     if (message.match(/^\/ask/)){
         var sortable = [];
-        sortable.sort(function(a, b) {return a[1] - b[1]})
         for (var page in visits)
-            sortable.push([page, visits[page]])
-        bot.say(nick,sortable.sort().toString())
+            sortable.push([page, visits[page]]);
+        bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
+        
+    };
+    if (message.match(/^coucou/)){
+        bot.say(nick,'hi');
     };
 });
 

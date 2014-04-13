@@ -78,6 +78,9 @@ users{\
     flex: 1 6 80%;\
     order: 2;\
 }\
+.list{\
+    overflow: auto;\
+}\
 \
 </style>\
 <resonance ng-app='resonance' ng-controller='ResonanceController' class='flex row'>\
@@ -92,7 +95,12 @@ users{\
                 <input type='text' ng-model='newMessage'/>\
             </form>\
         </messages>\
-        <topPages ng-controller='TopPagesController' ng-show='display==2' class='flex'>\
+        <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
+            <ul class='list'>\
+                <li ng-repeat='page in topPages track by $index'>\
+                      {{page}}\
+                </li>\
+            </ul>\
         </topPages>\
         <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
             <form >\
