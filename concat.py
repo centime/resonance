@@ -2,7 +2,7 @@ main = file('data/content.js').read()
 css = file('data/resonance.css').read().replace('\n', '\\\n').replace('"', "'")
 html = file('data/resonance.html').read().replace('\n', '\\\n').replace('"', "'")
 
-output = main.replace('<style>\\','<style>\\'+css+'\\').replace('</style>\\','</style>\\\n'+html+'\\')
+output = main.replace('<style>\\','<style>\\\n'+css+'\\').replace('</style>\\','</style>\\\n'+html+'\\')
 
 open('data/content-built.js','w').write(output)
 
