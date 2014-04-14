@@ -6,4 +6,5 @@ app.controller("ResonanceController", function($scope){
     // 3 fot settings.
     // Initialized with messages.
     $scope.display = 1;
+    $scope.mutedUser = [];
 });

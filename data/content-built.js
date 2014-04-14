@@ -87,8 +87,8 @@ users{\
     <div id='resonance_left'>\
         <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>\
             <ul class='list'>\
-                <li ng-repeat='message in messages track by $index'>\
-                      {{message}}\
+                <li ng-repeat='message in messages track by $index' ng-if='message.display'>\
+                      {{message.author}}: {{message.message}}\
                 </li>\
             </ul>\
             <form ng-submit='submitNewMessage()'>\
@@ -97,7 +97,7 @@ users{\
         </messages>\
         <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
             <ul class='list'>\
-                <li ng-repeat='page in topPages track by $index'>\
+                <li ng-repeat='page in topPages'>\
                       {{page}}\
                 </li>\
             </ul>\
@@ -120,6 +120,8 @@ users{\
             <ul class='list'>\
                 <li ng-repeat='user in users track by $index'>\
                       {{user}}\
+                      <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>\
+                      <button ng-click='unMute(user)' ng-show='isMute(user)'>unMute</button>\
                 </li>\
             </ul>\
         </users>\

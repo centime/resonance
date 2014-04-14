@@ -16,15 +16,31 @@ app.controller("MessagesController", function($scope){
     // Listen for a 'message' event.
     self.port.on("message", function (from,to,message) {
         // The line will be 'User : Message'.
-        var text = from+' : '+message;
-        // Append it to the list of all messages.
-        $scope.messages.push(text)
-        // Update the view.
-        $scope.$apply()
-        // Scroll down the view.
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000);
-        
-        
-    });
+        var entry = {'author':from,'message':message,'display':true};
 
+        if ($scope.$parent.mutedUser.indexOf(from) !== -1){
+            entry.display = false;
+        };
+        // Append it to the list of all messages.
+        $scope.messages.push(entry);
+        // Update the view.
+        $scope.$apply();
+        // Scroll down the view.
+        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000); 
+    });
+    $scope.$parent.$on("mute", function (e,user) {
+        for (var i in $scope.messages){
+            if ($scope.messages[i].author === user) {
+                $scope.messages[i].display = false;
+            }
+        };
+    });
+    $scope.$parent.$on("unMute", function (e,user) {
+        for (var i in $scope.messages){
+            if ($scope.messages[i].author === user) {
+                $scope.messages[i].display = true;
+            }
+        };
+
+    });
 });
