@@ -4,16 +4,10 @@ app.controller('UsersController', function($scope){
     $scope.users = [];
     // Listen for the message sent by the server when entering a chan, with the list of present users.
     self.port.on("names", function (channel,nicks) {
-        console.log("ioluihkjghvb'$")
-        console.log($scope.users)
             // Get every nickname. We could maybe use the privileges ?
             for (nick in nicks){
                 $scope.users.push(nick);
-
-        console.log('\t'+nick)
             };
-        console.log('\t'+$scope.users)
-        console.log($scope.users.indexOf(IRC.nick))
             // Remove the client, it will be added again by the 'joined' event.
             $scope.users.splice($scope.users.indexOf(IRC.nick),1); 
             // Update the view.
