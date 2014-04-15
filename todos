@@ -5,6 +5,9 @@ ff-irc :
     des que IRC lui dit un truc qu'il faut pas (nick utilisé, pm à qqn qui n'existe pas...)
     ssl
 
+messages :
+    autoriser des \n
+
 topPages :
     si le client ouvre 2 fois la meme page, il ne doit s'annoncer / se retirer qu'une fois
     comment savoir quand le client ferme brutalement son navigateur ?

@@ -1,43 +1,46 @@
-<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex row'>
-    <div id='resonance_left'>
-        <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
-            <ul class='list'>
-                <li ng-repeat='message in messages track by $index'>
-                      {{message}}
-                </li>
-            </ul>
-            <form ng-submit='submitNewMessage()'>
-                <input type='text' ng-model='newMessage'/>
-            </form>
-        </messages>
-        <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>
-            <ul class='list'>
-                <li ng-repeat='page in topPages track by $index'>
-                      {{page}}
-                </li>
-            </ul>
-        </topPages>
-        <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>
-            <form >
-                <input type='text' ng-model='newNick'></input>
-                <br>
-                <button ng-click='saveSettings();$parent.display=1'>save</button>
-            </form>
-       </settings>
+<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>
+    <div id='border' ng-mousedown='startResize($event)' ng-mousemove='resize($event)' ng-mouseup='stopResize'></div>
+    <div id='main' class='flex row'>
+        <div id='resonance_left' class='bordered'>
+            <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
+                <ul class='list'>
+                    <li ng-repeat='message in messages track by $index'>
+                          {{message}}
+                    </li>
+                </ul>
+                <form ng-submit='submitNewMessage()'>
+                    <input type='text' ng-model='newMessage'/>
+                </form>
+            </messages>
+            <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>
+                <ul class='list'>
+                    <li ng-repeat='page in topPages track by $index'>
+                          {{page}}
+                    </li>
+                </ul>
+            </topPages>
+            <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>
+                <form >
+                    <input type='text' ng-model='newNick'></input>
+                    <br>
+                    <button ng-click='saveSettings();$parent.display=1'>save</button>
+                </form>
+           </settings>
 
-    </div>
-    <div id='resonance_right' class='flex column'>
-        <controls>
-            <button ng-click='display=(display==2)?1:2'>top pages</button>
-            <button ng-click='display=(display==3)?1:3'>settings</button>
-        </controls>
-        <users ng-controller='UsersController'>
-            <ul class='list'>
-                <li ng-repeat='user in users track by $index'>
-                      {{user}}
-                </li>
-            </ul>
-        </users>
+        </div>
+        <div id='resonance_right' class='flex column'>
+            <controls class='bordered'>
+                <button ng-click='display=(display==2)?1:2'>T</button>
+                <button ng-click='display=(display==3)?1:3'>S</button>
+            </controls>
+            <users ng-controller='UsersController' class='bordered'>
+                <ul class='list'>
+                    <li ng-repeat='user in users track by $index'>
+                          {{user}}
+                    </li>
+                </ul>
+            </users>
+        </div>
     </div>
 </resonance>
 
