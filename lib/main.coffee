@@ -63,16 +63,14 @@ tabs.on 'ready', (tab) ->
     # Remove the chan form the list.
     # WARNING
     # tofix : what if the same page is on different tabs ?
-    delete channelsToWorkers[tabToPreviousPage[currentTab].chan] 
-    # Tell the admin-bot about it
-    client.say('Resonance-bot','/leave '+tabToPreviousPage[currentTab].url)
+    delete channelsToWorkers[tabToPreviousPage[currentTab].chan]
   
   # Generate the chan name for the page.
   chan = '#'+sha1(tab.url.host+tab.title).toString() 
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
-  client.say('Resonance-bot','/enter '+tab.url)
+  client.say('Resonance-bot','/enter '+tab.url+' '+chan)
   # Save which page is currently displayed in the current tab.
   tabToPreviousPage[currentTab] = 
     'url' : tab.url
