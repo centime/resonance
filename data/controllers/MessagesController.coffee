@@ -17,10 +17,27 @@ window.app.controller "MessagesController", ($scope) ->
     # Listen for a 'message' event.
     self.port.on "message", (from,to,message) ->
         # The line will be 'User : Message'.
-        text = from+' : '+message
+        entry = 
+            'author' : from
+            'message' : message
+            'display' : true
+        entry.display = not ( from in $scope.$parent.mutedUser )
         # Append it to the list of all messages.
-        $scope.messages.push(text)
+        $scope.messages.push(entry)
         # Update the view.
         $scope.$apply()
         # Scroll down the view.
+        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+
+    $scope.$parent.$on "mute", (e,user) ->
+        for message in $scope.messages
+            if message.author == user
+                message.display = false
+        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+        
+    
+    $scope.$parent.$on "unMute", (e,user) ->
+        for message in $scope.messages
+            if message.author == user
+                message.display = true
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
