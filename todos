@@ -5,10 +5,18 @@ ff-irc :
     des que IRC lui dit un truc qu'il faut pas (nick utilisé, pm à qqn qui n'existe pas...)
     ssl
 
+interface
+    resize (via js)
+
 topPages :
     si le client ouvre 2 fois la meme page, il ne doit s'annoncer / se retirer qu'une fois
     comment savoir quand le client ferme brutalement son navigateur ?
     on('close')
+    interface
+    filtres, categories
+
+workers & chans :
+    2 onglets sur la même page ?
 
 admin-bot :
     doit verifier que la personne est venue dans le cchan avant d'en sortir
@@ -20,6 +28,7 @@ messages :
     refactor on('message') et on('pm')
 
 users :
+    /nick zobizob
     par liste alphabetique
     clickable, avec menu d'options
 
