@@ -123,3 +123,5 @@ tabs.on 'ready', (tab) ->
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !
     storage.appSize = height
+    for own chan, worker in channelsToWorkers
+      worker.port.emit('appSize',height)

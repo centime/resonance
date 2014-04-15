@@ -86,6 +86,7 @@ messages > ul {\
 messages > form {\
     flex: 1 6 20%;\
     order: 2;\
+    max-height: 30px ;\
 }\
 messages input {\
     width: 100% ;\

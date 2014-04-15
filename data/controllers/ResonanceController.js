@@ -3,7 +3,8 @@
   window.app.controller("ResonanceController", function($scope) {
     $scope.display = 1;
     self.port.on('appSize', function(height) {
-      return angular.element('#resonance_container').height(height);
+      angular.element('#resonance_container').height(height);
+      return angular.element('body').css('margin-bottom', height);
     });
     $scope.resizing = false;
     return angular.element('body').on('mousemove', function(e) {
@@ -12,6 +13,7 @@
       if ($scope.resizing) {
         newHeight = window.innerHeight - e.clientY;
         angular.element('#resonance_container').height(newHeight);
+        angular.element('body').css('margin-bottom', newHeight);
         return self.port.emit('newAppSize', newHeight);
       }
     });
