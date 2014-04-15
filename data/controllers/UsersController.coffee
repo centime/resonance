@@ -10,7 +10,7 @@ window.app.controller 'UsersController', ($scope)->
 
     # Listen for the message sent by the server when someone enters the chan
     self.port.on "join",  (channel,nick) ->
-            $scope.users.push(nick) if nick isnt IRC.nick and nick isnt 'Resonance-bot'
+            $scope.users.push(nick) if ((nick isnt IRC.nick) and (nick isnt 'Resonance-bot'))
             $scope.$apply()
 
 

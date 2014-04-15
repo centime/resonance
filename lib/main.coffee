@@ -24,9 +24,11 @@ client.addListener 'message', (from, to, message) ->
 client.addListener 'pm', (from,message) ->
   # If it is a topPages annonce from the bot
   if from == 'Resonance-bot'
-    worker.port.emit('topPages',message) for own chan, worker in channelsToWorkers
+    for own chan, worker of channelsToWorkers
+      worker.port.emit('topPages',message)
   else
-    worker.port.emit('message',message) for own chan, worker in channelsToWorkers
+    for own chan, worker of channelsToWorkers
+      worker.port.emit('message',message)
     
 # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
 client.addListener 'part', (chan,nick) ->
@@ -70,7 +72,7 @@ tabs.on 'ready', (tab) ->
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
-  client.say('Resonance-bot','/enter '+tab.url+' '+chan)
+  client.say('Resonance-bot','enter '+tab.url+' '+chan[1..])
   # Save which page is currently displayed in the current tab.
   tabToPreviousPage[currentTab] = 
     'url' : tab.url
@@ -109,7 +111,7 @@ tabs.on 'ready', (tab) ->
   # Listen for the application asking for the top pages.
   worker.port.on 'getTopPages', () ->
       # Ask the bot for top tapes.
-      client.say('Resonance-bot','/ask')
+      client.say('Resonance-bot','ask')
   
   worker.port.on "newNick", (nick) ->
     #todo : sanitize !
@@ -121,3 +123,9 @@ tabs.on 'ready', (tab) ->
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !
     storage.appSize = height
+
+tabs.on 'close', (tab) ->
+    chan = '#'+sha1(tab.url.host+tab.title).toString()
+    client.part(chan)
+    delete tabToPreviousPage[tab]
+    delete channelsToWorkers[chan]

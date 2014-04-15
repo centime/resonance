@@ -3,7 +3,7 @@
 var irc = require('./irc');
 
 var bot = new irc.Client('chat.freenode.net', 'Resonance-bot', {
-    debug: false,
+    debug: true,
     channels: ['#resonance'],
 });
 
@@ -54,6 +54,34 @@ bot.addListener('names#resonance',function(){
                     delete visits[chansToPages[chan]] ;
                     delete chansToPages[chan] ;
                 }
+        };
+    });
+    bot.addListener('quit',function(nick, reason, channels, message){
+        for (i in channels){
+            var chan = channels[i];
+            if (typeof(chansToPages[chan]) !== 'undefined'){
+                    visitors = visits[chansToPages[chan]] -= 1 ;
+                    console.log('quit : '+visitors+' : '+chansToPages[chan])
+                    if (visitors == 0){
+                        bot.part(chan);
+                        delete visits[chansToPages[chan]] ;
+                        delete chansToPages[chan] ;
+                    };
+            };
+        };
+    });
+    bot.addListener('kill',function(nick, reason, channels, message){
+        for (i in channels){
+            var chan = channels[i];
+            if (typeof(chansToPages[chan]) !== 'undefined'){
+                    visitors = visits[chansToPages[chan]] -= 1 ;
+                    console.log('kill : '+visitors+' : '+chansToPages[chan])
+                    if (visitors == 0){
+                        bot.part(chan);
+                        delete visits[chansToPages[chan]] ;
+                        delete chansToPages[chan] ;
+                    };
+            };
         };
     });
     bot.addListener('join',function(chan,nick){

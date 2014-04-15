@@ -86,6 +86,7 @@ messages > ul {\
 messages > form {\
     flex: 1 6 20%;\
     order: 2;\
+    max-height: 30px ;\
 }\
 messages input {\
     width: 100% ;\
@@ -136,11 +137,11 @@ users{\
                     <button ng-click='saveSettings();$parent.display=1'>save</button>\
                 </form>\
            </settings>\
-\
         </div>\
         <div id='resonance_right' class='flex column'>\
             <controls class='bordered'>\
                 <button ng-click='display=(display==2)?1:2'>T</button>\
+                <button ng-click='display=(display==4)?1:4'>P</button>\
                 <button ng-click='display=(display==3)?1:3'>S</button>\
             </controls>\
             <users ng-controller='UsersController' class='bordered'>\

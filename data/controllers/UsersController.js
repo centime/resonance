@@ -5,19 +5,21 @@
     self.port.on("names", function(channel, nicks) {
       var nick;
 
-      $scope.users = (function() {
+      $scope.users = ((function() {
         var _results;
 
-        _results = [];
-        for (nick in nicks) {
-          _results.push(nick);
+        if (nick !== 'Resonance-bot') {
+          _results = [];
+          for (nick in nicks) {
+            _results.push(nick);
+          }
+          return _results;
         }
-        return _results;
-      })();
+      })());
       return $scope.$apply();
     });
     self.port.on("join", function(channel, nick) {
-      if (nick !== IRC.nick) {
+      if ((nick !== IRC.nick) && (nick !== 'Resonance-bot')) {
         $scope.users.push(nick);
       }
       return $scope.$apply();
