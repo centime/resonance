@@ -99,6 +99,7 @@ tabs.on 'ready', (tab) ->
   channelsToWorkers[chan] = worker  
 
   # Send the application some init values.
+  worker.port.emit('appSize',storage.appSize ? '100')
   worker.port.emit('chan',chan)
   worker.port.emit('nick',currentNick)
   # Listen for the application telling the client to say something.
@@ -119,3 +120,6 @@ tabs.on 'ready', (tab) ->
     #todo : nickserv alerts
     worker.port.emit('message','Resonance',currentNick,'Your new nick will be saved and available as soon as you restart firefox.')
   
+  worker.port.on "newAppSize", (height) ->
+    #todo : sanitize !
+    storage.appSize = height

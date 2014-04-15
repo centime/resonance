@@ -6,3 +6,22 @@ window.app.controller "ResonanceController", ($scope) ->
     # Initialized with messages.
     $scope.display = 1
 
+    self.port.on 'appSize',(height) ->
+        # Set the size of the app.
+        angular.element('#resonance_container').height height
+
+    # Resizing feature.
+    $scope.resizing = false
+    # This event is binded to body, but I can"t find the way to unbind it !
+    # .off raises an angularjs error, and this resizing var is the only workaround I found.
+    angular.element('body').on 'mousemove', (e) ->
+        # If the user is currentl resizing.
+        if $scope.resizing
+            # Get the desired height from where is the mouse on the screen.
+            newHeight = window.innerHeight-e.clientY
+            # Update the DOM element.
+            angular.element('#resonance_container').height newHeight
+            # Tell the background script so it can save the value.
+            self.port.emit('newAppSize',newHeight)
+    
+
