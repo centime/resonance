@@ -115,7 +115,7 @@ tabs.on 'ready', (tab) ->
   worker.port.on 'say', (to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
-      worker.port.emit('message',currentNick,to,text)
+      worker.port.emit('message',currentNick,to,message)
 
   worker.port.on 'pm', (nick, message) ->
     client.say(nick,message)

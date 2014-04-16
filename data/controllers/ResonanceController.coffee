@@ -8,6 +8,8 @@ window.app.controller "ResonanceController", ($scope) ->
 
     $scope.mutedUser = []
 
+    # List of users with which a private conversation has been started.
+    $scope.pmUsers = ['Resonance-bot']
     # Which user we're displaying in the private messages panel.
     $scope.currentPmUser = 'Resonance-bot'
 
@@ -30,3 +32,6 @@ window.app.controller "ResonanceController", ($scope) ->
             self.port.emit('newAppSize',newHeight)
     
 
+    $scope.selectPmUser = (user) ->
+        $scope.currentPmUser = user
+        $scope.$broadcast('pmUser',user)

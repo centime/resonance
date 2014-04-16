@@ -21,13 +21,14 @@ window.app.controller "PrivateMessagesController", ($scope) ->
                                 'display' : true
                             # Append it to the list of all messages.
                             $scope.messages.push(entry)
-                            # Update the view.
-                            $scope.$apply()
                             # Scroll down the view.
-                            elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+                            # WARNING : raises an exception, but works. ?!?
+                            # elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
 
     # Listen for a 'pm' event :when the client receives a pm.
     self.port.on "pm", (from,message) ->
+        if not ( from in $scope.$parent.pmUsers )
+            $scope.$parent.pmUsers.push(from)
         # The line will be 'User : Message'.
         entry = 
             'author' : from

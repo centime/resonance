@@ -30,3 +30,9 @@ window.app.controller 'UsersController', ($scope)->
             $scope.$parent.mutedUser.splice($scope.$parent.mutedUser.indexOf(user),1)
             $scope.$parent.$broadcast('unMute',user)
 
+    # Add the user to the list of users with which a private conversation has been started.
+    $scope.startPm = (user) ->
+            if not (user in $scope.$parent.pmUsers)
+                $scope.$parent.pmUsers.push(user)
+            $scope.$parent.selectPmUser(user)
+            $scope.$parent.display = 4
