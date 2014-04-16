@@ -112,16 +112,19 @@ tabs.on 'ready', (tab) ->
   worker.port.emit('chan',chan)
   worker.port.emit('nick',currentNick)
   # Listen for the application telling the client to say something.
-  worker.port.on 'say', (to, text) ->
-      client.say(to,text)
+  worker.port.on 'say', (to, message) ->
+      client.say(to,message)
       # Tell back the application that the message has been said.
       worker.port.emit('message',currentNick,to,text)
-  
+
+  worker.port.on 'pm', (nick, message) ->
+    client.say(nick,message)
+
   # Listen for the application asking for the top pages.
   worker.port.on 'getTopPages', () ->
-      # Ask the bot for top tapes.
-      client.say('Resonance-bot','ask')
-  
+    # Ask the bot for top tapes.
+    client.say('Resonance-bot','ask')
+
   worker.port.on "newNick", (nick) ->
     #todo : sanitize !
     storage.nick = nick 

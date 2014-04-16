@@ -4,8 +4,8 @@
         <div id='resonance_left' class='bordered'>
             <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
-                          {{message}}
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display'>
+                          {{message.author}}: {{message.message}}
                     </li>
                 </ul>
                 <form ng-submit='submitNewMessage()'>
@@ -28,8 +28,8 @@
            </settings>
            <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
-                          {{message}}
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display'>
+                          {{message.author}}: {{message.message}}
                     </li>
                 </ul>
                 <form ng-submit='submitNewMessage()'>
@@ -46,7 +46,9 @@
             <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>
                 <ul class='list'>
                     <li ng-repeat='user in users track by $index'>
-                          {{user}}
+                        {{user}}
+                        <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
+                        <button ng-click='unMute(user)' ng-show='isMute(user)'>unMute</button>
                     </li>
                 </ul>
             </users>
@@ -54,6 +56,7 @@
                 <ul class='list'>
                     <li ng-repeat='user in users track by $index'>
                           {{user}}
+                        <button ng-click='selectPmUser(user)' ng-hide='user == $parent.currentPmUser'>select</button>
                     </li>
                 </ul>
             </privateusers>

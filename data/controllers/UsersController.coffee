@@ -19,3 +19,14 @@ window.app.controller 'UsersController', ($scope)->
             $scope.users = ( user for user in $scope.users when user isnt nick )
             $scope.$apply()
 
+    $scope.mute = (user) ->
+            $scope.$parent.mutedUser.push(user) #Warning unexpected multipush possible.
+            $scope.$parent.$broadcast('mute',user)
+                        
+    $scope.isMute = (user) ->
+            user in $scope.$parent.mutedUser
+    
+    $scope.unMute = (user) ->
+            $scope.$parent.mutedUser.splice($scope.$parent.mutedUser.indexOf(user),1)
+            $scope.$parent.$broadcast('unMute',user)
+
