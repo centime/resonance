@@ -22,13 +22,20 @@ client.addListener 'message', (from, to, message) ->
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 client.addListener 'pm', (from,message) ->
-  # If it is a topPages annonce from the bot
-  if from == 'Resonance-bot'
+  # If it is a announce from the bot.
+  if from == 'Resonance-bot' and message.match(/^announce /)
+    message = message.replace('announce ','')
     for own chan, worker of channelsToWorkers
-      worker.port.emit('topPages',message)
+      worker.port.emit('announce',message)
+  # If it is a topPages from the bot.
+  else if from == 'Resonance-bot' and message.match(/^topPages /)
+    message = message.replace('topPages ','')
+    for own chan, worker of channelsToWorkers
+      worker.port.emit('topPages', message)
+  # If it is a regular pm.
   else
     for own chan, worker of channelsToWorkers
-      worker.port.emit('message',message)
+      worker.port.emit('pm', from, message)
     
 # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
 client.addListener 'part', (chan,nick) ->
@@ -72,7 +79,7 @@ tabs.on 'ready', (tab) ->
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
-  client.say('Resonance-bot','enter '+tab.url+' '+chan[1..])
+  client.say('Resonance-bot','enter '+tab.url+' '+chan)
   # Save which page is currently displayed in the current tab.
   tabToPreviousPage[currentTab] = 
     'url' : tab.url
@@ -92,6 +99,8 @@ tabs.on 'ready', (tab) ->
           data.url("controllers/UsersController.js"),
           data.url("controllers/TopPagesController.js"),
           data.url("controllers/SettingsController.js"),
+          data.url("controllers/PrivateMessagesController.js"),
+          data.url("controllers/PrivateUsersController.js"),
       ]})
   # Save which worker is in charge for wich channel.
   # todo : clean the list when leaving chan

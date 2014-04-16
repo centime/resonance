@@ -40,7 +40,7 @@ bot.addListener('pm', function(nick, message) {
         var sortable = [];
         for (var page in visits)
             sortable.push([page, visits[page]]);
-        bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
+        bot.say(nick,'topPages '+sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
         
     }else console.log('[[pm] '+date+' ] '+message)
 });
