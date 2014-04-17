@@ -46,10 +46,12 @@
             <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>
                 <ul class='list'>
                     <li ng-repeat='user in users track by $index'>
-                        {{user}}
-                        <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
-                        <button ng-click='unMute(user)' ng-show='isMute(user)'>unMute</button>
-                        <button ng-click='startPm(user)'>pm</button>
+                        <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
+                        <actions ng-show='displayActions[user]'>
+                            <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
+                            <button ng-click='unMute(user)' ng-hide='!isMute(user)'>unMute</button>
+                            <button ng-click='startPm(user)' ng-hide='isClient(user)'>private message</button>
+                        </actions>
                     </li>
                 </ul>
             </users>

@@ -7,17 +7,17 @@
     self.port.on("names", function(channel, nicks) {
       var nick;
 
-      $scope.users = ((function() {
+      $scope.users = (function() {
         var _results;
 
-        if (nick !== 'Resonance-bot') {
-          _results = [];
-          for (nick in nicks) {
+        _results = [];
+        for (nick in nicks) {
+          if (nick !== 'Resonance-bot') {
             _results.push(nick);
           }
-          return _results;
         }
-      })());
+        return _results;
+      })();
       return $scope.$apply();
     });
     self.port.on("join", function(channel, nick) {
@@ -44,8 +44,9 @@
       })();
       return $scope.$apply();
     });
+    $scope.displayActions = {};
     $scope.isMute = function(user) {
-      return __indexOf.call($scope.$parent.mutedUser, user) >= 0;
+      return __indexOf.call($scope.$parent.mutedUsers, user) >= 0;
     };
     $scope.mute = function(user) {
       $scope.$parent.mutedUsers.push(user);
@@ -57,12 +58,12 @@
       $scope.$parent.$broadcast('unMute', user);
       return self.port.emit('updateMutedUsers', $scope.$parent.mutedUsers);
     };
-    $scope.isMute = function(user) {
-      return $scope.$parent.mutedUsers.indexOf(user) >= 0;
-    };
-    return $scope.startPm = function(user) {
+    $scope.startPm = function(user) {
       self.port.emit('startPmUser', user);
       return $scope.$parent.display = 4;
+    };
+    return $scope.isClient = function(user) {
+      return user === IRC.nick;
     };
   });
 

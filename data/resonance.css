@@ -80,6 +80,10 @@ users{
     flex: 1 6 80%;
     order: 2;
 }
+users li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
 privatemessages > ul {
     flex: 1 6 80%;
     order: 1;
@@ -96,6 +100,10 @@ privatemessages input {
 privateusers{
     flex: 1 6 80%;
     order: 3;
+}
+privateusers li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
 }
 .list{
     overflow: auto;
