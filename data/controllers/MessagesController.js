@@ -19,6 +19,7 @@
           _results.push({
             'author': message.author,
             'message': message.message,
+            'old': message.old,
             'display': !(_ref = message.author, __indexOf.call($scope.$parent.mutedUsers, _ref) >= 0)
           });
         }
@@ -49,6 +50,11 @@
         scrollTop: elmt.prop('scrollHeight')
       }, 1000);
     });
+    $scope.oldMessage = function(message) {
+      return {
+        'old_message': message.old
+      };
+    };
     $scope.$parent.$on("mute", function(e, user) {
       var message, _i, _len, _ref;
 

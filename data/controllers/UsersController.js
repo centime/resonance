@@ -21,8 +21,8 @@
       return $scope.$apply();
     });
     self.port.on("join", function(channel, nick) {
-      if (((nick !== IRC.nick) && (nick !== 'Resonance-bot')).sort()) {
-        $scope.users.push(nick);
+      if ((nick !== IRC.nick) && (nick !== 'Resonance-bot')) {
+        $scope.users.push(nick).sort();
       }
       return $scope.$apply();
     });
@@ -60,7 +60,8 @@
     };
     $scope.startPm = function(user) {
       self.port.emit('startPmUser', user);
-      return $scope.$parent.display = 4;
+      $scope.$parent.display = 4;
+      return $scope.displayActions[user] = false;
     };
     return $scope.isClient = function(user) {
       return user === IRC.nick;

@@ -13,3 +13,7 @@ window.app.controller 'PrivateUsersController', ($scope)->
     self.port.on "pmUsers", (users) ->
         $scope.pmUsers = users
         $scope.$apply()
+
+    # Set the css class for the selected user.
+    $scope.selected = (user)->
+        { 'selected': user == $scope.currentPmUser }

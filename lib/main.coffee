@@ -11,8 +11,16 @@ irc = require('./bundle')
 # Histories
 storage.messagesHistory ?= {}
 storage.privateMessagesHistory ?= {}
-# storage.messagesHistory = {}
-# storage.privateMessagesHistory = {}
+
+# Set the 'old' flag for the messages in histories
+# Todo : no need to set it all at once, we could do it when served.
+for chan,list of storage.messagesHistory
+  for m in list
+    m.old = 'true'
+for user,list of storage.privateMessagesHistory
+  for m in list
+    m.old = 'true'
+
 pmUsers = ['Resonance-bot']
 currentPmUser = 'Resonance-bot'
 mutedUsers = storage.mutedUsers ? []
@@ -28,6 +36,7 @@ client.addListener 'message', (from, to, message) ->
   if to != currentNick
     # It goes to the corresponding chan / worker.
     channelsToWorkers[to].port.emit('message',from,to,message)
+    # Save in history.
     storage.messagesHistory[to] ?= []
     storage.messagesHistory[to].push( {'author':from, 'message': message } )
 
@@ -46,6 +55,7 @@ client.addListener 'pm', (from,message) ->
     if not( from in pmUsers)
         pmUsers.push(from)
         emitToAllWorkers('pmUsers', pmUsers)
+    # Save in history.
     storage.privateMessagesHistory[from] ?= []
     storage.privateMessagesHistory[from].push( {'author':from, 'message':message} )
     if from == currentPmUser
@@ -145,9 +155,13 @@ tabs.on 'ready', (tab) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
       worker.port.emit('message',currentNick,to,message)
+      # Save in history.
+      storage.messagesHistory[to] ?= []
+      storage.messagesHistory[to].push( {'author':currentNick, 'message': message } )
 
   worker.port.on 'privateMessage', (user, message) ->
     client.say(user,message)
+    # Save in history.
     storage.privateMessagesHistory[user] ?= []
     storage.privateMessagesHistory[user].push( {'author':currentNick, 'message':message} )
     emitToAllWorkers('privateMessage', currentNick, user, message)
@@ -162,6 +176,7 @@ tabs.on 'ready', (tab) ->
     if not( user in pmUsers)
       pmUsers.push(user)
       emitToAllWorkers('pmUsers', pmUsers)
+    # Save in history.
     storage.privateMessagesHistory[user] ?= []
     emitToAllWorkers('pmUser', currentPmUser, storage.privateMessagesHistory[user])
 

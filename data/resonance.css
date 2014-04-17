@@ -68,6 +68,9 @@ messages input {
     width: 100% ;
     height: 100% ;
 }
+.old_message {
+    color : gray;
+}
 controls{
     flex: 1 6 30px;
     order: 1;
@@ -104,6 +107,9 @@ privateusers{
 privateusers li{
     border-bottom: 1px solid;
     border-bottom-color: gray;
+}
+.selected {
+    background: white; 
 }
 .list{
     overflow: auto;

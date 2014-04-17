@@ -10,7 +10,7 @@ window.app.controller 'UsersController', ($scope)->
 
     # Listen for the message sent by the server when someone enters the chan
     self.port.on "join",  (channel,nick) ->
-        $scope.users.push(nick) if ((nick isnt IRC.nick) and (nick isnt 'Resonance-bot')).sort()
+        $scope.users.push(nick).sort() if ((nick isnt IRC.nick) and (nick isnt 'Resonance-bot'))
         $scope.$apply()
 
 
@@ -43,6 +43,7 @@ window.app.controller 'UsersController', ($scope)->
     $scope.startPm = (user) ->
         self.port.emit( 'startPmUser', user)
         $scope.$parent.display = 4
+        $scope.displayActions[user] = false
 
     $scope.isClient = (user) ->
         user == IRC.nick

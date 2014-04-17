@@ -4,7 +4,7 @@
         <div id='resonance_left' class='bordered'>
             <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index' ng-if='message.display'>
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='oldMessage(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
                 </ul>
@@ -28,7 +28,7 @@
            </settings>
            <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
+                    <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
                 </ul>
@@ -58,8 +58,7 @@
             <privateusers ng-controller='PrivateUsersController' ng-show='display==4' class='bordered'>
                 <ul class='list'>
                     <li ng-repeat='user in pmUsers track by $index'>
-                          {{user}}
-                        <button ng-click='selectPmUser(user)' ng-hide='user == currentPmUser'>select</button>
+                        <div ng-click='selectPmUser(user)' ng-class='selected(user)'>{{user}}</div>
                     </li>
                 </ul>
             </privateusers>

@@ -6,7 +6,7 @@ window.app.controller "MessagesController", ($scope) ->
 
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
-        $scope.messages = ({ 'author':message.author, 'message':message.message, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
+        $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
 
     # Select the DOM element for messages.
     elmt = angular.element('messages > ul') 
@@ -33,6 +33,11 @@ window.app.controller "MessagesController", ($scope) ->
         $scope.$apply()
         # Scroll down the view.
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+
+    # Set the css class for old messages (history).
+    $scope.oldMessage = (message) ->
+        {'old_message': message.old}
+
     # Undisplay the messages of the muted user
     $scope.$parent.$on "mute", (e,user) ->
         for message in $scope.messages

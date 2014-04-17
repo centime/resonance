@@ -33,3 +33,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
         $scope.$apply()
         # Scroll down the view.
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+
+    # Set the css class for old messages (history).
+    $scope.oldMessage = (message) ->
+        {'old_message': message.old}
