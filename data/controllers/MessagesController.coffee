@@ -26,20 +26,21 @@ window.app.controller "MessagesController", ($scope) ->
             'author' : from
             'message' : message
             'display' : not ( from in $scope.$parent.mutedUser )
+
         # Append it to the list of all messages.
         $scope.messages.push(entry)
         # Update the view.
         $scope.$apply()
         # Scroll down the view.
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
-
+    # Undisplay the messages of the muted user
     $scope.$parent.$on "mute", (e,user) ->
         for message in $scope.messages
             if message.author == user
                 message.display = false
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
         
-    
+    # Display the messages of the muted user
     $scope.$parent.$on "unMute", (e,user) ->
         for message in $scope.messages
             if message.author == user
