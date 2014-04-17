@@ -7,7 +7,7 @@
     self.port.on("names", function(channel, nicks) {
       var nick;
 
-      $scope.users = (function() {
+      $scope.users = ((function() {
         var _results;
 
         _results = [];
@@ -17,11 +17,11 @@
           }
         }
         return _results;
-      })();
+      })()).sort();
       return $scope.$apply();
     });
     self.port.on("join", function(channel, nick) {
-      if ((nick !== IRC.nick) && (nick !== 'Resonance-bot')) {
+      if (((nick !== IRC.nick) && (nick !== 'Resonance-bot')).sort()) {
         $scope.users.push(nick);
       }
       return $scope.$apply();
@@ -29,7 +29,7 @@
     self.port.on("part", function(channel, nick) {
       var user;
 
-      $scope.users = (function() {
+      $scope.users = ((function() {
         var _i, _len, _ref, _results;
 
         _ref = $scope.users;
@@ -41,7 +41,7 @@
           }
         }
         return _results;
-      })();
+      })()).sort();
       return $scope.$apply();
     });
     $scope.displayActions = {};
