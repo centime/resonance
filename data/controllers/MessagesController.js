@@ -19,7 +19,7 @@
           _results.push({
             'author': message.author,
             'message': message.message,
-            'display': !(_ref = message.author, __indexOf.call($scope.$parent.mutedUser, _ref) >= 0)
+            'display': !(_ref = message.author, __indexOf.call($scope.$parent.mutedUsers, _ref) >= 0)
           });
         }
         return _results;
@@ -41,7 +41,7 @@
       entry = {
         'author': from,
         'message': message,
-        'display': !(__indexOf.call($scope.$parent.mutedUser, from) >= 0)
+        'display': !(__indexOf.call($scope.$parent.mutedUsers, from) >= 0)
       };
       $scope.messages.push(entry);
       $scope.$apply();

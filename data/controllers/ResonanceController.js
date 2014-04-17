@@ -2,7 +2,10 @@
 (function() {
   window.app.controller("ResonanceController", function($scope) {
     $scope.display = 1;
-    $scope.mutedUser = [];
+    $scope.mutedUsers = [];
+    self.port.on('requestMutedUsers', function(n) {
+      return $scope.mutedUsers = n;
+    });
     self.port.on('appSize', function(height) {
       return angular.element('#resonance_container').height(height);
     });

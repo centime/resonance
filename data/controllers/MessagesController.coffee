@@ -6,7 +6,7 @@ window.app.controller "MessagesController", ($scope) ->
 
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
-        $scope.messages = ({ 'author':message.author, 'message':message.message, 'display':not(message.author in $scope.$parent.mutedUser)} for message in messagesHistory)
+        $scope.messages = ({ 'author':message.author, 'message':message.message, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
 
     # Select the DOM element for messages.
     elmt = angular.element('messages > ul') 
@@ -25,7 +25,7 @@ window.app.controller "MessagesController", ($scope) ->
         entry = 
             'author' : from
             'message' : message
-            'display' : not ( from in $scope.$parent.mutedUser )
+            'display' : not ( from in $scope.$parent.mutedUsers )
 
         # Append it to the list of all messages.
         $scope.messages.push(entry)

@@ -44,16 +44,21 @@
       })();
       return $scope.$apply();
     });
-    $scope.mute = function(user) {
-      $scope.$parent.mutedUser.push(user);
-      return $scope.$parent.$broadcast('mute', user);
-    };
     $scope.isMute = function(user) {
       return __indexOf.call($scope.$parent.mutedUser, user) >= 0;
     };
+    $scope.mute = function(user) {
+      $scope.$parent.mutedUsers.push(user);
+      $scope.$parent.$broadcast('mute', user);
+      return self.port.emit('updateMutedUsers', $scope.$parent.mutedUsers);
+    };
     $scope.unMute = function(user) {
-      $scope.$parent.mutedUser.splice($scope.$parent.mutedUser.indexOf(user), 1);
-      return $scope.$parent.$broadcast('unMute', user);
+      $scope.$parent.mutedUsers.splice($scope.$parent.mutedUsers.indexOf(user), 1);
+      $scope.$parent.$broadcast('unMute', user);
+      return self.port.emit('updateMutedUsers', $scope.$parent.mutedUsers);
+    };
+    $scope.isMute = function(user) {
+      return $scope.$parent.mutedUsers.indexOf(user) >= 0;
     };
     return $scope.startPm = function(user) {
       self.port.emit('startPmUser', user);

@@ -20,6 +20,7 @@ window.app.controller "ResonanceController", ($scope) ->
     $scope.resizing = false
     # This event is binded to body, but I can"t find the way to unbind it !
     # .off raises an angularjs error, and this resizing var is the only workaround I found.
+    # WARNING todo : performance cost of a test on mousemove ?
     angular.element('body').on 'mousemove', (e) ->
         # If the user is currentl resizing.
         if $scope.resizing
