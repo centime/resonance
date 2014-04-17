@@ -3,14 +3,14 @@
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   window.app.controller("MessagesController", function($scope) {
-    var elmt;
+    var elmt, scrollDown;
 
     $scope.messages = [];
     $scope.newMessage = '';
     self.port.on("messagesHistory", function(messagesHistory) {
       var message;
 
-      return $scope.messages = (function() {
+      $scope.messages = (function() {
         var _i, _len, _ref, _results;
 
         _results = [];
@@ -25,8 +25,8 @@
         }
         return _results;
       })();
+      return scrollDown();
     });
-    elmt = angular.element('messages > ul');
     $scope.submitNewMessage = function() {
       var msg;
 
@@ -46,9 +46,7 @@
       };
       $scope.messages.push(entry);
       $scope.$apply();
-      return elmt.animate({
-        scrollTop: elmt.prop('scrollHeight')
-      }, 1000);
+      return scrollDown();
     });
     $scope.oldMessage = function(message) {
       return {
@@ -65,9 +63,7 @@
           message.display = false;
         }
       }
-      return elmt.animate({
-        scrollTop: elmt.prop('scrollHeight')
-      }, 1000);
+      return scrollDown();
     });
     $scope.$parent.$on("unMute", function(e, user) {
       var message, _i, _len, _ref;
@@ -79,17 +75,22 @@
           message.display = true;
         }
       }
-      return elmt.animate({
-        scrollTop: elmt.prop('scrollHeight')
-      }, 1000);
+      return scrollDown();
     });
-    return self.port.on('error', function(error) {
+    self.port.on('error', function(error) {
       $scope.messages.push({
         'author': 'Error',
         'message': error
       });
-      return $scope.$apply();
+      $scope.$apply();
+      return scrollDown();
     });
+    elmt = angular.element('messages > ul');
+    return scrollDown = function() {
+      return elmt.animate({
+        scrollTop: elmt.prop('scrollHeight')
+      }, 1000);
+    };
   });
 
 }).call(this);

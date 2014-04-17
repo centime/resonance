@@ -3,14 +3,12 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     $scope.messages = []
     $scope.newMessage = ''
     currentPmUser = 'Resonance-bot'
-    #self.port.emit('requestPrivateMessagesHistory',currentPmUser)
 
     self.port.on "pmUser", (user, history) ->
         currentPmUser = user
         $scope.messages = history
+        scrollDown()
     
-    # Select the DOM element for messages.
-    elmt = angular.element('privatemessages > ul') 
     # Send a new message.
     $scope.submitNewMessage =  () ->
                             msg = $scope.newMessage 
@@ -30,8 +28,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
         $scope.messages.push(entry)
         # Update the view.
         $scope.$apply()
-        # Scroll down the view.
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+        scrollDown()
 
     # Set the css class for old messages (history).
     $scope.oldMessage = (message) ->
@@ -44,3 +41,10 @@ window.app.controller "PrivateMessagesController", ($scope) ->
         $scope.messages.push({'author':'Error','message':error})
         # Update the view.
         $scope.$apply()
+        scrollDown()
+
+
+    # Scroll down the messages list.
+    elmt = angular.element('privatemessages > ul') 
+    scrollDown = ()  ->
+        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)

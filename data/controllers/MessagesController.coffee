@@ -7,6 +7,7 @@ window.app.controller "MessagesController", ($scope) ->
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
         $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
+        scrollDown()
 
     # Send a new message.
     $scope.submitNewMessage =  () ->
@@ -29,9 +30,8 @@ window.app.controller "MessagesController", ($scope) ->
         $scope.messages.push(entry)
         # Update the view.
         $scope.$apply()
-        # Scroll down the view.
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
-
+        scrollDown()
+        
     # Set the css class for old messages (history).
     $scope.oldMessage = (message) ->
         {'old_message': message.old}
@@ -41,14 +41,14 @@ window.app.controller "MessagesController", ($scope) ->
         for message in $scope.messages
             if message.author == user
                 message.display = false
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+        scrollDown()
         
     # Display the messages of the muted user
     $scope.$parent.$on "unMute", (e,user) ->
         for message in $scope.messages
             if message.author == user
                 message.display = true
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+        scrollDown()
 
 
     # Catch errors.
@@ -58,4 +58,10 @@ window.app.controller "MessagesController", ($scope) ->
         $scope.messages.push({'author':'Error','message':error})
         # Update the view.
         $scope.$apply()
+        scrollDown()
 
+
+    # Scroll down the messages list.
+    elmt = angular.element('messages > ul') 
+    scrollDown = ()  ->
+        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
