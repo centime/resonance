@@ -19,7 +19,7 @@
         return self.port.emit('newAppSize', newHeight);
       }
     });
-    $scope.privateActive = true;
+    $scope.privateActive = false;
     return $scope.active = function() {
       return {
         'active': $scope.privateActive

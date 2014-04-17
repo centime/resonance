@@ -32,8 +32,7 @@ window.app.controller "ResonanceController", ($scope) ->
             self.port.emit('newAppSize',newHeight)
 
     # Notification when a private message has been received and not yet been readen.
-    $scope.privateActive = true
-
+    # updated by PrivateUsersController.
+    $scope.privateActive = false
     $scope.active = () ->
         {'active':$scope.privateActive}
-

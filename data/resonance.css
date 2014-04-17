@@ -114,7 +114,7 @@ privateusers li{
 .old_message {
     color : gray;
 }
-@keyframes blink { 50% { background-color: black; }  }
+@keyframes blink { 50% { background-color: gray; }  }
 .active{
     animation: blink .5s step-end infinite alternate; 
 }

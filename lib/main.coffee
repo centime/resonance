@@ -9,8 +9,10 @@ sha1 = require('./sha1.js').sha1
 irc = require('./bundle') 
 
 # Histories
-storage.messagesHistory ?= {}
-storage.privateMessagesHistory ?= {}
+# storage.messagesHistory ?= {}
+# storage.privateMessagesHistory ?= {}
+storage.messagesHistory = {}
+storage.privateMessagesHistory = {}
 
 # Set the 'old' flag for the messages in histories
 # Todo : no need to set it all at once, we could do it when served.
@@ -58,6 +60,7 @@ client.addListener 'pm', (from,message) ->
     # Save in history.
     storage.privateMessagesHistory[from] ?= []
     storage.privateMessagesHistory[from].push( {'author':from, 'message':message} )
+    emitToAllWorkers 'newPM', from
     if from == currentPmUser
       emitToAllWorkers('privateMessage', from, currentNick, message)
      
