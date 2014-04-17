@@ -41,7 +41,7 @@ client.addListener 'message', (from, to, message) ->
   # If it is not a private message.
   if to != currentNick
     # It goes to the corresponding chan / worker.
-    channelsToWorkers[to].port.emit('message',from,to,message)
+    channelsToWorkers[to].emit('message',from,to,message)
     # Save in history.
     storage.messagesHistory[to] ?= []
     storage.messagesHistory[to].push( {'author':from, 'message': message } )
@@ -70,7 +70,7 @@ client.addListener 'pm', (from,message) ->
 # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
 client.addListener 'part', (chan,nick) ->
     if nick isnt currentNick
-      channelsToWorkers[chan].port.emit('part',chan,nick)
+      channelsToWorkers[chan].emit('part',chan,nick)
 
 # Used to simply pass events from the client to the app.
 # tofix : should be properly implemented using arguments.
@@ -79,18 +79,33 @@ passEvent = (eventName) ->
   client.addListener eventName, (chan,a,b,c,d,e,f,g,h,i) ->
     # channelsToWorkers[chan] may have been deleted if the client has left the chan
     # todo : How to remove listeners once the chan has been left ?
-    channelsToWorkers[chan].port.emit(eventName,chan,a,b,c,d,e,f,g,h,i) if channelsToWorkers[chan]?
+    channelsToWorkers[chan].emit(eventName,chan,a,b,c,d,e,f,g,h,i) if channelsToWorkers[chan]?
 
 passEvent('names')
 passEvent('join')
 
 emitToAllWorkers = (eventName, a,b,c,d,e,f,g,h,i) ->
   for own chan, worker of channelsToWorkers
-        worker.port.emit(eventName, a,b,c,d,e,f,g,h,i)
+        worker.emit(eventName, a,b,c,d,e,f,g,h,i)
 
 # Need to find a better way for both of theses var...
-tabToPreviousPage = [] 
+tabToPreviousPage = []
 channelsToWorkers = {}
+class Channel
+  chan
+  workers = []
+  constructor: (@chan,worker) ->
+    workers.push(worker)
+  addWorker: (worker) ->
+    workers.push(worker)
+  removeWorker: (worker) ->
+    workers = (w for w in workers when w isnt worker)
+  # todo : use arguments, bitch !
+  emit: (eventName, a,b,c,d,e,f,g,h,i) ->
+    for w in workers
+      w.port.emit(eventName,a,b,c,d,e,f,g,h,i)
+  hasWorkers: () ->
+    workers.length > 0
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->
   # Find which tab is active.
@@ -102,19 +117,12 @@ tabs.on 'ready', (tab) ->
   # Part from the previous chan.
   if tabToPreviousPage[currentTab]?
     # Leave the chan.
-    client.part(tabToPreviousPage[currentTab].chan)
-    # Remove the chan form the list.
-    # WARNING
-    # tofix : what if the same page is on different tabs ?
-    delete channelsToWorkers[tabToPreviousPage[currentTab].chan]
+    if not channelsToWorkers[chan].hasWorkers()
+      client.part(tabToPreviousPage[currentTab].chan)
+      delete channelsToWorkers[tabToPreviousPage[currentTab].chan]
   
   # Generate the chan name for the page.
   chan = '#'+sha1(tab.url.host+tab.title).toString() 
-  # Looking after a bug I saw some time, where this chan was joined I don't know why.
-  if chan == '#84642551eb26c07c7895b86e3fb0b7d70fd6ff97'
-    console.log('########################################################\n error ?')
-  console.log(tab.url)
-  console.log(tab.title)
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
@@ -144,7 +152,9 @@ tabs.on 'ready', (tab) ->
   # Save which worker is in charge for wich channel.
   # todo : clean the list when leaving chan
   # tofix : 2 onglets avec la même page ?
-  channelsToWorkers[chan] = worker  
+  if channelsToWorkers[chan]?
+    channelsToWorkers[chan].addWorker(worker)
+  else channelsToWorkers[chan] = new Channel(chan, worker)
 
   # Send the application some init values.
   worker.port.emit('appSize',storage.appSize ? '100')
@@ -202,7 +212,8 @@ tabs.on 'ready', (tab) ->
     storage.appSize = height
 
 tabs.on 'close', (tab) ->
-    chan = '#'+sha1(tab.url.host+tab.title).toString()
-    client.part(chan)
     delete tabToPreviousPage[tab]
-    delete channelsToWorkers[chan]
+    if not channelsToWorkers[chan].hasWorkers()
+      chan = '#'+sha1(tab.url.host+tab.title).toString()
+      client.part(chan)
+      delete channelsToWorkers[chan]
