@@ -30,3 +30,10 @@ window.app.controller "ResonanceController", ($scope) ->
             angular.element('#resonance_container').height newHeight
             # Tell the background script so it can save the value.
             self.port.emit('newAppSize',newHeight)
+
+    # Notification when a private message has been received and not yet been readen.
+    $scope.privateActive = true
+
+    $scope.active = () ->
+        {'active':$scope.privateActive}
+
