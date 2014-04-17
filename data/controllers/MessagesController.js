@@ -22,7 +22,7 @@
         'message': message,
         'display': true
       };
-      entry.display = !(__indexOf.call($scope.$parent.mutedUser, from) >= 0);
+      entry.display = !(__indexOf.call($scope.$parent.mutedUsers, from) >= 0);
       $scope.messages.push(entry);
       $scope.$apply();
       return elmt.animate({

@@ -8,6 +8,7 @@ storage = require("sdk/simple-storage").storage
 sha1 = require('./sha1.js').sha1
 irc = require('./bundle') 
 
+mutedUsers = storage.mutedUsers ? [] 
 # IRC client init
 currentNick = storage.nick ? 'Resonance-dev' 
 client = new irc.Client('chat.freenode.net', currentNick, {
@@ -100,6 +101,7 @@ tabs.on 'ready', (tab) ->
 
   # Send the application some init values.
   worker.port.emit('chan',chan)
+  worker.port.emit('requestMutedUsers',mutedUsers)
   worker.port.emit('nick',currentNick)
   # Listen for the application telling the client to say something.
   worker.port.on 'say', (to, text) ->
@@ -118,4 +120,7 @@ tabs.on 'ready', (tab) ->
     currentNick = nick 
     #todo : nickserv alerts
     worker.port.emit('message','Resonance',currentNick,'Your new nick will be saved and available as soon as you restart firefox.')
-  
+    
+  # stock the current muted Users
+  worker.port.on "newMutedUser", (mutedUsers) ->
+    storage.mutedUsers = mutedUsers

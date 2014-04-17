@@ -38,15 +38,17 @@
       return $scope.$apply();
     });
     $scope.mute = function(user) {
-      $scope.$parent.mutedUser.push(user);
-      return $scope.$parent.$broadcast('mute', user);
+      $scope.$parent.mutedUsers.push(user);
+      $scope.$parent.$broadcast('mute', user);
+      return self.port.emit('newMutedUser', $scope.$parent.mutedUsers);
     };
-    $scope.isMute = function(user) {
-      return $scope.$parent.mutedUser.indexOf(user) >= 0;
+    $scope.unMute = function(user) {
+      $scope.$parent.mutedUsers.splice($scope.$parent.mutedUsers.indexOf(user), 1);
+      $scope.$parent.$broadcast('unMute', user);
+      return self.port.emit('newMutedUser', $scope.$parent.mutedUsers);
     };
-    return $scope.unMute = function(user) {
-      $scope.$parent.mutedUser.splice($scope.$parent.mutedUser.indexOf(user), 1);
-      return $scope.$parent.$broadcast('unMute', user);
+    return $scope.isMute = function(user) {
+      return $scope.$parent.mutedUsers.indexOf(user) >= 0;
     };
   });
 

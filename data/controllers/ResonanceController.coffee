@@ -5,4 +5,8 @@ window.app.controller "ResonanceController", ($scope) ->
     # 3 fot settings.
     # Initialized with messages.
     $scope.display = 1
-    $scope.mutedUser = []
+    # Updates the list of muted users when received from the background script.
+    $scope.mutedUsers = []
+    self.port.on 'requestMutedUsers',(n) ->
+        $scope.mutedUsers = n        
+    

@@ -3,7 +3,10 @@
 
   window.app.controller("ResonanceController", function($scope) {
     $scope.display = 1;
-    return $scope.mutedUser = [];
+    $scope.mutedUsers = [];
+    return self.port.on('requestMutedUsers', function(n) {
+      return $scope.mutedUsers = n;
+    });
   });
 
 }).call(this);
