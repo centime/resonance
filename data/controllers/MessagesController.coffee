@@ -3,6 +3,11 @@ window.app.controller "MessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
     $scope.newMessage = ''
+
+    # Get the histor from the background.
+    self.port.on "messagesHistory", (messagesHistory) ->
+        $scope.messages = ({ 'author':message.author, 'message':message.message, 'display':not(message.author in $scope.$parent.mutedUser)} for message in messagesHistory)
+
     # Select the DOM element for messages.
     elmt = angular.element('messages > ul') 
     # Send a new message.
@@ -20,8 +25,7 @@ window.app.controller "MessagesController", ($scope) ->
         entry = 
             'author' : from
             'message' : message
-            'display' : true
-        entry.display = not ( from in $scope.$parent.mutedUser )
+            'display' : not ( from in $scope.$parent.mutedUser )
         # Append it to the list of all messages.
         $scope.messages.push(entry)
         # Update the view.

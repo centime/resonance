@@ -8,11 +8,6 @@ window.app.controller "ResonanceController", ($scope) ->
 
     $scope.mutedUser = []
 
-    # List of users with which a private conversation has been started.
-    $scope.pmUsers = ['Resonance-bot']
-    # Which user we're displaying in the private messages panel.
-    $scope.currentPmUser = 'Resonance-bot'
-
     self.port.on 'appSize',(height) ->
         # Set the size of the app.
         angular.element('#resonance_container').height height
@@ -30,8 +25,3 @@ window.app.controller "ResonanceController", ($scope) ->
             angular.element('#resonance_container').height newHeight
             # Tell the background script so it can save the value.
             self.port.emit('newAppSize',newHeight)
-    
-
-    $scope.selectPmUser = (user) ->
-        $scope.currentPmUser = user
-        $scope.$broadcast('pmUser',user)

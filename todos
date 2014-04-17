@@ -4,7 +4,11 @@ ff-irc :
     [Exception... "'Error: Uncaught, unspecified 'error' event.' when calling method: [nsIStreamListener::onDataAvailable]"
     des que IRC lui dit un truc qu'il faut pas (nick utilisé, pm à qqn qui n'existe pas...)
     ssl
-
+private :
+    centraliser entre les differentes pages
+    pour les messages envoyés
+    pour les discussions ouvertes
+    
 interface
     resize (via js)
 

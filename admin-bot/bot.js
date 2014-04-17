@@ -44,6 +44,7 @@ bot.addListener('pm', function(nick, message) {
         
     }else console.log('[[pm] '+date+' ] '+message)
 });
+
 bot.addListener('names#resonance',function(){
     bot.addListener('part',function(chan,nick){
         if (typeof(chansToPages[chan]) !== 'undefined'){

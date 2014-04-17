@@ -32,7 +32,5 @@ window.app.controller 'UsersController', ($scope)->
 
     # Add the user to the list of users with which a private conversation has been started.
     $scope.startPm = (user) ->
-            if not (user in $scope.$parent.pmUsers)
-                $scope.$parent.pmUsers.push(user)
-            $scope.$parent.selectPmUser(user)
+            self.port.emit( 'startPmUser', user)
             $scope.$parent.display = 4

@@ -8,6 +8,14 @@ storage = require("sdk/simple-storage").storage
 sha1 = require('./sha1.js').sha1
 irc = require('./bundle') 
 
+# Histories
+storage.messagesHistory ?= {}
+storage.privateMessagesHistory ?= {}
+# storage.messagesHistory = {}
+# storage.privateMessagesHistory = {}
+pmUsers = ['Resonance-bot']
+currentPmUser = 'Resonance-bot'
+
 # IRC client init
 currentNick = storage.nick ? 'Resonance-dev' 
 client = new irc.Client('chat.freenode.net', currentNick, {
@@ -19,24 +27,29 @@ client.addListener 'message', (from, to, message) ->
   if to != currentNick
     # It goes to the corresponding chan / worker.
     channelsToWorkers[to].port.emit('message',from,to,message)
+    storage.messagesHistory[to] ?= []
+    storage.messagesHistory[to].push( {'author':from, 'message': message } )
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 client.addListener 'pm', (from,message) ->
   # If it is a announce from the bot.
   if from == 'Resonance-bot' and message.match(/^announce /)
     message = message.replace('announce ','')
-    for own chan, worker of channelsToWorkers
-      worker.port.emit('announce',message)
+    emitToAllWorkers('announce',message)
   # If it is a topPages from the bot.
   else if from == 'Resonance-bot' and message.match(/^topPages /)
     message = message.replace('topPages ','')
-    for own chan, worker of channelsToWorkers
-      worker.port.emit('topPages', message)
+    emitToAllWorkers('topPages', message)
   # If it is a regular pm.
   else
-    for own chan, worker of channelsToWorkers
-      worker.port.emit('pm', from, message)
-    
+    if not( from in pmUsers)
+        pmUsers.push(from)
+        emitToAllWorkers('pmUsers', pmUsers)
+    storage.privateMessagesHistory[from] ?= []
+    storage.privateMessagesHistory[from].push( {'author':from, 'message':message} )
+    if from == currentPmUser
+      emitToAllWorkers('privateMessage', from, currentNick, message)
+     
 # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
 client.addListener 'part', (chan,nick) ->
     if nick isnt currentNick
@@ -53,6 +66,10 @@ passEvent = (eventName) ->
 
 passEvent('names')
 passEvent('join')
+
+emitToAllWorkers = (eventName, a,b,c,d,e,f,g,h,i) ->
+  for own chan, worker of channelsToWorkers
+        worker.port.emit(eventName, a,b,c,d,e,f,g,h,i)
 
 # Need to find a better way for both of theses var...
 tabToPreviousPage = [] 
@@ -76,6 +93,11 @@ tabs.on 'ready', (tab) ->
   
   # Generate the chan name for the page.
   chan = '#'+sha1(tab.url.host+tab.title).toString() 
+  # Looking after a bug I saw some time, where this chan was joined I don't know why.
+  if chan == '#84642551eb26c07c7895b86e3fb0b7d70fd6ff97'
+    console.log('########################################################\n error ?')
+  console.log(tab.url)
+  console.log(tab.title)
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
@@ -111,19 +133,35 @@ tabs.on 'ready', (tab) ->
   worker.port.emit('appSize',storage.appSize ? '100')
   worker.port.emit('chan',chan)
   worker.port.emit('nick',currentNick)
+  worker.port.emit('messagesHistory', storage.messagesHistory[chan] ? [])
+  worker.port.emit('pmUsers',pmUsers)
+  storage.privateMessagesHistory[currentPmUser] ?= []
+  worker.port.emit('pmUser',currentPmUser, storage.privateMessagesHistory[currentPmUser])
+  # worker.port.emit('pmUser',currentPmUser)
   # Listen for the application telling the client to say something.
   worker.port.on 'say', (to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
       worker.port.emit('message',currentNick,to,message)
 
-  worker.port.on 'pm', (nick, message) ->
-    client.say(nick,message)
+  worker.port.on 'privateMessage', (user, message) ->
+    client.say(user,message)
+    storage.privateMessagesHistory[user] ?= []
+    storage.privateMessagesHistory[user].push( {'author':currentNick, 'message':message} )
+    emitToAllWorkers('privateMessage', currentNick, user, message)
 
   # Listen for the application asking for the top pages.
   worker.port.on 'getTopPages', () ->
     # Ask the bot for top tapes.
     client.say('Resonance-bot','ask')
+
+  worker.port.on 'startPmUser', (user) ->
+    currentPmUser = user
+    if not( user in pmUsers)
+      pmUsers.push(user)
+      emitToAllWorkers('pmUsers', pmUsers)
+    storage.privateMessagesHistory[user] ?= []
+    emitToAllWorkers('pmUser', currentPmUser, storage.privateMessagesHistory[user])
 
   worker.port.on "newNick", (nick) ->
     #todo : sanitize !
