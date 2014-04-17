@@ -48,6 +48,12 @@ bot.addListener('pm', function(nick, message) {
                 if(page.match(domain))
                     sortable.push([page, visits[page]]);
             bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
+        }else if(command.match(/^keyword/)){
+            var keyword = command.replace('keyword ','')||'';
+            for (var page in visits)
+                if(page.match(domain))
+                    sortable.push([page, visits[page]]);
+            bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString()); 
         }
     };
     if (message.match(/^coucou/)){

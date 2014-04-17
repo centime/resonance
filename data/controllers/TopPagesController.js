@@ -18,9 +18,13 @@ app.controller("TopPagesController", function($scope){
     $scope.getTopPages = function(displayTopPages){
         // If not
         var domain=$scope.domain;
+        var keyword=$scope.keyword;
         if (displayTopPages && (askedAlready!=domain)){
             self.port.emit('getTopPages',domain);
             askedAlready = domain ;
+        } else if (displayTopPages && (askedAlready!=keyword)){
+            self.port.emit('getTopPages',keyword);
+            askedAlready = keyword ;
         }
         return displayTopPages;
     };
