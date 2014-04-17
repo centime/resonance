@@ -3,6 +3,7 @@ app.controller("TopPagesController", function($scope){
     $scope.topPages = [];
     self.port.on('topPages', function(topPages){
         // Splir the string from the bot 'url,visitors,url,visitors,...'
+        $scope.topPages = [];
         var s = topPages.split(',');
         // Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
         for (var i=0;i<s.length;i+=2){
@@ -16,15 +17,11 @@ app.controller("TopPagesController", function($scope){
     var askedAlready = false ;
     $scope.getTopPages = function(displayTopPages){
         // If not
-        if (displayTopPages && !askedAlready){
-            self.port.emit('getTopPages');
-            askedAlready = true ;
-        // If TopPage isn't displayed anymore
-        }else if (!displayTopPages && askedAlready){
-            askedAlready = false ;
+        var domain=$scope.domain;
+        if (displayTopPages && (askedAlready!=domain)){
+            self.port.emit('getTopPages',domain);
+            askedAlready = domain ;
         }
         return displayTopPages;
     };
-    
-    
 });

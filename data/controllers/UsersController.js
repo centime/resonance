@@ -1,4 +1,3 @@
-
 app.controller('UsersController', function($scope){
     // List of every present user.
     $scope.users = [];
