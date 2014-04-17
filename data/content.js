@@ -1,14 +1,14 @@
 var SIZE = '100px';
 
 var app = $(document.createElement('div')).attr({
-    id: 'app',
+    id: 'resonance_container',
 }).css({
     position: 'fixed',
     bottom: '0px',
     height: SIZE,
     width: '100%',
     background: 'white',
-    'z-index': '10000'
+    'z-index': '9999999999999999999999999999999999999999999999' //tofix
 })
 .appendTo(document.body);
 
@@ -25,4 +25,4 @@ var content = "\
 </style>\
 ";
 
-document.getElementById("app").innerHTML = content ;
+document.getElementById("resonance_container").innerHTML = content ;
