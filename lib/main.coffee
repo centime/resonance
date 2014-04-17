@@ -30,6 +30,12 @@ currentNick = storage.nick ? 'Resonance-dev'
 client = new irc.Client('chat.freenode.net', currentNick, {
       debug: false,
 })
+
+# Error handling
+client.addListener 'error', (message) ->
+  emitToAllWorkers('error', message.command+message.args.join(' '))
+  console.error('ERROR:', message.command, message.args.join(' '))
+
 # When the client receives a message.
 client.addListener 'message', (from, to, message) ->
   # If it is not a private message.

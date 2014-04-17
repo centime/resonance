@@ -1,4 +1,3 @@
-
 window.app.controller "PrivateMessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
@@ -37,3 +36,11 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     # Set the css class for old messages (history).
     $scope.oldMessage = (message) ->
         {'old_message': message.old}
+
+    # Catch errors.
+    self.port.on 'error', (error) ->
+        # Append it to the list of all messages.
+        # todo : what if a user is called Error ?
+        $scope.messages.push({'author':'Error','message':error})
+        # Update the view.
+        $scope.$apply()

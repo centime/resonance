@@ -69,7 +69,7 @@
         scrollTop: elmt.prop('scrollHeight')
       }, 1000);
     });
-    return $scope.$parent.$on("unMute", function(e, user) {
+    $scope.$parent.$on("unMute", function(e, user) {
       var message, _i, _len, _ref;
 
       _ref = $scope.messages;
@@ -82,6 +82,13 @@
       return elmt.animate({
         scrollTop: elmt.prop('scrollHeight')
       }, 1000);
+    });
+    return self.port.on('error', function(error) {
+      $scope.messages.push({
+        'author': 'Error',
+        'message': error
+      });
+      return $scope.$apply();
     });
   });
 

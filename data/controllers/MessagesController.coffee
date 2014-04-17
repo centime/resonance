@@ -8,8 +8,6 @@ window.app.controller "MessagesController", ($scope) ->
     self.port.on "messagesHistory", (messagesHistory) ->
         $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
 
-    # Select the DOM element for messages.
-    elmt = angular.element('messages > ul') 
     # Send a new message.
     $scope.submitNewMessage =  () ->
                             msg = $scope.newMessage 
@@ -51,3 +49,13 @@ window.app.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+
+
+    # Catch errors.
+    self.port.on 'error', (error) ->
+        # Append it to the list of all messages.
+        # todo : what if a user is called Error ?
+        $scope.messages.push({'author':'Error','message':error})
+        # Update the view.
+        $scope.$apply()
+

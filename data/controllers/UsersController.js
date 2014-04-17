@@ -22,8 +22,9 @@
     });
     self.port.on("join", function(channel, nick) {
       if ((nick !== IRC.nick) && (nick !== 'Resonance-bot')) {
-        $scope.users.push(nick).sort();
+        $scope.users.push(nick);
       }
+      $scope.users = $scope.users.sort();
       return $scope.$apply();
     });
     self.port.on("part", function(channel, nick) {
