@@ -12,7 +12,8 @@ bot.addListener('error', function(message) {
 });
 
 // The structure in which are kept the pages visited.
-var visits = {'test':0, 'test1':1}; // page:visitors
+var visits = {'test':0, 'test1':1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam non fermentum lacus, et vehicula purus. Aenean fringilla nibh sapien, sed auctor orci fermentum in. Sed cursus at magna et vulputate. Duis mauris lacus, adipiscing et justo ac, congue gravida nibh. Aliquam luctus magna et ligula tristique bibendum. Duis at venenatis neque. Mauris non risus sed tellus molestie placerat sed sit amet metus. Sed luctus semper imperdiet. Quisque pulvinar tortor est, nec dictum lacus feugiat a. Sed interdum urna quis lacus sodales, in rhoncus dolor elementum. Praesent at posuere justo. Mauris imperdiet tristique tortor, a viverra ipsum placerat nec. Quisque ultricies urna vitae libero interdum fringilla. Sed eu ullamcorper turpis, eget bibendum magna. In mattis felis mattis ornare ullamcorper. Donec tristique, tellus quis dignissim condimentum, lectus lorem iaculis urna, sit amet congue velit tortor vitae est. Suspendisse ac dui tincidunt, ultricies justo sit amet, auctor lorem. Curabitur quis fermentum neque. Ut posuere tincidunt turpis, nec interdum nisl malesuada ac. Morbi ac faucibus augue, at cursus ligula. Phasellus at augue quis quam porttitor aliquet in a nisi. Aliquam sodales lectus dui, tristique dictum nunc facilisis sed. ':2
+}; // page:visitors
 
 // When the bot receives a private message.
 // Todo : security.
@@ -39,7 +40,6 @@ bot.addListener('pm', function(nick, message) {
         if (command.match(/^global/)){
             for (var page in visits)
                 sortable.push([page, visits[page]]);
-            bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
         //paramètre 'domaine'
         }else if(command.match(/^domain /)){
             var domain = command.replace('domain ','')||'';
@@ -47,14 +47,15 @@ bot.addListener('pm', function(nick, message) {
             for (var page in visits)
                 if(page.match(domain))
                     sortable.push([page, visits[page]]);
-            bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
-        }else if(command.match(/^keyword/)){
+        //paramètre 'keyword'
+        }else if(command.match(/^keyword /)){
             var keyword = command.replace('keyword ','')||'';
+            keyword = new RegExp(keyword);
             for (var page in visits)
-                if(page.match(domain))
+                if(page.match(keyword))
                     sortable.push([page, visits[page]]);
-            bot.say(nick,sortable.sort(function(a, b) {return b[1] - a[1]}).toString()); 
         }
+        bot.say(nick,'top'+sortable.sort(function(a, b) {return b[1] - a[1]}).toString());
     };
     if (message.match(/^coucou/)){
         bot.say(nick,'hi');

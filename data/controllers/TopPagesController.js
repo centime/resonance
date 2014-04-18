@@ -2,8 +2,7 @@ app.controller("TopPagesController", function($scope){
     // List of pages {url : visitors}
     $scope.topPages = [];
     self.port.on('topPages', function(topPages){
-        // Splir the string from the bot 'url,visitors,url,visitors,...'
-        $scope.topPages = [];
+        // Split the string from the bot 'url,visitors,url,visitors,...'
         var s = topPages.split(',');
         // Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
         for (var i=0;i<s.length;i+=2){
@@ -14,17 +13,21 @@ app.controller("TopPagesController", function($scope){
     });
     // Execute when TopPages is shown.
     // Have top pages already been asked since TopPgae has been shown ?
-    var askedAlready = false ;
+    var lastDom = null ;
+    var lastKey = null ;
     $scope.getTopPages = function(displayTopPages){
         // If not
-        var domain=$scope.domain;
-        var keyword=$scope.keyword;
-        if (displayTopPages && (askedAlready!=domain)){
-            self.port.emit('getTopPages',domain);
-            askedAlready = domain ;
-        } else if (displayTopPages && (askedAlready!=keyword)){
-            self.port.emit('getTopPages',keyword);
-            askedAlready = keyword ;
+        var domain = $scope.domain;
+        var ts = $scope.typeSearch;
+        if (displayTopPages ){
+            if ((ts=='dom') && (lastDom!=domain)){
+                self.port.emit('getTopPagesDom',domain);
+                lastDom = domain ;
+            }
+            if ((lastKey!=domain) && (ts=='key')){
+                self.port.emit('getTopPagesKey',domain);
+                lastKey = domain ;
+            }
         }
         return displayTopPages;
     };

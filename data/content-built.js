@@ -96,8 +96,9 @@ users{\
             </form>\
         </messages>\
         <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
-            Domaine :\
             <form ng-submit='getTopPages(display==2)'>\
+                <input type='radio' ng-model='typeSearch' value='dom'/>Recherche par domaine<br>\
+                <input type='radio' ng-model='typeSearch' value='key'/>Recherche par mot clé<br>\
                 <input type='text' ng-model='domain'/>\
             </form>\
             <ul class='list'>\
