@@ -41,7 +41,7 @@ client.addListener 'message', (from, to, message) ->
   # If it is not a private message.
   if to != currentNick
     # It goes to the corresponding chan / worker.
-    channelsToWorkers[to].emit('message',from,to,message)
+    workers[to].emit('message',from,to,message)
     # Save in history.
     storage.messagesHistory[to] ?= []
     storage.messagesHistory[to].push( {'author':from, 'message': message } )
@@ -70,68 +70,67 @@ client.addListener 'pm', (from,message) ->
 # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
 client.addListener 'part', (chan,nick) ->
     if nick isnt currentNick
-      channelsToWorkers[chan].emit('part',chan,nick)
+      workers[chan].emit('part',chan,nick)
 
 # Used to simply pass events from the client to the app.
 # tofix : should be properly implemented using arguments.
 # WARNING : it won't work if the chan isn't the first argument of the event !
 passEvent = (eventName) ->
   client.addListener eventName, (chan,a,b,c,d,e,f,g,h,i) ->
-    # channelsToWorkers[chan] may have been deleted if the client has left the chan
+    # workers[chan] may have been deleted if the client has left the chan
     # todo : How to remove listeners once the chan has been left ?
-    channelsToWorkers[chan].emit(eventName,chan,a,b,c,d,e,f,g,h,i) if channelsToWorkers[chan]?
+    workers[chan].emit(eventName,chan,a,b,c,d,e,f,g,h,i) if workers[chan]?
 
 passEvent('names')
 passEvent('join')
 
 emitToAllWorkers = (eventName, a,b,c,d,e,f,g,h,i) ->
-  for own chan, worker of channelsToWorkers
+  for own chan, worker of workers
         worker.emit(eventName, a,b,c,d,e,f,g,h,i)
 
 # Need to find a better way for both of theses var...
-tabToPreviousPage = []
-channelsToWorkers = {}
+workers = {}
 class Channel
-  chan
-  workers = []
-  constructor: (@chan,worker) ->
-    workers.push(worker)
+  constructor: (chan,worker) ->
+    @chan = chan
+    @linkedWorkers = [worker]
   addWorker: (worker) ->
-    workers.push(worker)
+    @linkedWorkers.push(worker)
   removeWorker: (worker) ->
-    workers = (w for w in workers when w isnt worker)
+    @linkedWorkers = (w for w in @linkedWorkers when w isnt worker)
   # todo : use arguments, bitch !
   emit: (eventName, a,b,c,d,e,f,g,h,i) ->
-    for w in workers
+    for w in @linkedWorkers
       w.port.emit(eventName,a,b,c,d,e,f,g,h,i)
   hasWorkers: () ->
-    workers.length > 0
+    @linkedWorkers.length > 0
+  numWorkers: () ->
+    @linkedWorkers.length
+
+
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->
-  # Find which tab is active.
-  currentTab = -1 
-  i = 0
-  while i < tabs.length
-    currentTab = i  if tab is tabs[i]
-    i++
-  # Part from the previous chan.
-  if tabToPreviousPage[currentTab]?
-    # Leave the chan.
-    if not channelsToWorkers[chan].hasWorkers()
-      client.part(tabToPreviousPage[currentTab].chan)
-      delete channelsToWorkers[tabToPreviousPage[currentTab].chan]
+  # If a page was displayed.
+  if tab.chan?
+    previousChan = tab.chan
+    # Get the binded worker.
+    # todo : le worker attaché est il le même pour un même tab ?!
+    previousWorker = tab.worker
+    # Remove it from the list of workers linked to the chan.
+    workers[previousChan].removeWorker(previousWorker)
+    # Leave the previous chan if there are no more workers binded to it.
+    if not workers[previousCchan].hasWorkers()
+      client.part(previousChan)
+      delete workers[previousChan]
   
   # Generate the chan name for the page.
   chan = '#'+sha1(tab.url.host+tab.title).toString() 
+  # Save it.
+  tab.chan = chan
   # Join the new chan.
   client.join(chan)
   # Tell the admin-bot about it.
   client.say('Resonance-bot','enter '+tab.url+' '+chan)
-  # Save which page is currently displayed in the current tab.
-  tabToPreviousPage[currentTab] = 
-    'url' : tab.url
-    'chan' : chan
-
   
   # Inject the application code into the page.
   worker = tab.attach({
@@ -149,12 +148,15 @@ tabs.on 'ready', (tab) ->
           data.url("controllers/PrivateMessagesController.js"),
           data.url("controllers/PrivateUsersController.js"),
       ]})
+  # Save the linked worker.
+  tab.worker = worker
+
   # Save which worker is in charge for wich channel.
   # todo : clean the list when leaving chan
   # tofix : 2 onglets avec la même page ?
-  if channelsToWorkers[chan]?
-    channelsToWorkers[chan].addWorker(worker)
-  else channelsToWorkers[chan] = new Channel(chan, worker)
+  if workers[chan]?
+    workers[chan].addWorker(worker)
+  else workers[chan] = new Channel(chan, worker)
 
   # Send the application some init values.
   worker.port.emit('appSize',storage.appSize ? '100')
@@ -165,12 +167,15 @@ tabs.on 'ready', (tab) ->
   worker.port.emit('pmUsers',pmUsers)
   storage.privateMessagesHistory[currentPmUser] ?= []
   worker.port.emit('pmUser',currentPmUser, storage.privateMessagesHistory[currentPmUser])
-  # worker.port.emit('pmUser',currentPmUser)
+  # todo : 
+  # client.send('name',chan)
+  
+
   # Listen for the application telling the client to say something.
   worker.port.on 'say', (to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
-      worker.port.emit('message',currentNick,to,message)
+      workers[to].emit('message',currentNick,to,message)
       # Save in history.
       storage.messagesHistory[to] ?= []
       storage.messagesHistory[to].push( {'author':currentNick, 'message': message } )
@@ -211,9 +216,13 @@ tabs.on 'ready', (tab) ->
     #todo : sanitize !
     storage.appSize = height
 
+
 tabs.on 'close', (tab) ->
-    delete tabToPreviousPage[tab]
-    if not channelsToWorkers[chan].hasWorkers()
-      chan = '#'+sha1(tab.url.host+tab.title).toString()
-      client.part(chan)
-      delete channelsToWorkers[chan]
+  # Unlink the worker 
+  workers[tab.chan].removeWorker(tab.worker)
+  # Check for the remaining workers linked to the same chan.
+  if not workers[tab.chan].hasWorkers()
+    # Part from the chan.
+    client.part(tab.chan)
+    # Deletes the chan entry.
+    delete workers[tab.chan]
