@@ -92,9 +92,11 @@ emitToAllWorkers = (eventName, a,b,c,d,e,f,g,h,i) ->
 workers = {}
 class Channel
   constructor: (chan,worker) ->
+    console.log('constr '+chan)
     @chan = chan
     @linkedWorkers = [worker]
   addWorker: (worker) ->
+    console.log('add '+chan)
     @linkedWorkers.push(worker)
   removeWorker: (worker) ->
     @linkedWorkers = (w for w in @linkedWorkers when w isnt worker)
@@ -119,7 +121,7 @@ tabs.on 'ready', (tab) ->
     # Remove it from the list of workers linked to the chan.
     workers[previousChan].removeWorker(previousWorker)
     # Leave the previous chan if there are no more workers binded to it.
-    if not workers[previousCchan].hasWorkers()
+    if not workers[previousChan].hasWorkers()
       client.part(previousChan)
       delete workers[previousChan]
   
@@ -129,6 +131,9 @@ tabs.on 'ready', (tab) ->
   tab.chan = chan
   # Join the new chan.
   client.join(chan)
+  # Request a list of users.
+  client.send('NAMES',chan) 
+
   # Tell the admin-bot about it.
   client.say('Resonance-bot','enter '+tab.url+' '+chan)
   
@@ -157,6 +162,7 @@ tabs.on 'ready', (tab) ->
   if workers[chan]?
     workers[chan].addWorker(worker)
   else workers[chan] = new Channel(chan, worker)
+  console.log 'LOAD '+workers[chan].numWorkers()
 
   # Send the application some init values.
   worker.port.emit('appSize',storage.appSize ? '100')
@@ -218,10 +224,14 @@ tabs.on 'ready', (tab) ->
 
 
 tabs.on 'close', (tab) ->
+  console.log('close')
+  console.log(tab.chan)
   # Unlink the worker 
   workers[tab.chan].removeWorker(tab.worker)
+  console.log(workers[tab.chan].hasWorkers())
   # Check for the remaining workers linked to the same chan.
   if not workers[tab.chan].hasWorkers()
+    console.log('closed')
     # Part from the chan.
     client.part(tab.chan)
     # Deletes the chan entry.
