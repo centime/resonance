@@ -236,3 +236,21 @@ tabs.on 'close', (tab) ->
     client.part(tab.chan)
     # Deletes the chan entry.
     delete workers[tab.chan]
+
+# Tests
+tests = {}
+
+tests["test tests"] = () ->
+  assert.ok(true)
+
+# Asserts structure.
+assert = {}
+assert.ok = (exp) ->
+  exp
+
+# Run the tests.
+for own test, check of tests
+  if check()
+    console.log('[[ TEST ]] : '+test+' PASSED')
+  else
+    console.log('[[ TEST ]] : '+test+' FAILED')
