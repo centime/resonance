@@ -100,3 +100,12 @@ privateusers{
 .list{
     overflow: auto;
 }
+.red{
+    color: red;
+}
+.blue{
+    color: blue;
+}
+.yellow{
+    color: yellow;
+}

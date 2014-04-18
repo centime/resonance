@@ -3,11 +3,12 @@ window.app.controller "MessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
     $scope.newMessage = ''
-
+    $scope.currentnick = ''
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
         $scope.messages = ({ 'author':message.author, 'message':message.message, 'display':not(message.author in $scope.$parent.mutedUser)} for message in messagesHistory)
-
+    self.port.on "nick", (currentnick) ->
+        $scope.currentnick=currentnick
     # Select the DOM element for messages.
     elmt = angular.element('messages > ul') 
     # Send a new message.
@@ -45,3 +46,12 @@ window.app.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+
+    $scope.authorIsMe = (message) -> 
+        wordsInMessage = message.message.split(' ')
+        if message.author == $scope.currentnick
+            {'red': true}
+        else if (wordsInMessage.indexOf($scope.currentnick) >= 0)
+            {'yellow': true}
+        else
+            {'blue': true}
