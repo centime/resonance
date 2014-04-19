@@ -35,6 +35,9 @@ client = new irc.Client('chat.freenode.net', currentNick, {
 client.addListener 'error', (message) ->
   emitToAllWorkers('error', message.command+message.args.join(' '))
   console.error('ERROR:', message.command, message.args.join(' '))
+# Catch the connection event
+client.addListener 'registered', (message) ->
+  client.connected = true
 
 # When the client receives a message.
 client.addListener 'message', (from, to, message) ->
@@ -91,12 +94,10 @@ emitToAllWorkers = (eventName, a,b,c,d,e,f,g,h,i) ->
 # Need to find a better way for both of theses var...
 workers = {}
 class Channel
-  constructor: (chan,worker) ->
-    console.log('constr '+chan)
+  constructor: (chan,worker) ->    
     @chan = chan
     @linkedWorkers = [worker]
-  addWorker: (worker) ->
-    console.log('add '+chan)
+  addWorker: (worker) ->    
     @linkedWorkers.push(worker)
   removeWorker: (worker) ->
     @linkedWorkers = (w for w in @linkedWorkers when w isnt worker)
@@ -161,8 +162,7 @@ tabs.on 'ready', (tab) ->
   # tofix : 2 onglets avec la même page ?
   if workers[chan]?
     workers[chan].addWorker(worker)
-  else workers[chan] = new Channel(chan, worker)
-  console.log 'LOAD '+workers[chan].numWorkers()
+  else workers[chan] = new Channel(chan, worker)  
 
   # Send the application some init values.
   worker.port.emit('appSize',storage.appSize ? '100')
@@ -223,34 +223,66 @@ tabs.on 'ready', (tab) ->
     storage.appSize = height
 
 
-tabs.on 'close', (tab) ->
-  console.log('close')
-  console.log(tab.chan)
+tabs.on 'close', (tab) ->    
   # Unlink the worker 
-  workers[tab.chan].removeWorker(tab.worker)
-  console.log(workers[tab.chan].hasWorkers())
+  workers[tab.chan].removeWorker(tab.worker)  
   # Check for the remaining workers linked to the same chan.
-  if not workers[tab.chan].hasWorkers()
-    console.log('closed')
+  if not workers[tab.chan].hasWorkers()    
     # Part from the chan.
     client.part(tab.chan)
     # Deletes the chan entry.
     delete workers[tab.chan]
 
+
 # Tests
-tests = {}
+setTimeout = require('sdk/timers').setTimeout
+class Tests
+  constructor: () ->
+    @tests = []
+    @rootTests = []
+  # test is an object with the following properties :
+  # name
+  # executeAfter
+  # delay
+  # check()
+  add: (test) ->
+    test.followers = []
+    @tests.push(test)
+    if not (test.before in (t.name for t in @tests))
+      @rootTests.push(test)
+    else
+      prevTest = (t for t in @tests when t.name == test.before)[0]
+      @follow(test,prevTest)
+  follow: (follower, firstTest) ->
+    firstTest.followers.push(follower)
+    
+  run: () ->
+    for test in @rootTests
+      @assert(test)
 
-tests["test tests"] = () ->
-  assert.ok(true)
+  assert: (test) ->
+    result = 'Failed.'
+    if test.check()
+      result = 'Passed.'
+    console.log('[[ TESTS ]] '+test.name+' : '+result)
+    assert = @assert
+    for next in test.followers
+      assertNext = () -> assert(next)
+      setTimeout(assertNext,next.delay)
 
-# Asserts structure.
-assert = {}
-assert.ok = (exp) ->
-  exp
+tests = new Tests()
 
-# Run the tests.
-for own test, check of tests
-  if check()
-    console.log('[[ TEST ]] : '+test+' PASSED')
-  else
-    console.log('[[ TEST ]] : '+test+' FAILED')
+tests.add(
+  'name' : 'Addon started',
+  'before' : '',
+  'delay' : 0
+  'check' : () -> true
+)
+tests.add(
+  'name' : 'Client connected to irc in less than 10s',
+  'before' : 'Addon started',
+  'delay' : 10000
+  'check' : () -> client.connected
+)
+
+tests.run()
