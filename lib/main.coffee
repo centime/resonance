@@ -28,7 +28,7 @@ mutedUsers = storage.mutedUsers ? []
 # IRC client init
 currentNick = storage.nick ? 'Resonance-dev' 
 client = new irc.Client('chat.freenode.net', currentNick, {
-      debug: false,
+      debug: true,
 })
 
 # Error handling
@@ -127,7 +127,7 @@ tabs.on 'ready', (tab) ->
       delete workers[previousChan]
   
   # Generate the chan name for the page.
-  chan = '#'+sha1(tab.url.host+tab.title).toString() 
+  chan = '#'+sha1(tab.url+tab.title).toString() 
   # Save it.
   tab.chan = chan
   # Join the new chan.
@@ -279,22 +279,70 @@ tests.add(
   'check' : () -> true
 )
 tests.add(
-  'name' : 'CB1',
-  'before' : 'Addon started',
-  'delay' : 3000
-  'check' : () -> true
+  'name' : 'Storage available',
+  'before' : '',
+  'delay' : 0
+  'check' : () -> storage?
 )
 tests.add(
-  'name' : 'CB2',
+  'name' : 'Client connected in less than 20s',
   'before' : 'Addon started',
+  'delay' : 20000
+  'check' : () -> client.connected
+)
+# This test is added while it is not really a test, just to open the page.
+# I just can't find another way to wait to the tab to become active
+tests.add(
+  'name' : 'Open sebsauvage.net',
+  'before' : 'Client connected in less than 20s',
+  'delay' : 1000
+  'check' : () ->
+    tabs.open('sebsauvage.net')
+    true # what else ?
+)
+
+testChan = ''
+
+# It can't find a way to run several instances of irc client...
+# An external bot (Resonance-test) is used to simulate incoming messages.
+# It is controlled by irc via private messages using the commands :
+# /msg Resonance-test join #chan
+# /msg Resonance-test say #chan message
+testBot = 'Resonance-test'
+
+tests.add(
+  'name' : 'Connected to the corresponding chan',
+  'before' : 'Open sebsauvage.net',
+  'delay' : 20000
+  'check' : () ->
+    testChan = '#'+sha1(tabs.activeTab.url+tabs.activeTab.title).toString()
+    # Tell the test bot to join the same chan
+    client.say(testBot,'join '+testChan)
+    for chan of client.chans
+      if chan is testChan
+        return true
+    return false
+)
+date = new Date()
+date = date.toString()
+tests.add(
+  'name' : 'Send a message in the chan with the testing bot',
+  'before' : 'Connected to the corresponding chan',
+  'delay' : 2000
+  'check' : () ->
+    
+    client.say( testBot, 'say '+testChan+' '+date)
+    true
+)
+tests.add(
+  'name' : 'Receive the message and save it in history',
+  'before' : 'Send a message in the chan with the testing bot',
   'delay' : 4000
-  'check' : () -> false
+  'check' : () ->
+    okAuthor = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].author == 'Resonance-test')
+    okMessage = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].message == date)
+    ( okAuthor and okMessage )
 )
-tests.add(
-  'name' : 'CB3',
-  'before' : 'CB1',
-  'delay' : 10000
-  'check' : () -> true
-)
+
 
 tests.run()
