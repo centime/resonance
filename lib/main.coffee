@@ -260,15 +260,15 @@ class Tests
     for test in @rootTests
       @assert(test)
 
-  assert: (test) ->
+  assert: (test) =>
     result = 'Failed.'
     if test.check()
       result = 'Passed.'
     console.log('[[ TESTS ]] '+test.name+' : '+result)
     assert = @assert
     for next in test.followers
-      assertNext = () -> assert(next)
-      setTimeout(assertNext,next.delay)
+      do (next) ->
+        setTimeout( (()-> assert(next) ),next.delay)
 
 tests = new Tests()
 
@@ -279,10 +279,22 @@ tests.add(
   'check' : () -> true
 )
 tests.add(
-  'name' : 'Client connected to irc in less than 10s',
+  'name' : 'CB1',
   'before' : 'Addon started',
+  'delay' : 3000
+  'check' : () -> true
+)
+tests.add(
+  'name' : 'CB2',
+  'before' : 'Addon started',
+  'delay' : 4000
+  'check' : () -> false
+)
+tests.add(
+  'name' : 'CB3',
+  'before' : 'CB1',
   'delay' : 10000
-  'check' : () -> client.connected
+  'check' : () -> true
 )
 
 tests.run()
