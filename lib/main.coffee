@@ -349,18 +349,18 @@ tests.add(
 )
 tests.add(
   'prereq' : true
-  'name' : 'ask app display',
+  'name' : 'ask app display ~full',
   'previous' : 'sebsauvage.net is open',
   'delay' : 1000
   'check' : () ->
-    workers[testChan].emit('test','Test app display')
+    workers[testChan].emit('test','Test app display ~full')
 )
 tests.add(
-  'name' : 'The app is displayed',
-  'previous' : 'ask app display',
+  'name' : 'app display ~full',
+  'previous' : 'ask app display ~full',
   'delay' : 1000
   'check' : () ->
-    testPortReplies['Test app display : true']
+    testPortReplies['Test app display ~full : true']
 )
 # It can't find a way to run several instances of irc client...
 # An external bot (Resonance-test) is used to simulate incoming messages.
@@ -368,6 +368,10 @@ tests.add(
 # /msg Resonance-test join #chan
 # /msg Resonance-test say #chan message
 testBot = 'Resonance-test'
+
+# Clear histories
+storage.messagesHistory = {}
+storage.privateMessagesHistory = {}
 
 tests.add(
   'name' : 'Connected to the corresponding chan',
@@ -386,7 +390,7 @@ date = new Date()
 date = date.toString()
 tests.add(
   'prereq' : true,
-  'name' : 'Send a message in the chan with the testing bot',
+  'name' : 'Send a message in the chan via the testing bot',
   'previous' : 'Connected to the corresponding chan',
   'delay' : 2000
   'check' : () ->
@@ -394,12 +398,26 @@ tests.add(
 )
 tests.add(
   'name' : 'Receive a message and save it in history',
-  'previous' : 'Send a message in the chan with the testing bot',
+  'previous' : 'Send a message in the chan via the testing bot',
   'delay' : 4000
   'check' : () ->
-    okAuthor = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].author == 'Resonance-test')
-    okMessage = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].message == date)
-    ( okAuthor and okMessage )
+    date in ( e.message for e in storage.messagesHistory[testChan])
+)
+
+tests.add(
+  'prereq' : true,
+  'name' : 'Tell the app to send a message',
+  'previous' : 'Connected to the corresponding chan',
+  'delay' : 1000
+  'check' : () ->
+    workers[testChan].emit('test','Send message')
+)
+tests.add(
+  'name' : 'Send a message via the app',
+  'previous' : 'Tell the app to send a message',
+  'delay' : 4000
+  'check' : () ->
+    'coucou' in ( e.message for e in storage.messagesHistory[testChan])
 )
 
 

@@ -43,6 +43,7 @@ box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
 #main {
     flex: 1 6 100%;
     order: 2;
+    width: 100%;
 }
 #resonance_left {
     flex: 1 6 80%;
