@@ -318,7 +318,7 @@ tests.add(
   'prereq' : true,
   'name' : 'sebsauvage.net is open',
   'previous' : 'Open sebsauvage.net',
-  'delay' : 20000
+  'delay' : 10000
   'check' : () ->
     tabs.activeTab.url ==  'http://sebsauvage.net/'
 )
@@ -328,7 +328,7 @@ testChan = ''
 tests.add(
   'name' : 'tab.chan is correctly defined for sebsauvage',
   'previous' : 'sebsauvage.net is open',
-  'delay' : 500
+  'delay' : 100
   'check' : () ->
     testChan = '#'+sha1(tabs.activeTab.url+tabs.activeTab.title).toString()
     tabs.activeTab.chan ==  testChan
@@ -338,14 +338,14 @@ tests.add(
   'prereq':true,
   'name' : 'Test port communication with the tab of sebsauvage',
   'previous' : 'sebsauvage.net is open',
-  'delay' : 500
+  'delay' : 100
   'check' : () ->
     workers[testChan].emit('test','Test port communication')
 )
 tests.add(
   'name' : 'workers[chan] allow communication with the correct tab for sebsauvage ',
   'previous' : 'Test port communication with the tab of sebsauvage',
-  'delay' : 1000
+  'delay' : 300
   'check' : () -> 
     testPortReplies['Test port communication : sebsauvage.net']
     
@@ -361,7 +361,7 @@ tests.add(
 tests.add(
   'name' : 'app display ~full',
   'previous' : 'ask app display ~full',
-  'delay' : 1000
+  'delay' : 300
   'check' : () ->
     testPortReplies['Test app display ~full : true']
 )
@@ -378,8 +378,8 @@ storage.privateMessagesHistory = {}
 
 tests.add(
   'name' : 'Connected to the corresponding chan',
-  'previous' : 'sebsauvage.net is open',
-  'delay' : 1000
+  'previous' : 'Client connected in less than 20s',
+  'delay' : 4000
   'check' : () ->
     testChan = '#'+sha1(tabs.activeTab.url+tabs.activeTab.title).toString()
     # Tell the test bot to join the same chan
@@ -411,16 +411,31 @@ tests.add(
   'prereq' : true,
   'name' : 'Tell the app to send a message',
   'previous' : 'Connected to the corresponding chan',
-  'delay' : 1000
+  'delay' : 300
   'check' : () ->
     workers[testChan].emit('test','Send message')
 )
 tests.add(
   'name' : 'Send a message via the app',
   'previous' : 'Tell the app to send a message',
-  'delay' : 4000
+  'delay' : 1000
   'check' : () ->
     'coucou' in ( e.message for e in storage.messagesHistory[testChan])
+)
+tests.add(
+  'prereq' : true,
+  'name' : 'Check that messages in history are really displayed',
+  'previous' : 'Receive a message and save it in history',
+  'delay' : 2000
+  'check' : () ->
+    workers[testChan].emit('test','Displayed messages',storage.messagesHistory[testChan])
+)
+tests.add(
+  'name' : 'Display messages from updated history ',
+  'previous' : 'Check that messages in history are really displayed',
+  'delay' : 300
+  'check' : () ->
+    testPortReplies['Displayed messages : true']
 )
 
 
