@@ -6,7 +6,7 @@ data = require("sdk/self").data
 storage = require("sdk/simple-storage").storage 
 
 sha1 = require('./sha1.js').sha1
-irc = require('./bundle') 
+irc = require('./_irc.js') 
 
 # Histories
 storage.messagesHistory ?= {}
@@ -153,6 +153,8 @@ tabs.on 'ready', (tab) ->
           data.url("controllers/SettingsController.js"),
           data.url("controllers/PrivateMessagesController.js"),
           data.url("controllers/PrivateUsersController.js"),
+          # USED FOR TESTS ONLY
+          data.url("tests.js"),
       ]})
   # Save the linked worker.
   tab.worker = worker
@@ -222,6 +224,10 @@ tabs.on 'ready', (tab) ->
     #todo : sanitize !
     storage.appSize = height
 
+  # USED FOR TESTS ONLY
+  worker.port.on 'test', (response) ->
+    testPortReplies[response] = true
+
 
 tabs.on 'close', (tab) ->    
   # Unlink the worker 
@@ -248,10 +254,10 @@ class Tests
   add: (test) ->
     test.followers = []
     @tests.push(test)
-    if not (test.before in (t.name for t in @tests))
+    if not (test.previous in (t.name for t in @tests))
       @rootTests.push(test)
     else
-      prevTest = (t for t in @tests when t.name == test.before)[0]
+      prevTest = (t for t in @tests when t.name == test.previous)[0]
       @follow(test,prevTest)
   follow: (follower, firstTest) ->
     firstTest.followers.push(follower)
@@ -261,10 +267,12 @@ class Tests
       @assert(test)
 
   assert: (test) =>
-    result = 'Failed.'
+    # prereq are not really tests, but just some actions which are prerequired for the next test
+    result = '\n\t\tFAILED.\n'
     if test.check()
       result = 'Passed.'
-    console.log('[[ TESTS ]] '+test.name+' : '+result)
+    if not (test.prereq?)
+      console.log('[[ TESTS ]] '+test.name+' : '+result)
     assert = @assert
     for next in test.followers
       do (next) ->
@@ -274,35 +282,86 @@ tests = new Tests()
 
 tests.add(
   'name' : 'Addon started',
-  'before' : '',
+  'previous' : '',
   'delay' : 0
   'check' : () -> true
 )
 tests.add(
   'name' : 'Storage available',
-  'before' : '',
+  'previous' : '',
   'delay' : 0
   'check' : () -> storage?
 )
 tests.add(
   'name' : 'Client connected in less than 20s',
-  'before' : 'Addon started',
+  'previous' : 'Addon started',
   'delay' : 20000
   'check' : () -> client.connected
 )
+
+testPortReplies = {}
 # This test is added while it is not really a test, just to open the page.
 # I just can't find another way to wait to the tab to become active
 tests.add(
+  'prereq' : true,
   'name' : 'Open sebsauvage.net',
-  'before' : 'Client connected in less than 20s',
+  'previous' : 'Addon started',
   'delay' : 1000
   'check' : () ->
     tabs.open('sebsauvage.net')
-    true # what else ?
+    
+)
+tests.add(
+  'prereq' : true,
+  'name' : 'sebsauvage.net is open',
+  'previous' : 'Open sebsauvage.net',
+  'delay' : 20000
+  'check' : () ->
+    tabs.activeTab.url ==  'http://sebsauvage.net/'
 )
 
 testChan = ''
 
+tests.add(
+  'name' : 'tab.chan is correctly defined for sebsauvage',
+  'previous' : 'sebsauvage.net is open',
+  'delay' : 500
+  'check' : () ->
+    testChan = '#'+sha1(tabs.activeTab.url+tabs.activeTab.title).toString()
+    tabs.activeTab.chan ==  testChan
+)
+
+tests.add(
+  'prereq':true,
+  'name' : 'Test port communication with the tab of sebsauvage',
+  'previous' : 'sebsauvage.net is open',
+  'delay' : 500
+  'check' : () ->
+    workers[testChan].emit('test','Test port communication')
+)
+tests.add(
+  'name' : 'workers[chan] allow communication with the correct tab for sebsauvage ',
+  'previous' : 'Test port communication with the tab of sebsauvage',
+  'delay' : 1000
+  'check' : () -> 
+    testPortReplies['Test port communication : sebsauvage.net']
+    
+)
+tests.add(
+  'prereq' : true
+  'name' : 'ask app display',
+  'previous' : 'sebsauvage.net is open',
+  'delay' : 1000
+  'check' : () ->
+    workers[testChan].emit('test','Test app display')
+)
+tests.add(
+  'name' : 'The app is displayed',
+  'previous' : 'ask app display',
+  'delay' : 1000
+  'check' : () ->
+    testPortReplies['Test app display : true']
+)
 # It can't find a way to run several instances of irc client...
 # An external bot (Resonance-test) is used to simulate incoming messages.
 # It is controlled by irc via private messages using the commands :
@@ -312,8 +371,8 @@ testBot = 'Resonance-test'
 
 tests.add(
   'name' : 'Connected to the corresponding chan',
-  'before' : 'Open sebsauvage.net',
-  'delay' : 20000
+  'previous' : 'sebsauvage.net is open',
+  'delay' : 1000
   'check' : () ->
     testChan = '#'+sha1(tabs.activeTab.url+tabs.activeTab.title).toString()
     # Tell the test bot to join the same chan
@@ -326,23 +385,23 @@ tests.add(
 date = new Date()
 date = date.toString()
 tests.add(
+  'prereq' : true,
   'name' : 'Send a message in the chan with the testing bot',
-  'before' : 'Connected to the corresponding chan',
+  'previous' : 'Connected to the corresponding chan',
   'delay' : 2000
   'check' : () ->
-    
     client.say( testBot, 'say '+testChan+' '+date)
-    true
 )
 tests.add(
-  'name' : 'Receive the message and save it in history',
-  'before' : 'Send a message in the chan with the testing bot',
+  'name' : 'Receive a message and save it in history',
+  'previous' : 'Send a message in the chan with the testing bot',
   'delay' : 4000
   'check' : () ->
     okAuthor = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].author == 'Resonance-test')
     okMessage = (storage.messagesHistory[testChan][storage.messagesHistory[testChan].length-1].message == date)
     ( okAuthor and okMessage )
 )
+
 
 
 tests.run()
