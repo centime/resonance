@@ -50,8 +50,8 @@ window.app.controller "MessagesController", ($scope) ->
     $scope.authorIsMe = (message) -> 
         wordsInMessage = message.message.split(' ')
         if message.author == $scope.currentnick
-            {'red': true}
+            {'authorIsMe': true}
         else if (wordsInMessage.indexOf($scope.currentnick) >= 0)
-            {'yellow': true}
+            {'authorToMe': true}
         else
-            {'blue': true}
+            {'otherAuthor': true}

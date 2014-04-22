@@ -124,14 +124,14 @@ privateusers{\
 .list{\
     overflow: auto;\
 }\
-.red{\
-    color: red;\
+.authorIsMe{\
+    color: #353535;\
 }\
-.blue{\
-    color: blue;\
+.otherAuthor{\
+    color: #000000;\
 }\
-.yellow{\
-    color: yellow;\
+.authorToMe{\
+    text-decoration : underline;\
 }\
 </style>\
 <resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>\

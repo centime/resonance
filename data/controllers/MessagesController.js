@@ -79,15 +79,15 @@
       wordsInMessage = message.message.split(' ');
       if (message.author === $scope.currentnick) {
         return {
-          'red': true
+          'authorIsMe': true
         };
       } else if (wordsInMessage.indexOf($scope.currentnick) >= 0) {
         return {
-          'yellow': true
+          'authorToMe': true
         };
       } else {
         return {
-          'blue': true
+          'otherAuthor': true
         };
       }
     };
