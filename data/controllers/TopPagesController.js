@@ -1,34 +1,58 @@
-app.controller("TopPagesController", function($scope){
-    // List of pages {url : visitors}
+(function() {
+
+  window.app.controller("TopPagesController", function($scope) {
+    var lastDom;
     $scope.topPages = [];
-    self.port.on('topPages', function(topPages){
-        // Split the string from the bot 'url,visitors,url,visitors,...'
-        var s = topPages.split(',');
-        // Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
-        for (var i=0;i<s.length;i+=2){
-            $scope.topPages.push([ s[i],s[i+1] ]) ;
-        };
-        // Update the view.
-        $scope.$apply();
-    });
-    // Execute when TopPages is shown.
-    // Have top pages already been asked since TopPgae has been shown ?
-    var lastDom = null ;
-    var lastKey = null ;
-    $scope.getTopPages = function(displayTopPages){
-        // If not
-        var domain = $scope.domain;
-        var ts = $scope.typeSearch;
-        if (displayTopPages ){
-            if ((ts=='dom') && (lastDom!=domain)){
-                self.port.emit('getTopPagesDom',domain);
-                lastDom = domain ;
-            }
-            if ((lastKey!=domain) && (ts=='key')){
-                self.port.emit('getTopPagesKey',domain);
-                lastKey = domain ;
-            }
+    self.port.on('topPages', function(topPages) {
+      var i, p, page, pages, s, v, visitors;
+      topPages = atob(topPages);
+      s = topPages.split(',');
+      pages = (function() {
+        var _i, _len, _results, _step;
+        _results = [];
+        for (_i = 0, _len = s.length, _step = 2; _i < _len; _i += _step) {
+          p = s[_i];
+          _results.push(p);
         }
-        return displayTopPages;
+        return _results;
+      })();
+      visitors = (function() {
+        var _i, _len, _ref, _results, _step;
+        _ref = s.slice(1);
+        _results = [];
+        for (_i = 0, _len = _ref.length, _step = 2; _i < _len; _i += _step) {
+          v = _ref[_i];
+          _results.push(v);
+        }
+        return _results;
+      })();
+      if (pages[0].slice(0, 5) === 'begin') {
+        $scope.topPages = [];
+        pages[0] = pages[0].substring(5);
+      }
+      $scope.topPages = $scope.topPages.concat((function() {
+        var _len, _results;
+        _results = [];
+        for (i = 0, _len = pages.length; i < _len; i++) {
+          page = pages[i];
+          _results.push([page, visitors[i]]);
+        }
+        return _results;
+      })());
+      return $scope.$apply();
+    });
+    lastDom = '';
+    return $scope.getTopPages = function(displayTopPages) {
+      var domain;
+      domain = $scope.domain;
+      if (displayTopPages) {
+        if (lastDom !== domain) {
+          self.port.emit('getTopPages', domain);
+          lastDom = domain;
+        }
+      }
+      return displayTopPages;
     };
-});
+  });
+
+}).call(this);

@@ -22,15 +22,10 @@ $('body').css('margin-bottom',SIZE)
 /***************************************************************************/
 var content = "\
 <style>\
-messages > ul {background: blue}\
-controls {background: red}\
-users {background: green}\
-settings {background: yellow}\
-topPages {background: purple}\
-\
 resonance {\
     height: 100% ;\
     width: 100% ;\
+    background-color: \
 }\
 resonance * {\
     border : 0px;\
@@ -46,6 +41,32 @@ resonance * {\
 .column {\
     flex-flow: column;\
     flex-direction: column;\
+}\
+.bordered{\
+    border:3px solid gray;\
+    background-color: #DAE5E6 ;\
+}\
+.border_gradient {\
+    border: 5px solid #000;\
+    -moz-border-bottom-colors:#897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;\
+    -moz-border-top-colors:  #897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;\
+    -moz-border-left-colors: #897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;\
+    -moz-border-right-colors:#897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;\
+}\
+.test_box_shadow{\
+    -webkit-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);\
+-moz-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);\
+box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);\
+}\
+#border {\
+    flex: 1 6 5px;\
+    order: 1;\
+    background: gray ;\
+    cursor: n-resize;\
+}\
+#main {\
+    flex: 1 6 100%;\
+    order: 2;\
 }\
 #resonance_left {\
     flex: 1 6 80%;\
@@ -65,73 +86,131 @@ messages > ul {\
 messages > form {\
     flex: 1 6 20%;\
     order: 2;\
+    max-height: 30px ;\
 }\
 messages input {\
     width: 100% ;\
     height: 100% ;\
 }\
+.old_message {\
+    color : gray;\
+}\
 controls{\
     flex: 1 6 30px;\
     order: 1;\
 }\
+controls > button {\
+    height: 100%;\
+    min-width: 30px;\
+}\
 users{\
     flex: 1 6 80%;\
     order: 2;\
+}\
+users li{\
+    border-bottom: 1px solid;\
+    border-bottom-color: gray;\
+}\
+privatemessages > ul {\
+    flex: 1 6 80%;\
+    order: 1;\
+}\
+privatemessages > form {\
+    flex: 1 6 20%;\
+    order: 2;\
+    max-height: 30px ;\
+}\
+privatemessages input {\
+    width: 100% ;\
+    height: 100% ;\
+}\
+privateusers{\
+    flex: 1 6 80%;\
+    order: 3;\
+}\
+privateusers li{\
+    border-bottom: 1px solid;\
+    border-bottom-color: gray;\
+}\
+.selected {\
+    background: white; \
 }\
 .list{\
     overflow: auto;\
 }\
 \
 </style>\
-<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex row'>\
-    <div id='resonance_left'>\
-        <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>\
-            <ul class='list'>\
-                <li ng-repeat='message in messages track by $index'>\
-                      {{message}}\
-                </li>\
-            </ul>\
-            <form ng-submit='submitNewMessage()'>\
-                <input type='text' ng-model='newMessage'/>\
-            </form>\
-        </messages>\
-        <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
-            <form ng-submit='getTopPages(display==2)'>\
-                <input type='radio' ng-model='typeSearch' value='dom'/>Recherche par domaine<br>\
-                <input type='radio' ng-model='typeSearch' value='key'/>Recherche par mot clé<br>\
-                <input type='text' ng-model='domain'/>\
-            </form>\
-            <ul class='list'>\
-                <li ng-repeat='page in topPages track by $index'>\
-                      {{page[1]}}:{{page[0]}}\
-                </li>\
-            </ul>\
-        </topPages>\
-        <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
-            <form >\
-                <input type='text' ng-model='newNick'></input>\
-                <br>\
-                <button ng-click='saveSettings();$parent.display=1'>save</button>\
-            </form>\
-       </settings>\
-\
-    </div>\
-    <div id='resonance_right' class='flex column'>\
-        <controls>\
-            <button ng-click='display=(display==2)?1:2'>top pages</button>\
-            <button ng-click='display=(display==3)?1:3'>settings</button>\
-        </controls>\
-        <users ng-controller='UsersController'>\
-            <ul class='list'>\
-                <li ng-repeat='user in users track by $index'>\
-                      {{user}}\
-                </li>\
-            </ul>\
-        </users>\
+<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>\
+    <div id='border' ng-click='resizing = !resizing'></div>\
+    <div id='main' class='flex row'>\
+        <div id='resonance_left' class='bordered'>\
+            <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>\
+                <ul class='list'>\
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='oldMessage(message)'>\
+                          {{message.author}}: {{message.message}}\
+                    </li>\
+                </ul>\
+                <form ng-submit='submitNewMessage()'>\
+                    <input type='text' ng-model='newMessage'/>\
+                </form>\
+            </messages>\
+            <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
+                <form>\
+                    <input type='text' ng-model='domain'/>\
+                </form>\
+                <ul class='list'>\
+                    <li ng-repeat='page in topPages track by $index'>\
+                          {{page[0]}}: {{page[1]}}\
+                    </li>\
+                </ul>\
+            </topPages>\
+            <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
+                <form >\
+                    <input type='text' ng-model='newNick'></input>\
+                    <br>\
+                    <button ng-click='saveSettings();$parent.display=1'>save</button>\
+                </form>\
+           </settings>\
+           <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>\
+                <ul class='list'>\
+                    <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>\
+                          {{message.author}}: {{message.message}}\
+                    </li>\
+                </ul>\
+                <form ng-submit='submitNewMessage()'>\
+                    <input type='text' ng-model='newMessage'/>\
+                </form>\
+            </privatemessages>\
+        </div>\
+        <div id='resonance_right' class='flex column'>\
+            <controls class='bordered'>\
+                <button ng-click='display=(display==2)?1:2'>T</button>\
+                <button ng-click='display=(display==4)?1:4'>P</button>\
+                <button ng-click='display=(display==3)?1:3'>S</button>\
+            </controls>\
+            <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>\
+                <ul class='list'>\
+                    <li ng-repeat='user in users track by $index'>\
+                        <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>\
+                        <actions ng-show='displayActions[user]'>\
+                            <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>\
+                            <button ng-click='unMute(user)' ng-hide='!isMute(user)'>unMute</button>\
+                            <button ng-click='startPm(user)' ng-hide='isClient(user)'>private message</button>\
+                        </actions>\
+                    </li>\
+                </ul>\
+            </users>\
+            <privateusers ng-controller='PrivateUsersController' ng-show='display==4' class='bordered'>\
+                <ul class='list'>\
+                    <li ng-repeat='user in pmUsers track by $index'>\
+                        <div ng-click='selectPmUser(user)' ng-class='selected(user)'>{{user}}</div>\
+                    </li>\
+                </ul>\
+            </privateusers>\
+        </div>\
     </div>\
 </resonance>\
 \
-  \
 ";
 
 document.getElementById("resonance_container").innerHTML = content ;

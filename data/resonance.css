@@ -1,12 +1,7 @@
-messages > ul {background: blue}
-controls {background: red}
-users {background: green}
-settings {background: yellow}
-topPages {background: purple}
-
 resonance {
     height: 100% ;
     width: 100% ;
+    background-color: 
 }
 resonance * {
     border : 0px;
@@ -22,6 +17,32 @@ resonance * {
 .column {
     flex-flow: column;
     flex-direction: column;
+}
+.bordered{
+    border:3px solid gray;
+    background-color: #DAE5E6 ;
+}
+.border_gradient {
+    border: 5px solid #000;
+    -moz-border-bottom-colors:#897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;
+    -moz-border-top-colors:  #897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;
+    -moz-border-left-colors: #897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;
+    -moz-border-right-colors:#897048 #917953 #a18a66 #b6a488 #c5b59b #d4c5ae #e2d6c4 #eae1d2;
+}
+.test_box_shadow{
+    -webkit-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
+-moz-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
+box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
+}
+#border {
+    flex: 1 6 5px;
+    order: 1;
+    background: gray ;
+    cursor: n-resize;
+}
+#main {
+    flex: 1 6 100%;
+    order: 2;
 }
 #resonance_left {
     flex: 1 6 80%;
@@ -41,18 +62,54 @@ messages > ul {
 messages > form {
     flex: 1 6 20%;
     order: 2;
+    max-height: 30px ;
 }
 messages input {
     width: 100% ;
     height: 100% ;
 }
+.old_message {
+    color : gray;
+}
 controls{
     flex: 1 6 30px;
     order: 1;
 }
+controls > button {
+    height: 100%;
+    min-width: 30px;
+}
 users{
     flex: 1 6 80%;
     order: 2;
+}
+users li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
+privatemessages > ul {
+    flex: 1 6 80%;
+    order: 1;
+}
+privatemessages > form {
+    flex: 1 6 20%;
+    order: 2;
+    max-height: 30px ;
+}
+privatemessages input {
+    width: 100% ;
+    height: 100% ;
+}
+privateusers{
+    flex: 1 6 80%;
+    order: 3;
+}
+privateusers li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
+.selected {
+    background: white; 
 }
 .list{
     overflow: auto;

@@ -1,30 +1,82 @@
-app.controller("MessagesController", function($scope){
-    // List of every messages that has been sent or received in the current channel (page).
+(function() {
+  var __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  window.app.controller("MessagesController", function($scope) {
+    var elmt, scrollDown;
     $scope.messages = [];
     $scope.newMessage = '';
-    // Select the DOM element for messages.
-    var elmt = angular.element('messages > ul') ;
-    // Send a new message.
-    $scope.submitNewMessage =  function(){
-                            var msg = $scope.newMessage ;
-                            // Tell the background script to 'say' 'msg' on channel 'IRC.chan'
-                            if (msg !== '')
-                                self.port.emit('say',IRC.chan, msg);
-                            // Clear the input.
-                            $scope.newMessage = '';
-                        };
-    // Listen for a 'message' event.
-    self.port.on("message", function (from,to,message) {
-        // The line will be 'User : Message'.
-        var text = from+' : '+message;
-        // Append it to the list of all messages.
-        $scope.messages.push(text)
-        // Update the view.
-        $scope.$apply()
-        // Scroll down the view.
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000);
-        
-        
+    self.port.on("messagesHistory", function(messagesHistory) {
+      var message;
+      $scope.messages = (function() {
+        var _i, _len, _ref, _results;
+        _results = [];
+        for (_i = 0, _len = messagesHistory.length; _i < _len; _i++) {
+          message = messagesHistory[_i];
+          _results.push({
+            'author': message.author,
+            'message': message.message,
+            'old': message.old,
+            'display': !(_ref = message.author, __indexOf.call($scope.$parent.mutedUsers, _ref) >= 0)
+          });
+        }
+        return _results;
+      })();
+      return scrollDown();
     });
+    $scope.submitNewMessage = function() {
+      var msg;
+      msg = $scope.newMessage;
+      if (msg !== '') self.port.emit('say', IRC.chan, msg);
+      return $scope.newMessage = '';
+    };
+    self.port.on("message", function(from, to, message) {
+      var entry;
+      entry = {
+        'author': from,
+        'message': message,
+        'display': !(__indexOf.call($scope.$parent.mutedUsers, from) >= 0)
+      };
+      $scope.messages.push(entry);
+      $scope.$apply();
+      return scrollDown();
+    });
+    $scope.oldMessage = function(message) {
+      return {
+        'old_message': message.old
+      };
+    };
+    $scope.$parent.$on("mute", function(e, user) {
+      var message, _i, _len, _ref;
+      _ref = $scope.messages;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        message = _ref[_i];
+        if (message.author === user) message.display = false;
+      }
+      return scrollDown();
+    });
+    $scope.$parent.$on("unMute", function(e, user) {
+      var message, _i, _len, _ref;
+      _ref = $scope.messages;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        message = _ref[_i];
+        if (message.author === user) message.display = true;
+      }
+      return scrollDown();
+    });
+    self.port.on('error', function(error) {
+      $scope.messages.push({
+        'author': 'Error',
+        'message': error
+      });
+      $scope.$apply();
+      return scrollDown();
+    });
+    elmt = angular.element('messages > ul');
+    return scrollDown = function() {
+      return elmt.animate({
+        scrollTop: elmt.prop('scrollHeight')
+      }, 1000);
+    };
+  });
 
-});
+}).call(this);
