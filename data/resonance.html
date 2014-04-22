@@ -1,11 +1,11 @@
 <resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>
-    <div id='border' ng-mousedown='startResize($event)' ng-mousemove='resize($event)' ng-mouseup='stopResize'></div>
+    <div id='border' ng-click='resizing = !resizing'></div>
     <div id='main' class='flex row'>
         <div id='resonance_left' class='bordered'>
             <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
-                          {{message}}
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='oldMessage(message)'>
+                          {{message.author}}: {{message.message}}
                     </li>
                 </ul>
                 <form ng-submit='submitNewMessage()'>
@@ -26,20 +26,42 @@
                     <button ng-click='saveSettings();$parent.display=1'>save</button>
                 </form>
            </settings>
-
+           <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>
+                <ul class='list'>
+                    <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>
+                          {{message.author}}: {{message.message}}
+                    </li>
+                </ul>
+                <form ng-submit='submitNewMessage()'>
+                    <input type='text' ng-model='newMessage'/>
+                </form>
+            </privatemessages>
         </div>
         <div id='resonance_right' class='flex column'>
             <controls class='bordered'>
                 <button ng-click='display=(display==2)?1:2'>T</button>
+                <button ng-click='display=(display==4)?1:4'>P</button>
                 <button ng-click='display=(display==3)?1:3'>S</button>
             </controls>
-            <users ng-controller='UsersController' class='bordered'>
+            <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>
                 <ul class='list'>
                     <li ng-repeat='user in users track by $index'>
-                          {{user}}
+                        <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
+                        <actions ng-show='displayActions[user]'>
+                            <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
+                            <button ng-click='unMute(user)' ng-hide='!isMute(user)'>unMute</button>
+                            <button ng-click='startPm(user)' ng-hide='isClient(user)'>private message</button>
+                        </actions>
                     </li>
                 </ul>
             </users>
+            <privateusers ng-controller='PrivateUsersController' ng-show='display==4' class='bordered'>
+                <ul class='list'>
+                    <li ng-repeat='user in pmUsers track by $index'>
+                        <div ng-click='selectPmUser(user)' ng-class='selected(user)'>{{user}}</div>
+                    </li>
+                </ul>
+            </privateusers>
         </div>
     </div>
-
+</resonance>

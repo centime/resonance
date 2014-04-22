@@ -62,10 +62,14 @@ messages > ul {
 messages > form {
     flex: 1 6 20%;
     order: 2;
+    max-height: 30px ;
 }
 messages input {
     width: 100% ;
     height: 100% ;
+}
+.old_message {
+    color : gray;
 }
 controls{
     flex: 1 6 30px;
@@ -78,6 +82,34 @@ controls > button {
 users{
     flex: 1 6 80%;
     order: 2;
+}
+users li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
+privatemessages > ul {
+    flex: 1 6 80%;
+    order: 1;
+}
+privatemessages > form {
+    flex: 1 6 20%;
+    order: 2;
+    max-height: 30px ;
+}
+privatemessages input {
+    width: 100% ;
+    height: 100% ;
+}
+privateusers{
+    flex: 1 6 80%;
+    order: 3;
+}
+privateusers li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
+.selected {
+    background: white; 
 }
 .list{
     overflow: auto;
