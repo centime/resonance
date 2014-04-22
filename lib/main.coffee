@@ -25,6 +25,8 @@ for user,list of storage.privateMessagesHistory
 
 pmUsers = ['Resonance-bot']
 currentPmUser = 'Resonance-bot'
+activePrivateUsers = {}
+
 mutedUsers = storage.mutedUsers ? []
 
 # IRC client init
@@ -69,7 +71,10 @@ client.addListener 'pm', (from,message) ->
     # Save in history.
     storage.privateMessagesHistory[from] ?= []
     storage.privateMessagesHistory[from].push( {'author':from, 'message':message} )
-    emitToAllWorkers 'newPM', from
+    
+    activePrivateUsers[from] = true
+    emitToAllWorkers('activePrivateUsers',activePrivateUsers)
+
     if from == currentPmUser
       emitToAllWorkers('privateMessage', from, currentNick, message)
      
@@ -222,6 +227,12 @@ tabs.on 'ready', (tab) ->
   # stock the current muted Users
   worker.port.on "updateMutedUsers", (mutedUsers) ->
     storage.mutedUsers = mutedUsers
+
+
+  worker.port.on 'unactivePmUser', (user) ->
+    console.log('main unactv '+user)
+    activePrivateUsers[user] = false
+    emitToAllWorkers('activePrivateUsers',activePrivateUsers)
   
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !

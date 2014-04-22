@@ -3,31 +3,30 @@ window.app.controller 'PrivateUsersController', ($scope)->
     $scope.currentPmUser = 'Resonance-bot'
     $scope.pmUsers = []
 
+    # When the user clicks on a user in the list.
     $scope.selectPmUser = (user) ->
+        # Propagate to other tabs via the background
         self.port.emit( 'startPmUser', user)
-        
+        # Update the notifications
+        self.port.emit('unactivePmUser',user)
+    
+    # When a user is selected.
     self.port.on "pmUser", (user, history) ->
         $scope.currentPmUser = user
-        # Update the notifications
-        $scope.privateUsersActive[user] = false
-        $scope.$parent.privateActive = false
-        for user, active of $scope.privateUsersActive
-            if active
-                $scope.$parent.privateActive = true
-        
         $scope.$apply()
     
+    # When the list of private conversations is updated.
     self.port.on "pmUsers", (users) ->
         $scope.pmUsers = users
         $scope.$apply()
 
     # Set the css class
     $scope.class = (user)->
-        { 'selected': user == $scope.currentPmUser, 'active':$scope.privateUsersActive[user]}
+        { 'selected': user == $scope.currentPmUser, 'active':$scope.activePrivateUsers[user]}
 
     # Raise the notification when a new private message is waiting.
-    $scope.privateUsersActive = {}
-    self.port.on 'newPM', (user) ->
-        $scope.$parent.privateActive = true
-        $scope.$parent.$apply()
-        $scope.privateUsersActive[user] = true
+    $scope.activePrivateUsers = {}
+    self.port.on 'activePrivateUsers', (users) ->
+        console.log('PUC actv')
+        $scope.activePrivateUsers = users
+        $scope.$apply()
