@@ -31,8 +31,8 @@ resonance * {
 }
 .test_box_shadow{
     -webkit-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
--moz-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
+    -moz-box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
+    box-shadow: inset -33px 44px 146px -47px rgba(31,31,31,1);
 }
 #border {
     flex: 1 6 5px;
@@ -68,9 +68,6 @@ messages > form {
 messages input {
     width: 100% ;
     height: 100% ;
-}
-.old_message {
-    color : gray;
 }
 controls{
     flex: 1 6 30px;
@@ -109,9 +106,16 @@ privateusers li{
     border-bottom: 1px solid;
     border-bottom-color: gray;
 }
+.list{
+    overflow: auto;
+}
 .selected {
     background: white; 
 }
-.list{
-    overflow: auto;
+.old_message {
+    color : gray;
+}
+@keyframes blink { 50% { background-color: gray; }  }
+.active{
+    animation: blink .5s step-end infinite alternate; 
 }

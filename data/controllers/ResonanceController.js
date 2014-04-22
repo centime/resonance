@@ -10,7 +10,7 @@
       return angular.element('#resonance_container').height(height);
     });
     $scope.resizing = false;
-    return angular.element('body').on('mousemove', function(e) {
+    angular.element('body').on('mousemove', function(e) {
       var newHeight;
 
       if ($scope.resizing) {
@@ -19,6 +19,12 @@
         return self.port.emit('newAppSize', newHeight);
       }
     });
+    $scope.privateActive = false;
+    return $scope.active = function() {
+      return {
+        'active': $scope.privateActive
+      };
+    };
   });
 
 }).call(this);
