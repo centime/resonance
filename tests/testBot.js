@@ -19,5 +19,10 @@ bot.addListener('pm',function(nick,message){
         var chan = message.replace('say ','').split(' ')[0];
         var message = message.replace('say ','').replace(chan+' ','');
         bot.say(chan,message);
+    } else if (message.match(/^pm/)){
+        var message = message.replace('pm ','');
+        console.log( message)
+        console.log(nick)
+        bot.say(nick,message);
     };
 });

@@ -352,18 +352,18 @@ tests.add(
 )
 tests.add(
   'prereq' : true
-  'name' : 'ask app display ~full',
+  'name' : 'App displayed, ~full ?',
   'previous' : 'sebsauvage.net is open',
-  'delay' : 1000
+  'delay' : 2000
   'check' : () ->
-    workers[testChan].emit('test','Test app display ~full')
+    workers[testChan].emit('test','App displayed, ~full ?')
 )
 tests.add(
-  'name' : 'app display ~full',
-  'previous' : 'ask app display ~full',
-  'delay' : 300
+  'name' : 'The app is displayed (>90% width)',
+  'previous' : 'App displayed, ~full ?',
+  'delay' : 1000
   'check' : () ->
-    testPortReplies['Test app display ~full : true']
+    testPortReplies['App displayed, ~full ? : true']
 )
 # It can't find a way to run several instances of irc client...
 # An external bot (Resonance-test) is used to simulate incoming messages.
@@ -424,20 +424,49 @@ tests.add(
 )
 tests.add(
   'prereq' : true,
-  'name' : 'Check that messages in history are really displayed',
+  'name' : 'Are messages in history really displayed ?',
   'previous' : 'Receive a message and save it in history',
   'delay' : 2000
   'check' : () ->
-    workers[testChan].emit('test','Displayed messages',storage.messagesHistory[testChan])
+    workers[testChan].emit('test','Are messages in history really displayed ?',storage.messagesHistory[testChan])
 )
 tests.add(
   'name' : 'Display messages from updated history ',
-  'previous' : 'Check that messages in history are really displayed',
+  'previous' : 'Are messages in history really displayed ?',
   'delay' : 300
   'check' : () ->
-    testPortReplies['Displayed messages : true']
+    testPortReplies['Are messages in history really displayed ? : true']
 )
 
-
-
+# PM
+tests.add(
+  'prereq' : true,
+  'name' : 'Send a pm to the client via the testing bot',
+  'previous' : 'Connected to the corresponding chan',
+  'delay' : 2000
+  'check' : () ->
+    client.say( testBot, 'pm '+date)
+)
+tests.add(
+  'name' : 'Save a pm in history when received',
+  'previous' : 'Send a pm to the client via the testing bot',
+  'delay' : 4000
+  'check' : () ->
+    date in ( e.message for e in storage.privateMessagesHistory[testBot])
+)
+tests.add(
+  'prereq' : true,
+  'name' : 'Updated pm users list ?',
+  'previous' : 'Save a pm in history when received',
+  'delay' : 300
+  'check' : () ->
+    workers[testChan].emit('test','Updated pm users list ?',testBot)
+)
+tests.add(
+  'name' : 'Start a new pm conversation when a pm is received',
+  'previous' : 'Updated pm users list ?',
+  'delay' : 1000
+  'check' : () ->
+    testPortReplies['Updated pm users list ? : true']
+)
 tests.run()
