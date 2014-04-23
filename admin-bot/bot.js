@@ -45,7 +45,9 @@ bot.addListener('pm', function(nick, message) {
     }else console.log('[[pm] '+date+' ] '+message)
 });
 
+// Once the bot is ready.
 bot.addListener('names#resonance',function(){
+    // Listen for ins / outs for every chan where people are.
     bot.addListener('part',function(chan,nick){
         if (typeof(chansToPages[chan]) !== 'undefined'){
                 visitors = visits[chansToPages[chan]] -= 1 ;

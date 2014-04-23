@@ -4,7 +4,7 @@
         <div id='resonance_left' class='bordered'>
             <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
                 <ul class='list'>
-                    <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='oldMessage(message)'>
+                    <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='class(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
                 </ul>

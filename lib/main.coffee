@@ -29,6 +29,9 @@ activePrivateUsers = {}
 
 mutedUsers = storage.mutedUsers ? []
 
+# DEBUG
+storage.nick = 'Mazdra_ta_mere'
+
 # IRC client init
 currentNick = storage.nick ? 'Resonance-dev' 
 client = new irc.Client('chat.freenode.net', currentNick, {
@@ -230,7 +233,6 @@ tabs.on 'ready', (tab) ->
 
 
   worker.port.on 'unactivePmUser', (user) ->
-    console.log('main unactv '+user)
     activePrivateUsers[user] = false
     emitToAllWorkers('activePrivateUsers',activePrivateUsers)
   
@@ -465,6 +467,7 @@ tests.add(
   'previous' : 'Send a pm to the client via the testing bot',
   'delay' : 4000
   'check' : () ->
+    storage.privateMessagesHistory[testBot] ?= []
     date in ( e.message for e in storage.privateMessagesHistory[testBot])
 )
 tests.add(

@@ -7,6 +7,7 @@
 
     $scope.messages = [];
     $scope.newMessage = '';
+    $scope.currentnick = '';
     self.port.on("messagesHistory", function(messagesHistory) {
       var message;
 
@@ -25,6 +26,10 @@
         }
         return _results;
       })();
+      return scrollDown();
+    });
+    self.port.on("nick", function(currentnick) {
+      $scope.currentnick = currentnick;
       return scrollDown();
     });
     $scope.submitNewMessage = function() {
@@ -48,10 +53,19 @@
       $scope.$apply();
       return scrollDown();
     });
-    $scope.oldMessage = function(message) {
-      return {
+    $scope["class"] = function(message) {
+      var classes, wordsInMessage, _ref;
+
+      classes = {
         'old_message': message.old
       };
+      wordsInMessage = message.message.split(new RegExp(' |:', 'g'));
+      if (message.author === $scope.currentnick) {
+        classes['authorIsMe'] = true;
+      } else if (_ref = $scope.currentnick, __indexOf.call(wordsInMessage, _ref) >= 0) {
+        classes['authorToMe'] = true;
+      }
+      return classes;
     };
     $scope.$parent.$on("mute", function(e, user) {
       var message, _i, _len, _ref;
@@ -66,16 +80,19 @@
       return scrollDown();
     });
     $scope.$parent.$on("unMute", function(e, user) {
-      var message, _i, _len, _ref;
+      var message, _i, _len, _ref, _results;
 
       _ref = $scope.messages;
+      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         message = _ref[_i];
         if (message.author === user) {
-          message.display = true;
+          _results.push(message.display = true);
+        } else {
+          _results.push(void 0);
         }
       }
-      return scrollDown();
+      return _results;
     });
     self.port.on('error', function(error) {
       $scope.messages.push({

@@ -59,6 +59,7 @@ resonance * {
 messages > ul {
     flex: 1 6 80%;
     order: 1;
+    color: #000000;
 }
 messages > form {
     flex: 1 6 20%;
@@ -120,4 +121,10 @@ privateusers li{
 @keyframes blink { 50% { background-color: gray; }  }
 .active{
     animation: blink .5s step-end infinite alternate; 
+}
+.authorIsMe{
+    font-weight: 600;
+}
+.authorToMe{
+    text-decoration : underline;
 }
