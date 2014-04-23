@@ -108,6 +108,7 @@ privateusers li{
 }
 .list{
     overflow: auto;
+    height: 100%;
 }
 .selected {
     background: white; 
@@ -115,6 +116,7 @@ privateusers li{
 .old_message {
     color : gray;
 }
+/* Blink */
 @keyframes blink { 50% { background-color: gray; }  }
 .active{
     animation: blink .5s step-end infinite alternate; 

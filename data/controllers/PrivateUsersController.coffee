@@ -13,7 +13,6 @@ window.app.controller 'PrivateUsersController', ($scope)->
     # When a user is selected.
     self.port.on "pmUser", (user, history) ->
         $scope.currentPmUser = user
-        $scope.$apply()
     
     # When the list of private conversations is updated.
     self.port.on "pmUsers", (users) ->
@@ -27,6 +26,5 @@ window.app.controller 'PrivateUsersController', ($scope)->
     # Raise the notification when a new private message is waiting.
     $scope.activePrivateUsers = {}
     self.port.on 'activePrivateUsers', (users) ->
-        console.log('PUC actv')
         $scope.activePrivateUsers = users
         $scope.$apply()

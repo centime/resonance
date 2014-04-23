@@ -237,6 +237,8 @@ tabs.on 'ready', (tab) ->
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !
     storage.appSize = height
+    emitToAllWorkers('appSize',height)
+
 
   # USED FOR TESTS ONLY
   worker.port.on 'test', (response) ->

@@ -9,7 +9,8 @@
       return $scope.mutedUsers = n;
     });
     self.port.on('appSize', function(height) {
-      return angular.element('#resonance_container').height(height);
+      angular.element('#resonance_container').height(height);
+      return angular.element('body').css('margin-bottom', height);
     });
     $scope.resizing = false;
     angular.element('body').on('mousemove', function(e) {
@@ -18,6 +19,7 @@
       if ($scope.resizing) {
         newHeight = window.innerHeight - e.clientY;
         angular.element('#resonance_container').height(newHeight);
+        angular.element('body').css('margin-bottom', newHeight);
         return self.port.emit('newAppSize', newHeight);
       }
     });
@@ -35,7 +37,6 @@
         }
         return _results;
       })(), true) >= 0);
-      console.log('RC actv ' + $scope.privateActive);
       return $scope.$apply();
     });
     return $scope.active = function() {

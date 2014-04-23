@@ -1,24 +1,28 @@
 todos :
 
+
+
 ff-irc :
-    [Exception... "'Error: Uncaught, unspecified 'error' event.' when calling method: [nsIStreamListener::onDataAvailable]"
-    des que IRC lui dit un truc qu'il faut pas (nick utilisé, pm à qqn qui n'existe pas...)
     ssl
-private :
-    centraliser entre les differentes pages
-    pour les messages envoyés
-    pour les discussions ouvertes
-    
-interface
-    resize (via js)
+
+annonces :
+    resonances
+    errrors    
+
+version :
+    annonce
+    updte
+
+bouton addon :
+    activate / desactivate
 
 messages :
     autoriser des \n
+    tab, autocompletion sur les noms
+    fleche du haut pour message precedent
 
 topPages :
-    si le client ouvre 2 fois la meme page, il ne doit s'annoncer / se retirer qu'une fois
-    comment savoir quand le client ferme brutalement son navigateur ?
-    on('close')
+    verifier l'integrité du decompte
     interface
     filtres, categories
 
@@ -31,13 +35,11 @@ admin-bot :
     nickserv
     optimisation temps de traitement, taille de la liste.
 
-messages :
-    refactor on('message') et on('pm')
+Nickserv
 
 users :
     /nick zobizob
-    par liste alphabetique
-    clickable, avec menu d'options
+    changement de nom ?
 
 mute :
     clignotement quand il parle
@@ -51,7 +53,7 @@ no-track :
     limiter le nombre de canaux simultanés ?
 
 refactor main.js
-
+s
 systeme de mise a jour apres installation
 
 clean disconnect
