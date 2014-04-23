@@ -18,7 +18,7 @@ $('body').css('margin-bottom',SIZE)
 /* The following will get generated from :
 /*          resonance.html
 /*          resonance.css
-/* Just run the build.sh script.
+/* Just run the concat.py script.
 /***************************************************************************/
 var content = "\
 <style>\

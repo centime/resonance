@@ -18,7 +18,7 @@ $('body').css('margin-bottom',SIZE)
 /* The following will get generated from :
 /*          resonance.html
 /*          resonance.css
-/* Just run the build.sh script.
+/* Just run the concat.py script.
 /***************************************************************************/
 var content = "\
 <style>\
@@ -162,7 +162,7 @@ toppages > ul {\
 }\
 toppages input {\
     height: 100%;\
-    width: 90%;\
+    width: 91.8%;\
 }\
 toppages button {\
     height: 100%;\
