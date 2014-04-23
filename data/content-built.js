@@ -162,7 +162,7 @@ toppages > ul {\
 }\
 toppages input {\
     height: 100%;\
-    width: 90%;\
+    width: 91.8%;\
 }\
 toppages button {\
     height: 100%;\
