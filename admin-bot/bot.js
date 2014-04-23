@@ -5,7 +5,7 @@ function encode(unencoded) {return new Buffer(unencoded || '').toString('base64'
 function decode (encoded) {return new Buffer(encoded || '', 'base64').toString('utf8');};
 
 var bot = new irc.Client('chat.freenode.net', 'Resonance-bot', {
-    debug: true,
+    debug: false,
     channels: ['#resonance'],
 });
 
@@ -14,10 +14,7 @@ bot.addListener('registered',function(){
     console.log('Connected')
 })
 // The structure in which are kept the pages visited.
-var visits = {'test':0, 'TEST1':1,'TËST!':1, 
-'Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam non fermentum lacus et vehicula purus. Aenean fringilla nibh sapien sed auctor orci fermentum in. Sed cursus at magna et vulputate. Duis mauris lacus adipiscing et justo ac congue gravida nibh. Aliquam luctus magna et ligula tristique bibendum. Duis at venenatis neque. Mauris non risus sed tellus molestie placerat sed sit amet metus. Sed luctus semper imperdiet. Quisque pulvinar tortor est nec dictum lacus feugiat a. Sed interdum urna quis lacus sodales':10,
-'Deuxième Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam non fermentum lacus et vehicula purus. Aenean fringilla nibh sapien sed auctor orci fermentum in. Sed cursus at magna et vulputate. Duis mauris lacus adipiscing et justo ac congue gravida nibh. Aliquam luctus magna et ligula tristique bibendum. Duis at venenatis neque. Mauris non risus sed tellus molestie placerat sed sit amet metus. Sed luctus semper imperdiet. Quisque pulvinar tortor est nec dictum lacus feugiat a. Sed interdum urna quis lacus sodales':50
-}; 
+var visits = {}; 
 // page:visitors
 var chansToPages = {}
 
@@ -36,11 +33,11 @@ bot.addListener('pm', function(nick, message) {
             chansToPages[chan] = page;
             bot.join(chan);
         }
-        
     }
     // If the user asks for the list of most visited pages.
     // todo Slow. Not suited for scaling.
     if (message.match(/^ask/)){
+        console.log(visits)
         var command = message.replace('ask ','')||'';
         var sortable = [];  
         //paramètre 'global'

@@ -152,6 +152,22 @@ privateusers li{\
 .authorToMe{\
     text-decoration : underline;\
 }\
+toppages > form {\
+    flex: 1 6 15%;\
+    order: 1;\
+}\
+toppages > ul {\
+    flex: 1 6 85%;\
+    order: 2;\
+}\
+toppages input {\
+    height: 100%;\
+    width: 90%;\
+}\
+toppages button {\
+    height: 100%;\
+    min-width: 30px;\
+}\
 \
 </style>\
 <resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>\
@@ -168,16 +184,18 @@ privateusers li{\
                     <input type='text' ng-model='newMessage'/>\
                 </form>\
             </messages>\
-            <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
-                <form>\
-                    <input type='text' ng-model='domain'/>\
+            <toppages ng-controller='TopPagesController' ng-show='displayTopPages(display==2)' class='flex column'>\
+                <form ng-submit='getTopPages()'>\
+                    <input type='text' ng-model='regexp'/>\
+                    <button>P</button>\
+                    <button>N</button>\
                 </form>\
                 <ul class='list'>\
                     <li ng-repeat='page in topPages track by $index'>\
-                          {{page[1]}}: {{page[0]}}\
+                          <a href={{page[0]}} target='_newtab'>{{page[1]}}: {{page[0]}}</a>\
                     </li>\
                 </ul>\
-            </topPages>\
+            </toppages>\
             <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>\
                 <form >\
                     <input type='text' ng-model='newNick'></input>\

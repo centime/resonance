@@ -1,6 +1,7 @@
 window.app.controller "TopPagesController", ($scope) ->
     # List of pages {url : visitors}
     $scope.topPages = []
+    $scope.regexp = ''
 
     self.port.on 'topPages', (topPages)->
         topPages = atob(topPages)
@@ -17,14 +18,15 @@ window.app.controller "TopPagesController", ($scope) ->
         # Update the view.
         $scope.$apply()
         
+    $scope.getTopPages = () ->
+        self.port.emit('getTopPages',$scope.regexp)
+                
     # Execute when TopPages is shown.
-    lastDom = ''
-    $scope.getTopPages = (displayTopPages) ->
-    # If not
-        domain = $scope.domain
+    alreadyRequestedTopPage = false
+    $scope.displayTopPages = (displayTopPages) ->
         if displayTopPages
-            if (lastDom!=domain)
-                self.port.emit('getTopPages',domain)
-                lastDom = domain 
-        
+            if (not alreadyRequestedTopPage)
+                self.port.emit('getTopPages',$scope.regexp)
+                alreadyRequestedTopPage = true
+        else alreadyRequestedTopPage = false
         return displayTopPages
