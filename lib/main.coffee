@@ -206,10 +206,13 @@ tabs.on 'ready', (tab) ->
     storage.privateMessagesHistory[user].push( {'author':currentNick, 'message':message} )
     emitToAllWorkers('privateMessage', currentNick, user, message)
 
-  # Listen for the application asking for the top pages.
-  worker.port.on 'getTopPages', () ->
-    # Ask the bot for top tapes.
-    client.say('Resonance-bot','ask')
+# Listen for the application asking for the top pages.
+  worker.port.on 'getTopPages', (domain) ->
+    #Ask the bot for top tapes.
+    if (domain!=null and domain!='')
+      client.say('Resonance-bot','ask keyword '+domain)
+    else
+      client.say('Resonance-bot','ask global')
 
   worker.port.on 'startPmUser', (user) ->
     currentPmUser = user

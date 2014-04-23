@@ -1,7 +1,16 @@
 todos :
 
+BUG :
+    toppage : 
+        lorem ipsum pop quand je demande 'news'
+
 ff-irc :
     ssl
+
+URLS :
+    virer le http://
+        dans la generation du hash (because https)
+        dans le toppage
 
 client :
     gerer la deconnexion / reco

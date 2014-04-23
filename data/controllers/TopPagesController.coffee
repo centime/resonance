@@ -3,27 +3,28 @@ window.app.controller "TopPagesController", ($scope) ->
     $scope.topPages = []
 
     self.port.on 'topPages', (topPages)->
+        topPages = atob(topPages)
         # Split the string from the bot 'url,visitors,url,visitors,...'
         s = topPages.split(',')
         # Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
         pages = (p for p in s by 2)
         visitors = (v for v in s[1..] by 2)
-        $scope.topPages = ( [page, visitors[i]] for page,i in pages )
-
+        if pages[0][0..4]=='begin'
+            $scope.topPages=[]
+            pages[0]=pages[0].substring(5)
+        $scope.topPages = $scope.topPages.concat( [page, visitors[i]] for page,i in pages )
+        
         # Update the view.
         $scope.$apply()
         
     # Execute when TopPages is shown.
-    # Have top pages already been asked since TopPgae has been shown ?
-    askedAlready = false 
+    lastDom = ''
     $scope.getTopPages = (displayTopPages) ->
-        # If not
-        if displayTopPages and not askedAlready
-            self.port.emit('getTopPages')
-            askedAlready = true 
-        # If TopPage isn't displayed anymore
-        else if not displayTopPages and askedAlready
-            askedAlready = false 
-
+    # If not
+        domain = $scope.domain
+        if displayTopPages
+            if (lastDom!=domain)
+                self.port.emit('getTopPages',domain)
+                lastDom = domain 
+        
         return displayTopPages
-    

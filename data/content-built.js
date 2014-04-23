@@ -147,7 +147,7 @@ privateusers li{\
     animation: blink .5s step-end infinite alternate; \
 }\
 .authorIsMe{\
-    color: #353535;\
+    font-weight: 600;\
 }\
 .authorToMe{\
     text-decoration : underline;\
@@ -169,9 +169,12 @@ privateusers li{\
                 </form>\
             </messages>\
             <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>\
+                <form>\
+                    <input type='text' ng-model='domain'/>\
+                </form>\
                 <ul class='list'>\
                     <li ng-repeat='page in topPages track by $index'>\
-                          {{page}}\
+                          {{page[1]}}: {{page[0]}}\
                     </li>\
                 </ul>\
             </topPages>\
