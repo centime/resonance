@@ -59,16 +59,6 @@ window.app.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
 
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        $scope.messages.push({'author':'Error','message':error})
-        # Update the view.
-        $scope.$apply()
-        scrollDown()
-
-
     # Scroll down the messages list.
     elmt = angular.element('messages > ul') 
     scrollDown = ()  ->

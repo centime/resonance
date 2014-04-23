@@ -8,7 +8,7 @@ irc = require('./_irc.js')
 
 
 
-resonanceOptions = {
+storage.resonanceOptions ?= {
   # Activate resonance on firefox start.
   'activated' : true,
   # Join the chan and display Resonance for every page.
@@ -19,8 +19,8 @@ resonanceOptions = {
 }
 
 # Globals
-storage.messagesHistory = {}
-storage.privateMessagesHistory = {}
+storage.messagesHistory ?= {}
+storage.privateMessagesHistory ?= {}
 activePrivateUsers = {}
 mutedUsers = storage.mutedUsers ? []
 workers = {}
@@ -172,7 +172,6 @@ openPage = (tab) ->
           data.url("controllers/MessagesController.js"),
           data.url("controllers/UsersController.js"),
           data.url("controllers/TopPagesController.js"),
-          data.url("controllers/SettingsController.js"),
           data.url("controllers/PrivateMessagesController.js"),
           data.url("controllers/PrivateUsersController.js"),
           # USED FOR TESTS ONLY
@@ -192,7 +191,7 @@ openPage = (tab) ->
   worker.port.emit('appSize',storage.appSize ? '100')
   worker.port.emit('chan',chan)
   worker.port.emit('requestMutedUsers',mutedUsers)
-  worker.port.emit('nick',resonanceOptions.nick)
+  worker.port.emit('nick',storage.resonanceOptions.nick)
   worker.port.emit('messagesHistory', storage.messagesHistory[chan] ? [])
   worker.port.emit('pmUsers',pmUsers)
   storage.privateMessagesHistory[currentPmUser] ?= []
@@ -205,17 +204,17 @@ openPage = (tab) ->
   worker.port.on 'say', (to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
-      workers[to].emit('message',resonanceOptions.nick,to,message)
+      workers[to].emit('message',storage.resonanceOptions.nick,to,message)
       # Save in history.
       storage.messagesHistory[to] ?= []
-      storage.messagesHistory[to].push( {'author':resonanceOptions.nick, 'message': message } )
+      storage.messagesHistory[to].push( {'author':storage.resonanceOptions.nick, 'message': message } )
 
   worker.port.on 'privateMessage', (user, message) ->
     client.say(user,message)
     # Save in history.
     storage.privateMessagesHistory[user] ?= []
-    storage.privateMessagesHistory[user].push( {'author':resonanceOptions.nick, 'message':message} )
-    emitToAllWorkers('privateMessage', resonanceOptions.nick, user, message)
+    storage.privateMessagesHistory[user].push( {'author':storage.resonanceOptions.nick, 'message':message} )
+    emitToAllWorkers('privateMessage', storage.resonanceOptions.nick, user, message)
 
 # Listen for the application asking for the top pages.
   worker.port.on 'getTopPages', (domain) ->
@@ -234,12 +233,6 @@ openPage = (tab) ->
     storage.privateMessagesHistory[user] ?= []
     emitToAllWorkers('pmUser', currentPmUser, storage.privateMessagesHistory[user])
 
-  worker.port.on "newNick", (nick) ->
-    #todo : sanitize !
-    resonanceOptions.nick = nick 
-    #todo : nickserv alerts
-    worker.port.emit('message','Resonance',resonanceOptions.nick,'Your new nick will be saved and available as soon as you restart firefox.')
-  
   # stock the current muted Users
   worker.port.on "updateMutedUsers", (mutedUsers) ->
     storage.mutedUsers = mutedUsers
@@ -278,20 +271,20 @@ require("sdk/widget").Widget({
   'panel': panel,
   'onClick': () ->
     # todo : about:blank & co
-    resonanceOptions['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
-    resonanceOptions['started'] = tabs.activeTab.started ?= 'false'
-    panel.port.emit('initOptions',resonanceOptions)
+    storage.resonanceOptions['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
+    storage.resonanceOptions['started'] = tabs.activeTab.started ?= 'false'
+    panel.port.emit('initOptions',storage.resonanceOptions)
 })
 
 panel.port.on 'updateOptions',(opt) ->
-  resonanceOptions = opt
+  storage.resonanceOptions = opt
 
 panel.port.on 'activate',(value) ->
   # todo : join & display where it should be joined & displayed
   if value
-    startClient(resonanceOptions)
+    startClient(storage.resonanceOptions)
   else
-    emitToAllWorkers('display','hide')
+    emitToAllWorkers('close')
     client.disconnect()
 
 panel.port.on 'startForPage',(value) ->
@@ -300,22 +293,22 @@ panel.port.on 'startForPage',(value) ->
       openPage(tabs.activeTab)
       tabs.activeTab.started = true
   else
-    tabs.activeTab.worker.port.emit('display','hide')
+    tabs.activeTab.worker.port.emit('close')
     closePage(tabs.activeTab)
     tabs.activeTab.started = false
 
 
-if resonanceOptions.activated
-  startClient(resonanceOptions)
+if storage.resonanceOptions.activated
+  startClient(storage.resonanceOptions)
 
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->
   # If a page was displayed.
   if tab.chan?
     closePage(tab)
-  if resonanceOptions.activated
+  if storage.resonanceOptions.activated
     domain = tab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
-    if resonanceOptions.startByDefault or (domain in resonanceOptions.startForDomains)
+    if storage.resonanceOptions.startByDefault or (domain in storage.resonanceOptions.startForDomains)
       openPage(tab)
       tab.started = true
     else tab.started = false

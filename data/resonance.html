@@ -24,13 +24,6 @@
                     </li>
                 </ul>
             </toppages>
-            <settings ng-controller='SettingsController' ng-show='display==3' class='flex'>
-                <form >
-                    <input type='text' ng-model='newNick'></input>
-                    <br>
-                    <button ng-click='saveSettings();$parent.display=1'>Save settings</button>
-                </form>
-           </settings>
            <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>
                 <ul class='list'>
                     <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>
@@ -46,7 +39,6 @@
             <controls class='bordered'>
                 <button ng-click='display=(display==2)?1:2'>T</button>
                 <button ng-click='display=(display==4)?1:4' ng-class='active()'>P</button>
-                <button ng-click='display=(display==3)?1:3'>S</button>
             </controls>
             <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>
                 <ul class='list'>

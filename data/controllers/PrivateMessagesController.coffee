@@ -7,6 +7,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     self.port.on "pmUser", (user, history) ->
         currentPmUser = user
         $scope.messages = history
+        $scope.$apply()
         scrollDown()
     
     # Send a new message.

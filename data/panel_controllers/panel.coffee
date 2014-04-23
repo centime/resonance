@@ -34,3 +34,4 @@ window.app.controller 'PanelController', ($scope) ->
     $scope.newNick = () ->
         options['nick'] = $scope.nick
         self.port.emit('updateOptions',options)
+        alert('Your new nick ('+$scope.nick+') will be saved and updated as soon as you restart firefox.')
