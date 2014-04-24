@@ -1,9 +1,9 @@
-<resonance ng-app='resonance' ng-controller='ResonanceController' class='flex column'>
-    <div id='border' ng-click='resizing = !resizing'></div>
-    <div id='main' class='flex row'>
-        <div id='resonance_left' class='bordered'>
-            <messages ng-controller='MessagesController' ng-show='display==1' class='flex column'>
-                <ul class='list'>
+<resonance_resonance ng-app='resonance' ng-controller='ResonanceController' class='flex_resonance column_resonance'>
+    <div id='border_resonance' ng-click='resizing = !resizing'></div>
+    <div id='main_resonance' class='flex_resonance row_resonance'>
+        <div id='left_resonance' class='bordered_resonance'>
+            <messages_resonance ng-controller='MessagesController' ng-show='display==1' class='flex_resonance column_resonance'>
+                <ul class='list_resonance'>
                     <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='class(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
@@ -11,21 +11,21 @@
                 <form ng-submit='submitNewMessage()'>
                     <input type='text' ng-model='newMessage'/>
                 </form>
-            </messages>
-            <toppages ng-controller='TopPagesController' ng-show='displayTopPages(display==2)' class='flex column'>
+            </messages_resonance>
+            <toppages_resonance ng-controller='TopPagesController' ng-show='displayTopPages(display==2)' class='flex_resonance column_resonance'>
                 <form ng-submit='getTopPages()'>
                     <input type='text' ng-model='regexp'/>
                     <button>P</button>
                     <button>N</button>
                 </form>
-                <ul class='list'>
+                <ul class='list_resonance'>
                     <li ng-repeat='page in topPages track by $index'>
                           <a href={{page[0]}} target="_newtab">{{page[1]}}: {{page[0]}}</a>
                     </li>
                 </ul>
-            </toppages>
-           <privatemessages ng-controller='PrivateMessagesController' ng-show='display==4' class='flex column'>
-                <ul class='list'>
+            </toppages_resonance>
+           <privatemessages_resonance ng-controller='PrivateMessagesController' ng-show='display==4' class='flex_resonance column_resonance'>
+                <ul class='list_resonance'>
                     <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
@@ -33,15 +33,15 @@
                 <form ng-submit='submitNewMessage()'>
                     <input type='text' ng-model='newMessage'/>
                 </form>
-            </privatemessages>
+            </privatemessages_resonance>
         </div>
-        <div id='resonance_right' class='flex column'>
-            <controls class='bordered'>
+        <div id='right_resonance' class='flex_resonance column_resonance'>
+            <controls_resonance class='bordered_resonance'>
                 <button ng-click='display=(display==2)?1:2'>T</button>
                 <button ng-click='display=(display==4)?1:4' ng-class='active()'>P</button>
-            </controls>
-            <users ng-controller='UsersController' ng-show='display!=4' class='bordered'>
-                <ul class='list'>
+            </controls_resonance>
+            <users_resonance ng-controller='UsersController' ng-show='display!=4' class='bordered_resonance'>
+                <ul class='list_resonance'>
                     <li ng-repeat='user in users track by $index'>
                         <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
                         <actions ng-show='displayActions[user]'>
@@ -51,14 +51,14 @@
                         </actions>
                     </li>
                 </ul>
-            </users>
-            <privateusers ng-controller='PrivateUsersController' ng-show='display==4' class='bordered'>
-                <ul class='list'>
+            </users_resonance>
+            <privateusers_resonance ng-controller='PrivateUsersController' ng-show='display==4' class='bordered_resonance'>
+                <ul class='list_resonance'>
                     <li ng-repeat='user in pmUsers track by $index'>
                         <div ng-click='selectPmUser(user)' ng-class='class(user)'>{{user}}</div>
                     </li>
                 </ul>
-            </privateusers>
+            </privateusers_resonance>
         </div>
     </div>
-</resonance>
+</resonance_resonance>

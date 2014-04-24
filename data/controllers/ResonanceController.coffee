@@ -39,7 +39,7 @@ window.app.controller "ResonanceController", ($scope) ->
         $scope.privateActive = ( true in ( active for user, active of users ))
         $scope.$apply()
     $scope.active = () ->
-        {'active':$scope.privateActive}
+        {'active_resonance':$scope.privateActive}
 
 
     # Catch errors.

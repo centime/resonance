@@ -38,12 +38,12 @@ window.app.controller "MessagesController", ($scope) ->
         
     # Set the css class for old messages (history).
     $scope.class = (message) ->
-        classes = {'old_message': message.old}
+        classes = {'old_message_resonance': message.old}
         wordsInMessage = message.message.split(new RegExp(' |:','g'))
         if message.author == $scope.currentnick
-            classes['authorIsMe'] = true
+            classes['authorIsMe_resonance'] = true
         else if $scope.currentnick in wordsInMessage
-            classes['authorToMe'] = true
+            classes['authorToMe_resonance'] = true
         return classes
 
     # Undisplay the messages of the muted user
@@ -60,7 +60,7 @@ window.app.controller "MessagesController", ($scope) ->
                 message.display = true
 
     # Scroll down the messages list.
-    elmt = angular.element('messages > ul') 
+    elmt = angular.element('messages_resonance > ul') 
     scrollDown = ()  ->
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
 

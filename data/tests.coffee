@@ -4,7 +4,7 @@ self.port.on 'test',(msg,param) ->
 
     if msg == 'App displayed, ~full ?'
         displayed = $('#resonance_container')?
-        fullSize = ($('#main').width() > window.innerWidth*9/10)
+        fullSize = ($('#resonance_container').width() > window.innerWidth*9/10)
         self.port.emit('test',msg+' : '+(displayed and fullSize))
         
     if msg == 'Send message'
