@@ -14,7 +14,8 @@ window.app.controller "ResonanceController", ($scope) ->
 
     self.port.on 'appSize',(height) ->
         # Set the size of the app.
-        angular.element('#resonance_container').height height
+        angular.element('#resonance_container').height(height)
+        angular.element('body').css('margin-bottom',height)
 
     # Resizing feature.
     $scope.resizing = false
@@ -27,6 +28,15 @@ window.app.controller "ResonanceController", ($scope) ->
             # Get the desired height from where is the mouse on the screen.
             newHeight = window.innerHeight-e.clientY
             # Update the DOM element.
-            angular.element('#resonance_container').height newHeight
+            angular.element('#resonance_container').height(newHeight)
+            angular.element('body').css('margin-bottom',newHeight)
             # Tell the background script so it can save the value.
             self.port.emit('newAppSize',newHeight)
+
+    # Notification when a private message has been received and not yet been readen.
+    $scope.privateActive = false
+    self.port.on 'activePrivateUsers', (users) ->
+        $scope.privateActive = ( true in ( active for user, active of users ))
+        $scope.$apply()
+    $scope.active = () ->
+        {'active':$scope.privateActive}
