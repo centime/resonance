@@ -30,7 +30,6 @@ window.app.controller 'PanelController', ($scope) ->
                 $scope.startForDomains = (d for d in $scope.startForDomains when d isnt $scope.domain)
         options['startForDomains'] = $scope.startForDomains
         self.port.emit('updateOptions',options)
-        self.port.emit('startForPage',$scope.startForDomain)
     $scope.newNick = () ->
         options['nick'] = $scope.nick
         self.port.emit('updateOptions',options)
