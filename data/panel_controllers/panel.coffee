@@ -7,10 +7,6 @@ window.app.controller 'PanelController', ($scope) ->
         $scope.startForDomain = (opt['domain'] in opt['startForDomains'])
         $scope.$apply()
         options = opt
-    self.port.on 'desactivated' ()->
-        $scope.started = false
-        options.started = false
-        $scope.$apply()
     $scope.toggleStarted = () ->
         $scope.started = not $scope.started
         options['started'] = $scope.started

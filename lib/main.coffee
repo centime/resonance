@@ -19,6 +19,7 @@ storage.resonanceOptions ?= {
 }
 
 # Globals
+versionResonance = 'alpha-0.0.1'
 storage.messagesHistory ?= {}
 storage.privateMessagesHistory ?= {}
 activePrivateUsers = {}
@@ -51,6 +52,7 @@ startClient = (opt) ->
   # Catch the connection event
   client.addListener 'registered', (message) ->
     client.connected = true
+    client.say('Resonance-bot','__version '+versionResonance)
 
   passEvent('names')
   passEvent('join')
@@ -70,7 +72,8 @@ startClient = (opt) ->
     # If it is a announce from the bot.
     if from == 'Resonance-bot' and message.match(/^announce /)
       message = message.replace('announce ','')
-      emitToAllWorkers('announce',message)
+      tabs.activeTab.worker.emit('announce',message)
+
     # If it is a topPages from the bot.
     else if from == 'Resonance-bot' and message.match(/^topPages /)
       message = message.replace('topPages ','')
@@ -99,7 +102,7 @@ startClient = (opt) ->
 getChan = (url,title) ->
   # todo : about:blank & co
   domain = url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
-  '#'+sha1(domain+title).toString() 
+  '#'+sha1(domain+title.replace(/\ /g,'')).toString() 
 
 
 # Used to simply pass events from the client to the app.
@@ -158,7 +161,11 @@ openPage = (tab) ->
   client.send('NAMES',chan) 
 
   # Tell the admin-bot about it.
-  client.say('Resonance-bot','enter '+tab.url+' '+chan)
+  domain = tab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
+  title = tab.title.replace(/\ /g,'')
+  client.say('Resonance-bot','__enter '+tab.url+' '+domain+' '+title)
+  console.log('__enter '+tab.url+' '+domain+' '+tab.title)
+  console.log(chan)
 
   # Inject the application code into the page.
   worker = tab.attach({
@@ -220,9 +227,9 @@ openPage = (tab) ->
   worker.port.on 'getTopPages', (domain) ->
     #Ask the bot for top tapes.
     if (domain!=null and domain!='')
-      client.say('Resonance-bot','ask keyword '+domain)
+      client.say('Resonance-bot','__ask keyword '+domain)
     else
-      client.say('Resonance-bot','ask global')
+      client.say('Resonance-bot','__ask global')
 
   worker.port.on 'startPmUser', (user) ->
     currentPmUser = user
@@ -286,9 +293,9 @@ panel.port.on 'activate',(value) ->
   else
     emitToAllWorkers('close')
     client.disconnect()
-    for tab in tabs
-      tab.started = false
-    panel.port.emit('desactivated')
+    # for tab in tabs
+    #   tab.started = false
+    #panel.port.emit('desactivated')
 
 panel.port.on 'startForPage',(value) ->
   if value
