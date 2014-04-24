@@ -12,13 +12,17 @@
                     <input type='text' ng-model='newMessage'/>
                 </form>
             </messages>
-            <topPages ng-controller='TopPagesController' ng-show='getTopPages(display==2)' class='flex'>
+            <topPages ng-controller='TopPagesController' ng-show='display==2' class='flex'>
                 <form>
                     <input type='text' ng-model='domain'/>
-                </form>
+                    <button ng-click='getTopPages()'>Search</button>
+                    <button ng-click='nbTopPages=nbTopPages+3'>More</button>
+                    <button ng-click='nbTopPages=nbTopPages-3'>Less</button>
+                    Nombre d'urls affichées : {{nbTopPages}}
+                </form>                    
                 <ul class='list'>
                     <li ng-repeat='page in topPages track by $index'>
-                          {{page[1]}}: {{page[0]}}
+                          {{page[1]}} : {{page[0]}}
                     </li>
                 </ul>
             </topPages>
