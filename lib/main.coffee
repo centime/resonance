@@ -286,6 +286,9 @@ panel.port.on 'activate',(value) ->
   else
     emitToAllWorkers('close')
     client.disconnect()
+    for tab in tabs
+      tab.started = false
+    panel.port.emit('desactivated')
 
 panel.port.on 'startForPage',(value) ->
   if value

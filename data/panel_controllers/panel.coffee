@@ -7,6 +7,10 @@ window.app.controller 'PanelController', ($scope) ->
         $scope.startForDomain = (opt['domain'] in opt['startForDomains'])
         $scope.$apply()
         options = opt
+    self.port.on 'desactivated' ()->
+        $scope.started = false
+        options.started = false
+        $scope.$apply()
     $scope.toggleStarted = () ->
         $scope.started = not $scope.started
         options['started'] = $scope.started
@@ -30,7 +34,6 @@ window.app.controller 'PanelController', ($scope) ->
                 $scope.startForDomains = (d for d in $scope.startForDomains when d isnt $scope.domain)
         options['startForDomains'] = $scope.startForDomains
         self.port.emit('updateOptions',options)
-        self.port.emit('startForPage',$scope.startForDomain)
     $scope.newNick = () ->
         options['nick'] = $scope.nick
         self.port.emit('updateOptions',options)
