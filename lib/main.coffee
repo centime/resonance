@@ -1,4 +1,4 @@
-
+base64 = require("sdk/base64");
 widgets = require("sdk/widget")
 URL = require('sdk/url').URL
 tabs = require('sdk/tabs')
@@ -46,6 +46,9 @@ client.addListener 'message', (from, to, message) ->
     storage.messagesHistory[to] ?= []
     storage.messagesHistory[to].push( {'author':from, 'message': message } )
 
+#concatenation of topPages
+assemb = ''
+
 # When the client receives a private message, it goes to every worker, thus to every tab.
 client.addListener 'pm', (from,message) ->
   # If it is a announce from the bot.
@@ -55,7 +58,26 @@ client.addListener 'pm', (from,message) ->
   # If it is a topPages from the bot.
   else if from == 'Resonance-bot' and message.match(/^topPages /)
     message = message.replace('topPages ','')
-    emitToAllWorkers('topPages', message)
+    assemb = assemb + base64.decode(message)
+    if assemb.match('^top')
+      if assemb.match(',')
+        assemb = assemb.replace('top','')
+        s = assemb.split(',')    
+        emitToAllWorkers('topPages', [[s[0],s[1]]])
+        #console.log('STEP 0 :'+assemb)
+    if assemb.match('end$')
+      assemb = assemb.substr(0,assemb.length-3)
+      #console.log('STEP 1 :'+assemb)
+      s = assemb.split(',')
+      #console.log('STEP 2 :'+s.toString())
+      # Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
+      pages = (p for p in s by 2)
+      visitors = (v for v in s[1..] by 2)
+      topPages = ( [page, visitors[i]] for page,i in pages)
+      #console.log('STEP 3 :'+topPages.toString())
+      emitToAllWorkers('topPages', topPages) 
+      assemb=''
+
   # If it is a regular pm.
   else
     if not( from in pmUsers)
@@ -173,12 +195,12 @@ tabs.on 'ready', (tab) ->
     emitToAllWorkers('privateMessage', currentNick, user, message)
 
 # Listen for the application asking for the top pages.
-  worker.port.on 'getTopPages', (domain) ->
+  worker.port.on 'getTopPages', (domain, index) ->
     #Ask the bot for top tapes.
     if (domain!=null and domain!='')
-      client.say('Resonance-bot','ask keyword '+domain)
+      client.say('Resonance-bot','ask '+index+' keyword '+domain)
     else
-      client.say('Resonance-bot','ask global')
+      client.say('Resonance-bot','ask '+index+' global ')
 
   worker.port.on 'startPmUser', (user) ->
     currentPmUser = user
