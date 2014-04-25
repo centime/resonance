@@ -1,12 +1,21 @@
 window.app.controller "TopPagesController", ($scope) ->
     # List of pages {url : visitors}
     $scope.topPages = []
-    $scope.indexTopPages = 10
+    $scope.query = ''
+
     self.port.on 'topPages', (topPages)->
         #Pastes the already recieved string with the new part
         $scope.topPages = topPages
         $scope.$apply()
-    
     $scope.getTopPages = () ->
-        $scope.topPages=[]
-        self.port.emit('getTopPages',$scope.domain, $scope.indexTopPages)
+        self.port.emit('getTopPages',$scope.query,0)
+                
+    # Execute when TopPages is shown.
+    alreadyRequestedTopPage = false
+    $scope.displayTopPages = (displayTopPages) ->
+        if displayTopPages
+            if (not alreadyRequestedTopPage)
+                self.port.emit('getTopPages',$scope.query)
+                alreadyRequestedTopPage = true
+        else alreadyRequestedTopPage = false
+        return displayTopPages

@@ -1,24 +1,42 @@
 todos :
 
+BUG :
+    toppage : 
+        lorem ipsum pop quand je demande 'news'
+        flood
+
 ff-irc :
-    [Exception... "'Error: Uncaught, unspecified 'error' event.' when calling method: [nsIStreamListener::onDataAvailable]"
-    des que IRC lui dit un truc qu'il faut pas (nick utilisé, pm à qqn qui n'existe pas...)
     ssl
-private :
-    centraliser entre les differentes pages
-    pour les messages envoyés
-    pour les discussions ouvertes
-    
-interface
-    resize (via js)
+
+URLS :
+    virer le http://
+        dans la generation du hash (because https)
+        dans le toppage
+
+client :
+    gerer la deconnexion / reco
+
+CSS :
+    transparence ?
+
+annonces :
+    resonances
+    errrors    
+
+version :
+    annonce
+    updte
+
+bouton addon :
+    activate / desactivate
 
 messages :
     autoriser des \n
+    tab, autocompletion sur les noms
+    fleche du haut pour message precedent
 
 topPages :
-    si le client ouvre 2 fois la meme page, il ne doit s'annoncer / se retirer qu'une fois
-    comment savoir quand le client ferme brutalement son navigateur ?
-    on('close')
+    verifier l'integrité du decompte
     interface
     filtres, categories
 
@@ -31,13 +49,12 @@ admin-bot :
     nickserv
     optimisation temps de traitement, taille de la liste.
 
-messages :
-    refactor on('message') et on('pm')
+Nickserv
 
 users :
     /nick zobizob
-    par liste alphabetique
-    clickable, avec menu d'options
+    changement de nom ?
+    /!\ propagation du nouveau nom, pas avant le reboot de FF.
 
 mute :
     clignotement quand il parle
@@ -55,3 +72,24 @@ refactor main.js
 systeme de mise a jour apres installation
 
 clean disconnect
+
+./admin-bot/bot.js:    // todo Slow. Not suited for scaling.
+./data/controllers/MessagesController.coffee:        # todo : what if a user is called Error ?
+./data/controllers/PrivateMessagesController.coffee:        # todo : what if a user is called Error ?
+./data/controllers/ResonanceController.coffee:    # WARNING todo : performance cost of a test on mousemove ?
+./lib/main.coffee:    # todo : How to remove listeners once the chan has been left ?
+./lib/main.coffee:  # todo : use arguments, bitch !
+./lib/main.coffee:    # todo : le worker attaché est il le même pour un même tab ?!
+./lib/main.coffee:  # todo : clean the list when leaving chan
+./lib/main.coffee:  # todo : 
+./lib/main.coffee:    #todo : sanitize !
+./lib/main.coffee:    #todo : nickserv alerts
+./lib/main.coffee:    #todo : sanitize !
+./data/content-built.js:    'z-index': '9999999999999999999999999999999999999999999999' //tofix
+./data/content.js:    'z-index': '9999999999999999999999999999999999999999999999' //tofix
+./lib/main.coffee:# tofix : should be properly implemented using arguments.
+./lib/main.coffee:  # tofix : 2 onglets avec la même page ?
+./lib/main.coffee:# WARNING : it won't work if the chan isn't the first argument of the event !
+./admin-bot/bot.js:// Todo : security.
+./admin-bot/bot.js:        // for security reason
+./lib/main.coffee:# Todo : no need to set it all at once, we could do it when served.

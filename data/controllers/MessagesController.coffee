@@ -3,10 +3,14 @@ window.app.controller "MessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
     $scope.newMessage = ''
-
+    $scope.currentnick = ''
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
         $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
+        scrollDown()
+
+    self.port.on "nick", (currentnick) ->
+        $scope.currentnick=currentnick
         scrollDown()
 
     # Send a new message.
@@ -33,8 +37,14 @@ window.app.controller "MessagesController", ($scope) ->
         scrollDown()
         
     # Set the css class for old messages (history).
-    $scope.oldMessage = (message) ->
-        {'old_message': message.old}
+    $scope.class = (message) ->
+        classes = {'old_message_resonance': message.old}
+        wordsInMessage = message.message.split(new RegExp(' |:','g'))
+        if message.author == $scope.currentnick
+            classes['authorIsMe_resonance'] = true
+        else if $scope.currentnick in wordsInMessage
+            classes['authorToMe_resonance'] = true
+        return classes
 
     # Undisplay the messages of the muted user
     $scope.$parent.$on "mute", (e,user) ->
@@ -48,20 +58,9 @@ window.app.controller "MessagesController", ($scope) ->
         for message in $scope.messages
             if message.author == user
                 message.display = true
-        scrollDown()
-
-
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        $scope.messages.push({'author':'Error','message':error})
-        # Update the view.
-        $scope.$apply()
-        scrollDown()
-
 
     # Scroll down the messages list.
-    elmt = angular.element('messages > ul') 
+    elmt = angular.element('messages_resonance > ul') 
     scrollDown = ()  ->
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+

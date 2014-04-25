@@ -1,6 +1,7 @@
+
 var SIZE = '100px';
 
-var app = $(document.createElement('div')).attr({
+var container = $(document.createElement('div')).attr({
     id: 'resonance_container',
 }).css({
     position: 'fixed',
@@ -8,21 +9,28 @@ var app = $(document.createElement('div')).attr({
     height: SIZE,
     width: '100%',
     background: 'white',
-    'z-index': '9999999999999999999999999999999999999999999999' //tofix
+    'z-index': '9999999999999999999999999999999999999999999999',
 })
-.appendTo(document.body);
-
-$('body').css('margin-bottom',SIZE)
 
 /***************************************************************************/
 /* The following will get generated from :
 /*          resonance.html
 /*          resonance.css
-/* Just run the build.sh script.
+/* Just run the concat.py script.
 /***************************************************************************/
 var content = "\
 <style>\
 </style>\
 ";
 
+
+container.appendTo(document.body);
+var initMargin = $('body').css('margin-bottom')
+$('body').css('margin-bottom',SIZE)
+
 document.getElementById("resonance_container").innerHTML = content ;
+
+self.port.on('close',function(){
+    $('#resonance_container').remove()
+    $('body').css('margin-bottom',initMargin)    
+});
