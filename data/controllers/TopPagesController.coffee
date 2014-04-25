@@ -8,14 +8,14 @@ window.app.controller "TopPagesController", ($scope) ->
         $scope.topPages = topPages
         $scope.$apply()
     $scope.getTopPages = () ->
-        self.port.emit('getTopPages',$scope.query,0)
+        self.port.emit('getTopPages',0,$scope.query)
                 
     # Execute when TopPages is shown.
     alreadyRequestedTopPage = false
     $scope.displayTopPages = (displayTopPages) ->
         if displayTopPages
             if (not alreadyRequestedTopPage)
-                self.port.emit('getTopPages',$scope.query)
+                self.port.emit('getTopPages',0,$scope.query)
                 alreadyRequestedTopPage = true
         else alreadyRequestedTopPage = false
         return displayTopPages

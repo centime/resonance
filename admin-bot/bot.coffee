@@ -10,7 +10,7 @@ encode = (unencoded) ->
 decode = (encoded) ->
     new Buffer(encoded || '', 'base64').toString('utf8')
 
-bot = new irc.Client('chat.freenode.net', 'Resonance-bot', {
+bot = new irc.Client('chat.freenode.net', 'Resonance-bot2', {
     debug: false,
     channels: ['#resonance'],
 })
@@ -23,7 +23,11 @@ bot.addListener 'registered',() ->
 # todo : this could be sent buy the client regarding the place it has to display toppages
 numberOfRequestedEntries = 10
 
-visits = {} 
+visits = {
+    'zob':1
+    'seb':2
+    'fufdhu':798    
+    } 
 # page:visitors
 chansToPages = {}
 
@@ -33,7 +37,6 @@ bot.addListener 'pm', (nick, message) ->
     date = new Date()
     # If the user says he visits one page.
     if message.match(/^__enter /)
-        console.log(message)
         args = message.replace('__enter ','')
         if args.split(' ').length == 3
             # todo security : someone could overwrite chansToPages[chan]
@@ -41,7 +44,6 @@ bot.addListener 'pm', (nick, message) ->
             domain = args.split(' ')[1]
             title = args.split(' ')[2]
             chan = '#'+sha1(domain+title).toString()
-            console.log(page+' '+chan)
             if not chansToPages[chan]?
                 chansToPages[chan] = page
                 bot.join(chan)
@@ -59,7 +61,6 @@ bot.addListener 'pm', (nick, message) ->
         for page,visitors of visits
             if page.match(regexp)
                 sortable.push([page, visitors])
-
         # Sort this array regarding the number of visitors.
         sortSortable = (a,b) -> (b[1] - a[1])
         sorted = sortable.sort(sortSortable)
@@ -73,20 +74,24 @@ bot.addListener 'pm', (nick, message) ->
         # [ ['site1',1], ['site2',2] ]   ----->    'site1,1|site2,2'
         topPagesResponse = selectedByIndex.join('|')
 
-        # Split the response so it wil go through IRC.
-        numberOfPackets = Math.ceil(topPagesResponse.length / packetSize)
-        # todo warning take into account String(i).length
-        packetSize = 200
-
         # Send topPages metadata.
-        totalIndices = Math.ceil(sorted.length / numberOfRequestedEntries)
+        l = sorted.length
+        totalIndices = Math.ceil( l / numberOfRequestedEntries)
         bot.say(nick,'topPagesMetaData '+[regexp, indexRequestedTopPages, totalIndices].join(' '))
 
+
+        # Split the response so it wil go through IRC.
+        # todo warning take into account String(i).length
+        packetSize = 200
+        l = topPagesResponse.length
+        numberOfPackets = Math.ceil( l / packetSize)
+
+        numberOfPackets = 1 if (numberOfPackets==0)
         # Send every paquet.
         for i in [0..numberOfPackets-1]
             packet=topPagesResponse.substr(i*packetSize,packetSize)
             # todo warning : what if 2 toppages are requested at the same time ?
-            bot.say('topPages '+[i, numberOfPackets, packet].join(' '))    
+            bot.say(nick, 'topPages '+[i, numberOfPackets, packet].join(' '))    
 
     else if message.match(/^__version /)
         args = message.replace('__version ','')
@@ -100,6 +105,7 @@ bot.addListener 'pm', (nick, message) ->
             sortable = []
             for page,visitors of visits
                 sortable.push([page, visitors])
+            sortSortable = (a,b) -> (b[1] - a[1])
             bot.say(nick,sortable.sort(sortSortable).toString())
     else if message.match(/^__messages /)
         args = message.replace('__messages ','')
@@ -157,7 +163,6 @@ bot.addListener 'names#resonance', () ->
         #todo : # var visitors = (Object.keys(nicks).length || 1 ) -1 ;
         # why ?
         users = (n for n of nicks)
-        console.log users
         # -1 because we don't want to count the bot.
         visitors = -1 + users.length
         visits[chansToPages[chan]] = visitors 

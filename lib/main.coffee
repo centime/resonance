@@ -217,9 +217,7 @@ openPage = (tab) ->
   domain = tab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
   title = tab.title.replace(/\ /g,'')
   client.say('Resonance-bot','__enter '+tab.url+' '+domain+' '+title)
-  console.log('__enter '+tab.url+' '+domain+' '+tab.title)
-  console.log(chan)
-
+  
   # Inject the application code into the page.
   worker = tab.attach({
       contentScriptFile:[
