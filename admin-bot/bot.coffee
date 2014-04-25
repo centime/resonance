@@ -16,15 +16,18 @@ bot.addListener 'registered',() ->
     console.log('Connected')
 
 # The structure in which are kept the pages visited.
-visits = {['test':0, 'TEST1':1, 
+visits = {'test':0, 'TEST1':1, 
 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam non fermentum lacus et vehicula purus. Aenean fringilla nibh sapien sed auctor orci fermentum in. Sed cursus at magna et vulputate. Duis mauris lacus adipiscing et justo ac congue gravida nibh. Aliquam luctus magna et ligula tristique bibendum. Duis at venenatis neque. Mauris non risus sed tellus molestie placerat sed sit amet metus. Sed luctus semper imperdiet. Quisque pulvinar tortor est nec dictum lacus feugiat a. Sed interdum urna quis lacus sodales':10,
 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1':5,
 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb2':5,
 'ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc':6,
-'test':0, 'TEST1':1]
+'test':0, 'TEST1':1
 }
 # page:visitors
 chansToPages = {}
+
+# todo : this could be sent buy the client regarding the place it has to display toppages
+numberOfRequestedEntries = 10
 
 # When the bot receives a private message.
 # Todo : security.
@@ -43,43 +46,46 @@ bot.addListener 'pm', (nick, message) ->
     # If the user asks for the list of most visited pages.
     # todo Slow. Not suited for scaling.
     if message.match(/^ask/)
-        command = message.replace('ask ','')
-        indexTopPages = command.match('^[0-9]+ ')[0]
-        command = command.replace(indexTopPages.toString(),'')
+        # ask [page index] [keyword]
+        args = message.replace('ask ','').split(' ')
+        indexRequestedTopPages = Number(args[0])
+        regexp = new RegExp(args[1])
+
+        # Construct an array with every page requested.
+        # [ [page1,visitors1],[page2,visitors2] ]
         sortable = []
-        #paramètre 'global'
-        if command.match(/^global/)
-            i = Number(indexTopPages)
-            j = Math.min(visits.length,(i+10))
-            range = [i..j]
-            console.log('visits '+j+'visits.length'+visits.length+'i'+i)
-            for page,visitors in visits
-                console.log('HERE')
+        for page,visitors of visits
+            if page.match(regexp)
                 sortable.push([page, visitors])
-                console.log(sortable.toString())
-        #paramètre 'domaine'
-        else if command.match(/^domain /)
-            domain = command.replace('domain ','')
-            domain = new RegExp("(^http:\/\/|^https:\/\/)(www\.|)"+domain)
-            for page,visitors of visits
-                if page.match(domain)
-                    sortable.push([page, visitors])
-        #paramètre 'keyword'
-        else if command.match(/^keyword /)
-            keyword = command.replace('keyword ','')
-            reg = new RegExp(keyword);
-            for page,visitors of visits
-                if page.match(reg)
-                    sortable.push([page, visitors])
-        
-        #Sorting and turning into string        
+
+        # Sort this array regarding the number of visitors.
         sortSortable = (a,b) -> (b[1] - a[1])
-        raw = 'top'+sortable.sort(sortSortable).toString()+'end'
-        #max size of chunk : 446-entete
-        tchunk = (raw.length/200).toFixed(0)
-        for i in [0..tchunk]
-            chunk=raw.substr(i*200,200)
-            bot.say(nick,'topPages '+encode(chunk))    
+        sorted = sortable.sort(sortSortable)
+
+        # Select only the entries requested
+        i = indexRequestedTopPages
+        n = numberOfRequestedEntries
+        selectedByIndex = sorted[i*n..(i+1)*n-1]
+
+        # Construct the complete response for the topPages request.
+        # [ ['site1',1], ['site2',2] ]   ----->    'site1,1|site2,2'
+        topPagesResponse = selectedByIndex.join('|')
+
+        # Split the response so it wil go through IRC.
+        numberOfPackets = Math.ceil(topPagesResponse.length / packetSize)
+        # todo warning take into account String(i).length
+        packetSize = 200
+
+        # Send topPages metadata.
+        totalIndices = Math.ceil(sorted.length / numberOfRequestedEntries)
+        bot.say(nick,'topPagesMetaData '+[regexp, indexRequestedTopPages, totalIndices].join(' '))
+
+        # Send every paquet.
+        for i in [0..numberOfPackets-1]
+            packet=topPagesResponse.substr(i*packetSize,packetSize)
+            # todo warning : what if 2 toppages are requested at the same time ?
+            bot.say('topPages '+[i, numberOfPackets, packet].join(' '))    
+
     
 
     if message.match(/^coucou/)

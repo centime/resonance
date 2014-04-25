@@ -46,8 +46,6 @@ client.addListener 'message', (from, to, message) ->
     storage.messagesHistory[to] ?= []
     storage.messagesHistory[to].push( {'author':from, 'message': message } )
 
-#concatenation of topPages
-assemb = ''
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 client.addListener 'pm', (from,message) ->
@@ -55,28 +53,67 @@ client.addListener 'pm', (from,message) ->
   if from == 'Resonance-bot' and message.match(/^announce /)
     message = message.replace('announce ','')
     emitToAllWorkers('announce',message)
+
+
+
+  # If it is a topPagesMetaData from the bot.
+  else if from == 'Resonance-bot' and message.match(/^topPagesMetaData /)
+    # Extract the arguments from the message.
+    args = message.replace('topPages ','').split(' ')
+    [ regexp, indexRequestedTopPages, totalIndices ] = args
+    # Pass the topPagesMetaData to the application.
+    emitToAllWorkers('topPagesMetaData', regexp, indexRequestedTopPages, totalIndices)
+    
+
   # If it is a topPages from the bot.
   else if from == 'Resonance-bot' and message.match(/^topPages /)
-    message = message.replace('topPages ','')
-    assemb = assemb + base64.decode(message)
-    if assemb.match('^top')
-      if assemb.match(',')
-        assemb = assemb.replace('top','')
-        s = assemb.split(',')    
-        emitToAllWorkers('topPages', [[s[0],s[1]]])
-        #console.log('STEP 0 :'+assemb)
-    if assemb.match('end$')
-      assemb = assemb.substr(0,assemb.length-3)
-      #console.log('STEP 1 :'+assemb)
-      s = assemb.split(',')
-      #console.log('STEP 2 :'+s.toString())
-      # Contrstruct an array of arrays from the array : [[url,visitors],[url,visitors]...]
-      pages = (p for p in s by 2)
-      visitors = (v for v in s[1..] by 2)
-      topPages = ( [page, visitors[i]] for page,i in pages)
-      #console.log('STEP 3 :'+topPages.toString())
-      emitToAllWorkers('topPages', topPages) 
-      assemb=''
+    # todo warning : what if there are multiple concurent requests for various keywords ?
+    # Extract the arguments from the message.
+    args = message.replace('topPages ','').split(' ')
+    [ packetId, totalPackets, packetContent ] = args
+    
+    # Variable for storing and concatenating the multiple packets of a response.
+    client.topPagesResponse ?= {}
+    # Store the received content at the corresponding index.
+    client.topPagesResponse[packetId] = packetContent
+
+    completeResponse = ''
+    receptionCompleted = true
+    # Check that all packets have been received.
+    for i in [0..totalPackets-1]
+      receptionCompleted = client.topPagesResponse[packetId]?
+      # Concat the packets into one string.
+      completeResponse += client.topPagesResponse[packetId]
+
+    # If all have been received.
+    if receptionCompleted
+      # Construct an array from the string
+      # 'site1,1|site2,2'  --->   [ ['site1',1], ['site2',2] ]
+      entries = completeResponse.split('|')
+      topPages = ( entry.split(',') for entry in entries)
+
+      # Pass the topPages to the application.
+      emitToAllWorkers('topPages',topPages)
+      # Reset.
+      client.topPagesResponse = {}
+    # todo : is the traffic / page refresh overhead really worth this 'optimisation' ?
+    # If not all packets have been received, but the first yes.
+    else if client.topPagesResponse[0]?
+      partialResponse = client.topPagesResponse[0]
+      # Remove the last incomplete page.
+      lastIndex = partialResponse.lastIndexOf('|')
+      # If at least one entry is complete.
+      if lastIndex != -1
+        partialResponse = client.topPagesResponse[0..lastIndex-1]
+
+        # Construct an array from the string
+        # 'site1,1|site2,2'  --->   [ ['site1',1], ['site2',2] ]
+        entries = partialResponse.split('|')
+        topPages = ( entry.split(',') for entry in entries)
+
+        # Pass the topPages to the application.
+        emitToAllWorkers('topPages',topPages)
+
 
   # If it is a regular pm.
   else
