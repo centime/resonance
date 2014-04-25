@@ -59,6 +59,9 @@ window.app.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
 
+    $scope.displayMessages = (displayMessages) ->
+        angular.element('messages_resonance input').focus()
+        return displayMessages
     # Scroll down the messages list.
     elmt = angular.element('messages_resonance > ul') 
     scrollDown = ()  ->

@@ -49,3 +49,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     elmt = angular.element('privatemessages_resonance > ul') 
     scrollDown = ()  ->
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+    #focus the input
+    $scope.displayPrivateMessage = (displayPrivateMessage) ->
+        angular.element('privatemessages_resonance input').focus()
+        return(displayPrivateMessage)
