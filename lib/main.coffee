@@ -77,10 +77,10 @@ startClient = (opt) ->
     # If it is a topPagesMetaData from the bot.
     else if from == 'Resonance-bot' and message.match(/^topPagesMetaData /)
       # Extract the arguments from the message.
-      args = message.replace('topPages ','').split(' ')
-      [ regexp, indexRequestedTopPages, totalIndices ] = args
+      args = message.replace('topPagesMetaData ','').split(' ')
+      [ query, indexRequestedTopPages, totalIndices ] = args
       # Pass the topPagesMetaData to the application.
-      emitToAllWorkers('topPagesMetaData', regexp, indexRequestedTopPages, totalIndices)
+      emitToAllWorkers('topPagesMetaData', query, indexRequestedTopPages, totalIndices)
       
 
     # If it is a topPages from the bot.

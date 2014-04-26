@@ -12,15 +12,19 @@
                     <input type='text' ng-model='newMessage'/>
                 </form>
             </messages_resonance>
-            <toppages_resonance ng-controller='TopPagesController' ng-show='displayTopPages(display==2)' class='flex_resonance column_resonance'>
-                <form ng-submit='getTopPages()'>
-                    <input type='text' ng-model='query'/>
-                    <button>P</button>
-                    <button>N</button>
-                </form>
+            <toppages_resonance ng-controller='TopPagesController' ng-show='displayTopPages(display==2)'>
+                <div class='flex_resonance row_resonance'>
+                    <form ng-submit='getTopPages()'>
+                        <input type='text' ng-model='query'/>
+                    </form>
+                    <button ng-click='previous()'>&lt</button>
+                    <div>{{index+1}}/{{total}}</div>
+                    <button ng-click='next()'>&gt</button>
+                </div>
                 <ul class='list_resonance'>
                     <li ng-repeat='page in topPages track by $index'>
-                          <a href={{page[0]}} target="_newtab">{{page[1]}}: {{page[0]}}</a>
+                        <span>{{page[1]}} </span>
+                        <a href={{page[0]}} target="_newtab">{{page[0]}}</a>
                     </li>
                 </ul>
             </toppages_resonance>

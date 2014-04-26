@@ -10,7 +10,7 @@ encode = (unencoded) ->
 decode = (encoded) ->
     new Buffer(encoded || '', 'base64').toString('utf8')
 
-bot = new irc.Client('chat.freenode.net', 'Resonance-bot2', {
+bot = new irc.Client('chat.freenode.net', 'Resonance-bot', {
     debug: false,
     channels: ['#resonance'],
 })
@@ -21,12 +21,32 @@ bot.addListener 'registered',() ->
     console.log('Connected')
 
 # todo : this could be sent buy the client regarding the place it has to display toppages
-numberOfRequestedEntries = 10
+numberOfRequestedEntries = 11
 
 visits = {
-    'zob':1
+    'zobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzob':1
     'seb':2
     'fufdhu':798    
+    'test1':1
+    'test2':1
+    'test3':1
+    'test4':1
+    'test5':1
+    'test6':1
+    'test7':1
+    'test8':1
+    'test9':1
+    'test10':1
+    'test11':1
+    'test12':1
+    'test13':1
+    'test14':1
+    'test15':1
+    'test16':1
+    'test17':1
+    'test18':1
+    'test19':1
+    'test20':1
     } 
 # page:visitors
 chansToPages = {}
@@ -53,7 +73,8 @@ bot.addListener 'pm', (nick, message) ->
     # ask [page index] [keyword]
         args = message.replace('__ask ','').split(' ')
         indexRequestedTopPages = Number(args[0])
-        regexp = new RegExp(args[1])
+        query = args[1]
+        regexp = new RegExp(query)
 
         # Construct an array with every page requested.
         # [ [page1,visitors1],[page2,visitors2] ]
@@ -75,16 +96,14 @@ bot.addListener 'pm', (nick, message) ->
         topPagesResponse = selectedByIndex.join('|')
 
         # Send topPages metadata.
-        l = sorted.length
-        totalIndices = Math.ceil( l / numberOfRequestedEntries)
-        bot.say(nick,'topPagesMetaData '+[regexp, indexRequestedTopPages, totalIndices].join(' '))
-
+        totalIndices = Math.ceil( sorted.length/numberOfRequestedEntries )
+        bot.say(nick,'topPagesMetaData '+[query, indexRequestedTopPages, totalIndices].join(' '))
+        console.log [query, indexRequestedTopPages, totalIndices].join(' ')
 
         # Split the response so it wil go through IRC.
         # todo warning take into account String(i).length
         packetSize = 200
-        l = topPagesResponse.length
-        numberOfPackets = Math.ceil( l / packetSize)
+        numberOfPackets = Math.ceil( topPagesResponse.length/packetSize )
 
         numberOfPackets = 1 if (numberOfPackets==0)
         # Send every paquet.
@@ -164,5 +183,5 @@ bot.addListener 'names#resonance', () ->
         # why ?
         users = (n for n of nicks)
         # -1 because we don't want to count the bot.
-        visitors = -1 + users.length
+        visitors = users.length-1
         visits[chansToPages[chan]] = visitors 
