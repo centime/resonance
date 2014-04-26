@@ -11,7 +11,7 @@ window.app.controller 'PanelController', ($scope) ->
         $scope.started = not $scope.started
         options['started'] = $scope.started
         self.port.emit('updateOptions',options)
-        self.port.emit('startForPage',$scope.started)
+        self.port.emit('start',$scope.started)
     $scope.toggleActivated = () ->
         $scope.activated = not $scope.activated
         options['activated'] = $scope.activated

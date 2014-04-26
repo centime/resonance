@@ -3,6 +3,7 @@ irc = require('../lib/_irc.js')
 startClient = (env) ->
   client = new irc.Client('chat.freenode.net', env.NICK, {
       debug: true,
+      channels: ['#resonance']
   })
   # Error handling
   client.addListener 'error', (message) ->
@@ -15,10 +16,12 @@ startClient = (env) ->
     client.say('Resonance-bot','__version '+env.versionResonance)
 
   client.addListener 'names', (chan,nicks) ->
-    env.workers[chan].emit('names',chan,nicks)
+    if chan != '#resonance'
+      env.workers[chan].emit('names',chan,nicks)
   
   client.addListener 'join', (chan,nick) ->
-    env.workers[chan].emit('join',chan,nick)
+    if chan != '#resonance'
+      env.workers[chan].emit('join',chan,nick)
 
   # When the client receives a message.
   client.addListener 'message', (from, to, message) ->

@@ -36,14 +36,14 @@ createPanel = (env) ->
       #   tab.started = false
       #panel.port.emit('desactivated')
 
-  panel.port.on 'startForPage',(value) ->
+  panel.port.on 'start',(value) ->
     if value
       if not env.tabs.activeTab.started
-        env.openPage(tabs.activeTab)
+        env.Resonance.start(tabs.activeTab)
         env.tabs.activeTab.started = true
     else
       env.tabs.activeTab.worker.port.emit('close')
-      env.closePage(env.tabs.activeTab)
+      env.Resonance.end(env.tabs.activeTab, env.ResoEnv)
       env.tabs.activeTab.started = false
   panel
 
