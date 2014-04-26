@@ -18,7 +18,7 @@ window.app.controller "MessagesController", ($scope) ->
                             msg = $scope.newMessage 
                             # Tell the background script to 'say' 'msg' on channel 'IRC.chan'
                             if (msg != '')
-                                self.port.emit('say',IRC.chan, msg)
+                                self.port.emit('message',IRC.chan, msg)
                             # Clear the input.
                             $scope.newMessage = ''
 

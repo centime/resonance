@@ -6,6 +6,7 @@ var bot = new irc.Client('chat.freenode.net', 'Resonance-test', {
     debug: true,
     channels: [],
 });
+console.log(bot.userName)
 
 bot.addListener('error', function(message) {
     console.error('ERROR: %s: %s', message.command, message.args.join(' '));

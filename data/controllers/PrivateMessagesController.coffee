@@ -35,16 +35,6 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     $scope.oldMessage = (message) ->
         {'old_message_resonance': message.old}
 
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        $scope.messages.push({'author':'Error','message':error})
-        # Update the view.
-        $scope.$apply()
-        scrollDown()
-
-
     # Scroll down the messages list.
     elmt = angular.element('privatemessages_resonance > ul') 
     scrollDown = ()  ->

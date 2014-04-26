@@ -64,6 +64,7 @@ bot.addListener 'pm', (nick, message) ->
             domain = args.split(' ')[1]
             title = args.split(' ')[2]
             chan = '#'+sha1(domain+title).toString()
+            console.log ['__enter',page,chan].join(' ')
             if not chansToPages[chan]?
                 chansToPages[chan] = page
                 bot.join(chan)
