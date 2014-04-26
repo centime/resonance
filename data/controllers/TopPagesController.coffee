@@ -29,4 +29,6 @@ window.app.controller "TopPagesController", ($scope) ->
                 self.port.emit('getTopPages',$scope.regexp)
                 alreadyRequestedTopPage = true
         else alreadyRequestedTopPage = false
+        #focus the input
+        angular.element('toppages_resonance input').focus()
         return displayTopPages
