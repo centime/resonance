@@ -9,11 +9,10 @@ pmUsers = ['Resonance-bot']
 currentPmUser = 'Resonance-bot'
 
 self = this
-# env = {workers, NICK}
-init = (env) ->
-  for varName,varValue of env
-    self[varName] = varValue
-
+init = (workers, NICK) ->
+  self.workers = workers
+  self.NICK = NICK
+  
 announce = (message, worker) ->
       # message = message.replace('announce ','')
       # worker.emit('announce',message)
@@ -51,7 +50,7 @@ privateMessage = (client, to, message) ->
     # Save in history.
     privateMessagesHistory[to] ?= []
     privateMessagesHistory[to].push( {'author':NICK, 'message':message} )
-    workers.emitToAll('privateMessage', NICK, to, message)
+    workers.emitToAll('privateMessage', NICK, message)
 
 startPmUser = (user) ->
     currentPmUser = user

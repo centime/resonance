@@ -1,9 +1,7 @@
 
 self = this
-# env = {workers}
-init = (env) ->
-  for varName,varValue of env
-    self[varName] = varValue
+init = (workers) ->
+  self.workers = workers
 
 metaData = (message) ->
     # Extract the arguments from the message.

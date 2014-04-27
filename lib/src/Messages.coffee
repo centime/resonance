@@ -6,10 +6,9 @@ setUpHistory(messagesHistory)
 
 
 self = this
-# env = {workers}
-init = (env) ->
-  for varName,varValue of env
-    self[varName] = varValue
+init = (workers, NICK) ->
+    self.workers = workers
+    self.NICK = NICK
 
 # When the client receives a message.
 receive = (from, to, message) ->
