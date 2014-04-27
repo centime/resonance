@@ -20,13 +20,13 @@ Users = require('./Users.js')
 self = this
 # env = {NICK, versionResonance}
 init = (env) ->
-  for varName,varValue of env
-    self[varName] = varValue
+  self.NICK = env.NICK
+  self.versionResonance = env.versionResonance
     
-  Messages.init({workers, NICK})
-  PrivateMessages.init({workers, NICK})
-  TopPages.init({workers})
-  Users.init({workers, NICK})
+  Messages.init(workers, NICK)
+  PrivateMessages.init(workers, NICK)
+  TopPages.init(workers)
+  Users.init(workers, NICK)
 
 # You need to Resonance.init({NICK, versionResonance}) first
 startClient = () ->

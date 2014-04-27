@@ -1,9 +1,8 @@
 
 self = this
-# env = {workers, NICK}
-init = (env) ->
-  for varName,varValue of env
-    self[varName] = varValue
+init = (workers, NICK) ->
+  self.workers = workers
+  self.NICK = NICK
 
 mutedUsers = require("sdk/simple-storage").storage.mutedUsers
 mutedUsers ?= []
