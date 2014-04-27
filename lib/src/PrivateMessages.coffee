@@ -1,5 +1,7 @@
+Nick = require("sdk/simple-storage").storage.nick
+
+require("sdk/simple-storage").storage.privateMessagesHistory ?= {}
 privateMessagesHistory = require("sdk/simple-storage").storage.privateMessagesHistory
-privateMessagesHistory ?= {}
 
 setUpHistory = require('./Utils.js').setUpHistory
 setUpHistory(privateMessagesHistory)
@@ -9,9 +11,8 @@ pmUsers = ['Resonance-bot']
 currentPmUser = 'Resonance-bot'
 
 self = this
-init = (workers, NICK) ->
+init = (workers) ->
   self.workers = workers
-  self.NICK = NICK
   
 announce = (message, worker) ->
       # message = message.replace('announce ','')
@@ -49,8 +50,8 @@ privateMessage = (client, to, message) ->
     client.say(to,message)
     # Save in history.
     privateMessagesHistory[to] ?= []
-    privateMessagesHistory[to].push( {'author':NICK, 'message':message} )
-    workers.emitToAll('privateMessage', NICK, message)
+    privateMessagesHistory[to].push( {'author':Nick.nick, 'message':message} )
+    workers.emitToAll('privateMessage', Nick.nick, message)
 
 startPmUser = (user) ->
     currentPmUser = user

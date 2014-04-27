@@ -26,7 +26,7 @@ getRandomName = () ->
 
     upperFirst(pre)+'_'+upperFirst(post)
 
-DefaultSettings = 
+defaultSettings = 
   # Activate resonance on firefox start.
   'activated' : true
   # Join the chan and display Resonance for every page.
@@ -35,7 +35,10 @@ DefaultSettings =
   'startForDomains' : []
   'nick' : getRandomName()  
 
+defaultNick = 
+  'nick':getRandomName()
 
 module.exports =
-    'DefaultSettings':DefaultSettings
+    'settings':defaultSettings
+    'nick':defaultNick
     'getRandomName':getRandomName

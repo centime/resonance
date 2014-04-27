@@ -1,15 +1,16 @@
+Nick = require("sdk/simple-storage").storage.nick
+
+require("sdk/simple-storage").storage.messagesHistory ?= {}
 messagesHistory = require("sdk/simple-storage").storage.messagesHistory
-messagesHistory ?= {}
 
 setUpHistory = require('./Utils.js').setUpHistory
 setUpHistory(messagesHistory)
 
 
 self = this
-init = (workers, NICK) ->
+init = (workers) ->
     self.workers = workers
-    self.NICK = NICK
-
+    
 # When the client receives a message.
 receive = (from, to, message) ->
     # If it is not a private message.
@@ -29,15 +30,15 @@ bindClient = (client) ->
 say = (client, to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
-      workers[to].emit('message',NICK,to,message)
+      workers[to].emit('message',Nick.nick,to,message)
       # Save in history.
       messagesHistory[to] ?= []
-      messagesHistory[to].push( {'author':NICK, 'message': message } )
+      messagesHistory[to].push( {'author':Nick.nick, 'message': message } )
 
 initWorker = (worker, chan) ->
   worker.port.emit('messagesHistory', messagesHistory[chan] ? [])
 
-# You need to Messages.init({workers, NICK}) first.
+# You need to Messages.init({workers}) first.
 bindWorker = (worker, client) ->
   worker.port.on 'message', (to, message) ->
     say(client, to, message)

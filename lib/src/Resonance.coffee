@@ -1,5 +1,6 @@
 data = require("sdk/self").data 
 storage = require("sdk/simple-storage").storage
+Nick = require("sdk/simple-storage").storage.nick
 
 { getDomain, getChan } = require('./Utils.js')
 Channel = require('./Channel.js').Channel
@@ -18,20 +19,19 @@ Users = require('./Users.js')
 
 
 self = this
-# env = {NICK, versionResonance}
-init = (env) ->
-  self.NICK = env.NICK
-  self.versionResonance = env.versionResonance
+# env = {VERSION}
+init = (VERSION) ->
+  self.VERSION = VERSION
     
-  Messages.init(workers, NICK)
-  PrivateMessages.init(workers, NICK)
+  Messages.init(workers)
+  PrivateMessages.init(workers)
   TopPages.init(workers)
-  Users.init(workers, NICK)
+  Users.init(workers)
 
-# You need to Resonance.init({NICK, versionResonance}) first
+# You need to Resonance.init({VERSION}) first
 startClient = () ->
 
-  client = require('./Client.js').startClient(NICK, versionResonance)
+  client = require('./Client.js').startClient(VERSION)
 
   Users.bindClient(client)
   Messages.bindClient(client)
@@ -88,7 +88,7 @@ start = (tab) ->
   # Send the application some init values.
   worker.port.emit('appSize', storage.appSize ? '100')
   worker.port.emit('chan',chan)
-  worker.port.emit('nick',NICK)
+  worker.port.emit('nick',Nick.nick)
   
   Users.initWorker(worker)
   Messages.initWorker(worker, chan)

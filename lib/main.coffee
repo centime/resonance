@@ -1,24 +1,28 @@
 tabs = require('sdk/tabs')
 
-resonanceOptions = require("sdk/simple-storage").storage.resonanceOptions
-resonanceOptions ?= require('./src/DefaultSettings.js').DefaultSettings
-
 getDomain = require('./src/Utils.js').getDomain
 
-versionResonance = 'alpha-0.0.1'
+VERSION = 'alpha-0.0.1'
 
-NICK = resonanceOptions.nick
+require("sdk/simple-storage").storage.settings ?= require('./src/Default.js').settings
+settings = require("sdk/simple-storage").storage.settings
+
+# Nick is an Object with a string property nick. This way it stays up to date when manipulated by multiple entities.
+
+require("sdk/simple-storage").storage.nick ?= require('./src/Default.js').nick
+Nick = require("sdk/simple-storage").storage.nick
 
 Resonance = require('./src/Resonance.js')
-Resonance.init({NICK, versionResonance})
+Resonance.init(VERSION)
 
 # Create the settings panel.
-panel = require('./src/Panel.js').createPanel({Resonance, resonanceOptions, versionResonance})
+panel = require('./src/Panel.js').createPanel({Resonance, settings, VERSION})
 panel.port.on 'updateOptions',(opt) ->
   for own key,value of opt
-    resonanceOptions[key] = value
+    settings[key] = value
 
-if resonanceOptions.activated
+# Start the irc client and join the server.
+if settings.activated
   Resonance.startClient()
 
 # Listen to events from the browser
@@ -28,11 +32,11 @@ tabs.on 'ready', (tab) ->
     # Leave the chan etc...
     Resonance.end(tab)
   # If Resonance is activated...
-  activated = resonanceOptions.activated
+  activated = settings.activated
   if activated
     # ..and if it should start for this page.
-    startByDefault = resonanceOptions.startByDefault
-    startForThisDomain = (getDomain(tab.url) in resonanceOptions.startForDomains)
+    startByDefault = settings.startByDefault
+    startForThisDomain = (getDomain(tab.url) in settings.startForDomains)
     if startByDefault or startForThisDomain
       # Start it (join chan etc...).
       Resonance.start(tab)

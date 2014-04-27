@@ -1,5 +1,9 @@
 todo
 
-decomposition de storage
 annonces
-mutedUsers history
+errors
+newNick()
+
+workers pour Client ?
+    -> errors
+    -> nickinuse

@@ -1,11 +1,11 @@
+Nick = require("sdk/simple-storage").storage.nick
+
+require("sdk/simple-storage").storage.mutedUsers ?= []
+mutedUsers =require("sdk/simple-storage").storage.mutedUsers
 
 self = this
-init = (workers, NICK) ->
+init = (workers) ->
   self.workers = workers
-  self.NICK = NICK
-
-mutedUsers = require("sdk/simple-storage").storage.mutedUsers
-mutedUsers ?= []
 
 initWorker = (worker) ->
   worker.port.emit('requestMutedUsers', mutedUsers)
@@ -19,7 +19,7 @@ bindClient = (client) ->
 
   # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
   client.addListener 'part', (chan,nick) ->
-      if nick isnt NICK
+      if nick isnt Nick.nick
         workers[chan].emit('part',chan,nick)
 
 bindWorker = (worker) ->
