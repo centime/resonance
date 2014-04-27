@@ -17,12 +17,12 @@ upperFirst = (str) ->
 getRandomName = () ->
 
     pre = ''
-    pre += randomSubString(names.male[Math.round(Math.random()*names.male.length)])
-    pre += randomSubString(names.female[Math.round(Math.random()*names.female.length)])
+    pre += randomSubString(names.male[Math.round(Math.random()*(names.male.length-1))])
+    pre += randomSubString(names.female[Math.round(Math.random()*(names.female.length-1))])
     
     post = ''
-    post += randomSubString(names.female[Math.round(Math.random()*names.female.length)])
-    post += randomSubString(names.last[Math.round(Math.random()*names.last.length)])
+    post += randomSubString(names.female[Math.round(Math.random()*(names.female.length-1))])
+    post += randomSubString(names.last[Math.round(Math.random()*(names.last.length-1))])
 
     upperFirst(pre)+'_'+upperFirst(post)
 

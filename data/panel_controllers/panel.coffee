@@ -34,8 +34,16 @@ window.app.controller 'PanelController', ($scope) ->
                 $scope.startForDomains = (d for d in $scope.startForDomains when d isnt $scope.domain)
         options['startForDomains'] = $scope.startForDomains
         self.port.emit('updateOptions',options)
-        
+
     $scope.newNick = () ->
         options['nick'] = $scope.nick
         self.port.emit('updateOptions',options)
         alert('Your new nick ('+$scope.nick+') will be saved and updated as soon as you restart firefox.')
+
+    $scope.getRandomName = () ->
+        self.port.emit('getRandomName')
+        
+    self.port.on 'randomName', (randomName) ->
+        $scope.nick = randomName
+        $scope.$apply()
+        $scope.newNick()

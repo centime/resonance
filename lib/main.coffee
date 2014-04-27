@@ -3,8 +3,6 @@ tabs = require('sdk/tabs')
 resonanceOptions = require("sdk/simple-storage").storage.resonanceOptions
 resonanceOptions ?= require('./src/DefaultSettings.js').DefaultSettings
 
-resonanceOptions.nick = require('./src/DefaultSettings.js').getRandomName
-
 getDomain = require('./src/Utils.js').getDomain
 
 versionResonance = 'alpha-0.0.1'

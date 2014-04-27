@@ -1,6 +1,6 @@
 data = require("sdk/self").data
 tabs = require('sdk/tabs')
-
+getRandomName = require('./DefaultSettings.js').getRandomName
 
 # env = {Resonance, resonanceOptions, versionResonance}
 createPanel = (env) ->
@@ -43,6 +43,10 @@ createPanel = (env) ->
       tabs.activeTab.worker.port.emit('close')
       env.Resonance.end(tabs.activeTab)
       tabs.activeTab.started = false
+
+  panel.port.on 'getRandomName', () ->
+    panel.port.emit('randomName',getRandomName())
+
   panel
 
 module.exports = 
