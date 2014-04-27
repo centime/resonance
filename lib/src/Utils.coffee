@@ -9,10 +9,13 @@ setUpHistory = (history) ->
 
 getChan = (url,title) ->
   # todo : about:blank & co
-  domain = url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
+  domain = getDomain(url)
   '#'+sha1(domain+title.replace(/\ /g,'')).toString() 
 
+getDomain = (url) ->
+    url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2]
 
 module.exports =
     'setUpHistory':setUpHistory
     'getChan':getChan
+    'getDomain':getDomain

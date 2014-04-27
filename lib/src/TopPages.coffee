@@ -4,55 +4,54 @@ metaData = (message,env) ->
     [ query, indexRequestedTopPages, totalIndices ] = args
     # Pass the topPagesMetaData to the application.
     env.workers.emitToAll('topPagesMetaData', query, indexRequestedTopPages, totalIndices)
-  
+
+# Variable for storing and concatenating the multiple packets of a response.
+topPagesResponse = {}
 topPages = (message,env) ->
       # todo warning : what if there are multiple concurent requests for various keywords ?
       # Extract the arguments from the message.
       args = message.replace('topPages ','').split(' ')
       [ packetId, totalPackets, packetContent ] = args
       
-      # Variable for storing and concatenating the multiple packets of a response.
-      env.client.topPagesResponse ?= {}
       # Store the received content at the corresponding index.
-      env.client.topPagesResponse[packetId] = packetContent
+      topPagesResponse[packetId] = packetContent
 
       completeResponse = ''
       receptionCompleted = true
       # Check that all packets have been received.
       for i in [0..totalPackets-1]
-        receptionCompleted = env.client.topPagesResponse[packetId]?
+        receptionCompleted = topPagesResponse[packetId]?
         # Concat the packets into one string.
-        completeResponse += env.client.topPagesResponse[packetId]
+        completeResponse += topPagesResponse[packetId]
 
       # If all have been received.
       if receptionCompleted
         # Construct an array from the string
         # 'site1,1|site2,2'  --->   [ ['site1',1], ['site2',2] ]
         entries = completeResponse.split('|')
-        topPages = ( entry.split(',') for entry in entries)
+        pages = ( entry.split(',') for entry in entries)
 
         # Pass the topPages to the application.
-        env.workers.emitToAll('topPages',topPages)
+        env.workers.emitToAll('topPages',pages)
         # Reset.
-        env.client.topPagesResponse = {}
-      # todo : is the traffic / page refresh overhead really worth this 'optimisation' ?
-      # If not all packets have been received, but the first yes.
-      else if client.topPagesResponse[0]?
-        partialResponse = env.client.topPagesResponse[0]
-        # Remove the last incomplete page.
-        lastIndex = partialResponse.lastIndexOf('|')
-        # If at least one entry is complete.
-        if lastIndex != -1
-          partialResponse = env.client.topPagesResponse[0..lastIndex-1]
+        topPagesResponse = {}
 
-          # Construct an array from the string
-          # 'site1,1|site2,2'  --->   [ ['site1',1], ['site2',2] ]
-          entries = partialResponse.split('|')
-          topPages = ( entry.split(',') for entry in entries)
+bindClient = (client,env) ->
+  # env = {workers}
+  client.addListener 'pm', (from, message) ->
+  # If it comes from the bot.
+    if from == 'Resonance-bot'
+      if message.match(/^topPagesMetaData /)
+        metaData(message, env)
+      else if message.match(/^topPages /)
+        topPages(message, env)
 
-          # Pass the topPages to the application.
-          env.workers.emitToAll('topPages',topPages)
+bindWorker = (worker, env) ->
+  # Listen for the application asking for the top pages.
+  worker.port.on 'getTopPages', (index,query) ->
+    #Ask the bot for top tapes.
+    env.client.say('Resonance-bot','__ask '+index+' '+query)
     
 module.exports =
-    'metaData':metaData
-    'topPages':topPages
+    'bindClient':bindClient
+    'bindWorker':bindWorker

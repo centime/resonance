@@ -1,19 +1,23 @@
+data = require("sdk/self").data
+
+
+# env = {storage, tabs, NICK, versionResonance}
 createPanel = (env) ->
   panel = require("sdk/panel").Panel({
     'width':800,
     'height':200,
-    'contentURL': env.data.url("panel.html"),
+    'contentURL': data.url("panel.html"),
     'contentScriptFile':[
-      env.data.url("lib/angular.min.js"),
-      env.data.url("lib/jquery.js"),
-      env.data.url("panel_controllers/panel.js"),
+      data.url("lib/angular.min.js"),
+      data.url("lib/jquery.js"),
+      data.url("panel_controllers/panel.js"),
       ],
   })
 
   require("sdk/widget").Widget({
     'id': "widget-open-settings",
     'label': "Resonance",
-    'contentURL': env.data.url("History.png"),
+    'contentURL': data.url("History.png"),
     'panel': panel,
     'onClick': () ->
       # todo : about:blank & co
@@ -28,22 +32,25 @@ createPanel = (env) ->
   panel.port.on 'activate',(value) ->
     # todo : join & display where it should be joined & displayed
     if value
-      env.client = env.startClient(env.clientEnv)
+      Env = 
+        'NICK':env.NICK
+        'versionResonance':env.versionResonance
+        'storage':env.storage
+      env.Resonance.startClient(Env)
     else
-      env.workers.emitToAll('close')
-      env.client.disconnect()
-      # for tab in tabs
-      #   tab.started = false
-      #panel.port.emit('desactivated')
+      env.Resonance.closeClient()
 
   panel.port.on 'start',(value) ->
     if value
       if not env.tabs.activeTab.started
-        env.Resonance.start(tabs.activeTab)
+        Env = 
+          'NICK':env.NICK
+          'storage':env.storage
+        env.Resonance.start(env.tabs.activeTab, Env)
         env.tabs.activeTab.started = true
     else
       env.tabs.activeTab.worker.port.emit('close')
-      env.Resonance.end(env.tabs.activeTab, env.ResoEnv)
+      env.Resonance.end(env.tabs.activeTab)
       env.tabs.activeTab.started = false
   panel
 

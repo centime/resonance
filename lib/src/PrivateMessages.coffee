@@ -1,44 +1,69 @@
+
+activePrivateUsers = {}
+pmUsers = ['Resonance-bot']
+currentPmUser = 'Resonance-bot'
+
 announce = (message, worker) ->
-      message = message.replace('announce ','')
-      worker.emit('announce',message)
+      # message = message.replace('announce ','')
+      # worker.emit('announce',message)
+      console.log 'Not implemented'
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 receive = (from, message, env) ->
-    if not( from in env.pmUsers)
-      env.pmUsers.push(from)
-      env.workers.emitToAll('pmUsers', env.pmUsers)
+  # env = { workers, storage, NICK}
+    if not( from in pmUsers)
+      pmUsers.push(from)
+      env.workers.emitToAll('pmUsers', pmUsers)
     # Save in history.
     env.storage.privateMessagesHistory[from] ?= []
     env.storage.privateMessagesHistory[from].push( {'author':from, 'message':message} )
 
-    env.activePrivateUsers[from] = true
-    env.workers.emitToAll('activePrivateUsers',env.activePrivateUsers)
+    activePrivateUsers[from] = true
+    env.workers.emitToAll('activePrivateUsers',activePrivateUsers)
 
-    if from == env.currentPmUser    
-        env.workers.emitToAll('privateMessage', from, env.NICK, message)   
+    if from == currentPmUser    
+        env.workers.emitToAll('privateMessage', from, env.NICK, message)
+
+bindClient = (client,env) ->
+  # When the client receives a private message, it goes to every worker, thus to every tab.
+  client.addListener 'pm', (from, message) ->
+    # todo : pm from the bot ?      
+    if (from == 'Resonance-bot') and message.match(/^topPages/)
+      return
+    if (from == 'Resonance-bot') and message.match(/^announce /)
+      announce(message)
+    else
+      receive(from, message, env)
+
 
 privateMessage = (to, message, env) ->
-    env.client.say(user,message)
+    env.client.say(to,message)
     # Save in history.
-    env.storage.privateMessagesHistory[user] ?= []
-    env.storage.privateMessagesHistory[user].push( {'author':env.NICK, 'message':message} )
-    env.workers.emitToAll('privateMessage', env.NICK, user, message)
+    env.storage.privateMessagesHistory[to] ?= []
+    env.storage.privateMessagesHistory[to].push( {'mauthor':env.NICK, 'message':message} )
+    env.workers.emitToAll('privateMessage', env.NICK, to, message)
 
 startPmUser = (user,env) ->
-    env.currentPmUser = user
-    if not( user in env.pmUsers)
-      env.pmUsers.push(user)
-      env.workers.emitToAll('pmUsers', env.pmUsers)
+    currentPmUser = user
+    if not( user in pmUsers)
+      pmUsers.push(user)
+      env.workers.emitToAll('pmUsers', pmUsers)
     # Save in history.
     env.storage.privateMessagesHistory[user] ?= []
-    env.workers.emitToAll('pmUser', env.currentPmUser, env.storage.privateMessagesHistory[user])
+    env.workers.emitToAll('pmUser', currentPmUser, env.storage.privateMessagesHistory[user])
 
 unactivePmUser = (user,env) ->
-    env.activePrivateUsers[user] = false
-    env.workers.emitToAll('activePrivateUsers',env.activePrivateUsers)
+    activePrivateUsers[user] = false
+    env.workers.emitToAll('activePrivateUsers',activePrivateUsers)
 
-bind = (worker,env) ->
-  worker.port.on 'privateMessage', (user, message) ->
+initWorker = (worker,env) ->
+  worker.port.emit('pmUsers',pmUsers)
+  env.storage.privateMessagesHistory[currentPmUser] ?= []
+  worker.port.emit('pmUser',currentPmUser, env.storage.privateMessagesHistory[currentPmUser])
+  
+
+bindWorker = (worker,env) ->
+  worker.port.on 'privateMessage', (to, message) ->
     privateMessage(to, message, env)
   
   worker.port.on 'startPmUser', (user) ->
@@ -48,6 +73,6 @@ bind = (worker,env) ->
     unactivePmUser(user,env)
     
 module.exports =
-  'announce':announce
-  'receive':receive
-  'bind':bind
+  'bindClient':bindClient
+  'initWorker':initWorker
+  'bindWorker':bindWorker

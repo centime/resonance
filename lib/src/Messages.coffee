@@ -10,6 +10,11 @@ receive = (from, to, message, env) ->
       env.storage.messagesHistory[to].push( {'author':from, 'message': message } )
 
 
+bindClient = (client,env) ->
+  # env = {workers, storage}
+  client.addListener 'message', (from, to, message) ->
+    receive(from, to, message, env)
+
 say = (to, message, env) ->
       env.client.say(to,message)
       # Tell back the application that the message has been said.
@@ -18,10 +23,14 @@ say = (to, message, env) ->
       env.storage.messagesHistory[to] ?= []
       env.storage.messagesHistory[to].push( {'author':env.NICK, 'message': message } )
 
-bind = (worker,env) ->
+initWorker = (worker, chan, env) ->
+  worker.port.emit('messagesHistory', env.storage.messagesHistory[chan] ? [])
+
+bindWorker = (worker,env) ->
   worker.port.on 'message', (to, message) ->
     say(to, message, env)
 
 module.exports =
-  'receive':receive
-  'bind':bind
+  'bindClient':bindClient
+  'initWorker':initWorker
+  'bindWorker':bindWorker
