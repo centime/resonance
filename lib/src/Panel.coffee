@@ -1,7 +1,8 @@
 data = require("sdk/self").data
+tabs = require('sdk/tabs')
 
 
-# env = {storage, tabs, NICK, versionResonance}
+# env = {Resonance, resonanceOptions, versionResonance}
 createPanel = (env) ->
   panel = require("sdk/panel").Panel({
     'width':800,
@@ -17,41 +18,31 @@ createPanel = (env) ->
   require("sdk/widget").Widget({
     'id': "widget-open-settings",
     'label': "Resonance",
-    'contentURL': data.url("History.png"),
+    'contentURL': data.url("Resonance.png"),
     'panel': panel,
     'onClick': () ->
       # todo : about:blank & co
-      env.storage.resonanceOptions['domain'] = env.tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
-      env.storage.resonanceOptions['started'] = env.tabs.activeTab.started ?= 'false'
-      panel.port.emit('initOptions',env.storage.resonanceOptions)
+      env.resonanceOptions['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
+      env.resonanceOptions['started'] = tabs.activeTab.started ?= 'false'
+      panel.port.emit('initOptions',env.resonanceOptions)
   })
-
-  panel.port.on 'updateOptions',(opt) ->
-    env.storage.resonanceOptions = opt
   
   panel.port.on 'activate',(value) ->
     # todo : join & display where it should be joined & displayed
     if value
-      Env = 
-        'NICK':env.NICK
-        'versionResonance':env.versionResonance
-        'storage':env.storage
-      env.Resonance.startClient(Env)
+      env.Resonance.startClient()
     else
       env.Resonance.closeClient()
 
   panel.port.on 'start',(value) ->
     if value
-      if not env.tabs.activeTab.started
-        Env = 
-          'NICK':env.NICK
-          'storage':env.storage
-        env.Resonance.start(env.tabs.activeTab, Env)
-        env.tabs.activeTab.started = true
+      if not tabs.activeTab.started
+        env.Resonance.start(tabs.activeTab)
+        tabs.activeTab.started = true
     else
-      env.tabs.activeTab.worker.port.emit('close')
-      env.Resonance.end(env.tabs.activeTab)
-      env.tabs.activeTab.started = false
+      tabs.activeTab.worker.port.emit('close')
+      env.Resonance.end(tabs.activeTab)
+      tabs.activeTab.started = false
   panel
 
 module.exports = 

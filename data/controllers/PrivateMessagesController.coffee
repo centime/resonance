@@ -20,7 +20,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
                             $scope.newMessage = ''
 
     # Listen for a 'pm' event : when the client receives or sends a pm.
-    self.port.on "privateMessage", (from,to,message) ->
+    self.port.on "privateMessage", (from,message) ->
         # create the new entry for the message
         entry = 
             'author' : from

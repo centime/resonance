@@ -1,4 +1,5 @@
 data = require("sdk/self").data 
+storage = require("sdk/simple-storage").storage
 
 { getDomain, getChan } = require('./Utils.js')
 Channel = require('./Channel.js').Channel
@@ -16,26 +17,33 @@ TopPages = require('./TopPages.js')
 Users = require('./Users.js')
 
 
-startClient = (env) ->
-  # env = {NICK, versionResonance, storage}
-  Env =
-    'NICK':env.NICK
-    'versionResonance':env.versionResonance
-  client = require('./Client.js').startClient(Env)
+self = this
+# env = {NICK, versionResonance}
+init = (env) ->
+  for varName,varValue of env
+    self[varName] = varValue
+    
+  Messages.init({workers, NICK})
+  PrivateMessages.init({workers, NICK})
+  TopPages.init({workers})
+  Users.init({workers, NICK})
 
-  NICK = env.NICK
-  storage = env.storage
-  Users.bindClient(client, {workers, NICK})
-  Messages.bindClient(client, {workers, storage})
-  PrivateMessages.bindClient(client, {workers, storage, NICK})
-  TopPages.bindClient(client, {workers})
+# You need to Resonance.init({NICK, versionResonance}) first
+startClient = () ->
+
+  client = require('./Client.js').startClient(NICK, versionResonance)
+
+  Users.bindClient(client)
+  Messages.bindClient(client)
+  PrivateMessages.bindClient(client)
+  TopPages.bindClient(client)
 
 closeClient = () ->
   workers.emitToAll('close')
   client.disconnect()
 
-# env = {NICK, storage}
-start = (tab,env) ->
+
+start = (tab) ->
   # Generate the chan name for the page.
   chan = getChan(tab.url,tab.title)
   # Save it.
@@ -78,32 +86,23 @@ start = (tab,env) ->
   else workers[chan] = new Channel(chan, worker)  
 
   # Send the application some init values.
-  worker.port.emit('appSize',env.storage.appSize ? '100')
+  worker.port.emit('appSize', storage.appSize ? '100')
   worker.port.emit('chan',chan)
-  worker.port.emit('nick',env.NICK)
+  worker.port.emit('nick',NICK)
   
-  Env = 
-    'storage':env.storage
   Users.initWorker(worker)
-  Messages.initWorker(worker, chan, Env)
-  PrivateMessages.initWorker(worker, Env)
+  Messages.initWorker(worker, chan)
+  PrivateMessages.initWorker(worker)
 
-  Env = 
-    'client' : client
-    'workers' : workers
-    'NICK' : env.NICK
-    'storage' : env.storage
-  Messages.bindWorker(worker,Env)
-  PrivateMessages.bindWorker(worker,Env)
-  TopPages.bindWorker(worker,{client})
-  Env = 
-    'storage':env.storage
-  Users.bindWorker(worker,Env)
+  Messages.bindWorker(worker, client)
+  PrivateMessages.bindWorker(worker, client)
+  TopPages.bindWorker(worker, client)
+  Users.bindWorker(worker)
 
   
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !
-    env.storage.appSize = height
+    storage.appSize = height
     workers.emitToAll('appSize',height)
 
 
@@ -123,6 +122,7 @@ end = (tab) ->
 
 
 module.exports =
+  'init':init
   'startClient':startClient
   'closeClient':closeClient
   'start' : start
