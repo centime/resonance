@@ -1,4 +1,4 @@
-window.app.controller "NotificationsController", ($scope) ->
+window.resonance.controller "NotificationsController", ($scope) ->
      # List of every notifications.
     $scope.notifications = []
     $scope.announce = ''

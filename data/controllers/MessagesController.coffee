@@ -1,5 +1,4 @@
-
-window.app.controller "MessagesController", ($scope) ->
+window.resonance.controller "MessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
     $scope.newMessage = ''

@@ -1,4 +1,4 @@
-window.app.controller "ResonanceController", ($scope) ->
+window.resonance.controller "ResonanceController", ($scope) ->
     # Indicates which element of the application has to be displayed.
     # 1 for messages.
     # 2 for features.

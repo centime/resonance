@@ -1,4 +1,4 @@
-window.app.controller 'PrivateUsersController', ($scope)->
+window.resonance.controller 'PrivateUsersController', ($scope)->
     # List of every present user.
     $scope.currentPmUser = 'Resonance-bot'
     $scope.pmUsers = []

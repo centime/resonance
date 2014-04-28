@@ -3,12 +3,13 @@ irc = require('./irc')
 
 version = 'alpha-0.0.1'
 KEY = 'openSourceKey'
-usersMessages = []
+usersMessages = [] 
+abuses = []
 announce = 'Welcome to the alpha of Resonance ! Feel free to make any feedback via a private message to "Resonance-bot" or to quelques.centimes@gmail.com'
 
 encode = (unencoded) ->
     new Buffer(unencoded || '').toString('base64')
-decode = (encoded) ->
+b64decode = (encoded) ->
     new Buffer(encoded || '', 'base64').toString('utf8')
 
 bot = new irc.Client('chat.freenode.net', 'Resonance-bot', {
@@ -34,17 +35,22 @@ bot.addListener 'pm', (nick, message) ->
     date = new Date()
     # If the user says he visits one page.
     if message.match(/^__enter /)
-        args = message.replace('__enter ','')
-        if args.split(' ').length == 3
+        args = message.replace('__enter ','').split(' ')
+        if args.length == 2
             # todo security : someone could overwrite chansToPages[chan]
-            page = args.split(' ')[0]
-            domain = args.split(' ')[1]
-            title = args.split(' ')[2]
-            chan = '#'+sha1(domain+title).toString()
+            [ page, chan ] = args
+            # domain = args.split(' ')[1]
+            # title = b64decode(args.split(' ')[2])
+            # console.log 'domain '+domain+' title '+title
+            # chan = '#'+sha1(domain+title).toString()
             console.log ['__enter',page,chan].join(' ')
+            # todo warnig tofix security abuse
             if not chansToPages[chan]?
                 chansToPages[chan] = page
                 bot.join(chan)
+            else 
+                abuses.push(nick+' : '+message)
+                console.log('[[ Abuse ]] '+nick+' : '+message)
     # If the user asks for the list of most visited pages.
     # todo Slow. Not suited for scaling.
     else if message.match(/^__ask/)
@@ -110,6 +116,11 @@ bot.addListener 'pm', (nick, message) ->
         key = args
         if key == KEY
             bot.say(nick, usersMessages.join(' | '))
+    else if message.match(/^__abuses /)
+        args = message.replace('__abuses ','')
+        key = args
+        if key == KEY
+            bot.say(nick, abuses.join(' | '))
     else if message.match(/^__newVersion /)
         args = message.replace('__newVersion ','')
         if args.split(' ').length == 2

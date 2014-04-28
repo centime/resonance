@@ -1,2 +1,2 @@
-window.app = angular.module('resonance',[])
+window.resonance = angular.module('resonance',[])
 

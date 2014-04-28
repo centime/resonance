@@ -1,4 +1,5 @@
 sha1 = require('../lib/sha1.js').sha1
+base64 = require("sdk/base64")
 
 # Set the 'old' flag for the messages in histories
 # Todo : no need to set it all at once, we could do it when served.
@@ -10,7 +11,8 @@ setUpHistory = (history) ->
 getChan = (url,title) ->
   # todo : about:blank & co
   domain = getDomain(url)
-  '#'+sha1(domain+title.replace(/\ /g,'')).toString() 
+  '#'+sha1(domain+title).toString() 
+
 
 getDomain = (url) ->
     url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2]

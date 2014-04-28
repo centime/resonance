@@ -1,4 +1,4 @@
-window.app.controller "SettingsController", ($scope) ->
+window.resonance.controller "SettingsController", ($scope) ->
     $scope.newNick = ''
     # Updates the nick when received from the background script.
     self.port.on 'nick',(n) ->

@@ -1,4 +1,4 @@
-window.app.controller "TopPagesController", ($scope) ->
+window.resonance.controller "TopPagesController", ($scope) ->
     # List of pages {url : visitors}
     $scope.topPages = []
     $scope.query = ''

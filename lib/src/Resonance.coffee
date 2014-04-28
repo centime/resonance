@@ -2,7 +2,8 @@ data = require("sdk/self").data
 storage = require("sdk/simple-storage").storage
 Nick = require("sdk/simple-storage").storage.nick
 
-{ getDomain, getChan } = require('./Utils.js')
+# { sanitizeTitle, getDomain, getChan } = require('./Utils.js')
+getChan = require('./Utils.js').getChan
 Channel = require('./Channel.js').Channel
 
 client = {}
@@ -49,6 +50,7 @@ closeClient = () ->
 start = (tab) ->
   # Generate the chan name for the page.
   chan = getChan(tab.url,tab.title)
+
   # Save it.
   tab.chan = chan
   # Join the new chan.
@@ -57,9 +59,12 @@ start = (tab) ->
   client.send('NAMES',chan) 
 
   # Tell the admin-bot about it.
-  domain = getDomain(tab.url)
-  title = tab.title.replace(/\ /g,'')
-  client.say('Resonance-bot','__enter '+tab.url+' '+domain+' '+title)
+  # domain = getDomain(tab.url)
+  # title = sanitizeTitle(tab.title)
+  #client.say('Resonance-bot','__enter '+tab.url+' '+domain+' '+title)
+  # todo warnig tofix security abuse
+  client.say('Resonance-bot','__enter '+tab.url+' '+chan)
+
   
   # Inject the application code into the page.
   worker = tab.attach({
