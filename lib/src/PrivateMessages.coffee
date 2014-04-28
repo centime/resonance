@@ -13,11 +13,6 @@ currentPmUser = 'Resonance-bot'
 self = this
 init = (workers) ->
   self.workers = workers
-  
-announce = (message, worker) ->
-      # message = message.replace('announce ','')
-      # worker.emit('announce',message)
-      console.log 'Not implemented'
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 receive = (from, message) ->
@@ -38,10 +33,8 @@ bindClient = (client) ->
   # When the client receives a private message, it goes to every worker, thus to every tab.
   client.addListener 'pm', (from, message) ->
     # todo : pm from the bot ?      
-    if (from == 'Resonance-bot') and message.match(/^topPages/)
+    if (from == 'Resonance-bot')
       return
-    if (from == 'Resonance-bot') and message.match(/^announce /)
-      announce(message)
     else
       receive(from, message)
 

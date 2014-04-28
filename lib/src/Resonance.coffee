@@ -12,6 +12,7 @@ workers.__proto__.emitToAll = () ->
         worker.emit.apply(worker,arguments)
 
 
+Notifications = require('./Notifications.js')
 Messages = require('./Messages.js')
 PrivateMessages = require('./PrivateMessages.js')
 TopPages = require('./TopPages.js')
@@ -22,7 +23,8 @@ self = this
 # env = {VERSION}
 init = (VERSION) ->
   self.VERSION = VERSION
-    
+  
+  Notifications.init(workers)  
   Messages.init(workers)
   PrivateMessages.init(workers)
   TopPages.init(workers)
@@ -31,8 +33,9 @@ init = (VERSION) ->
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
 
-  client = require('./Client.js').startClient(VERSION,workers)
+  client = require('./Client.js').startClient(VERSION)
 
+  Notifications.bindClient(client)
   Users.bindClient(client)
   Messages.bindClient(client)
   PrivateMessages.bindClient(client)
@@ -72,6 +75,7 @@ start = (tab) ->
           data.url("controllers/TopPagesController.js"),
           data.url("controllers/PrivateMessagesController.js"),
           data.url("controllers/PrivateUsersController.js"),
+          data.url("controllers/NotificationsController.js")
           # USED FOR TESTS ONLY
           #data.url("tests.js"),
       ]})
@@ -90,6 +94,7 @@ start = (tab) ->
   worker.port.emit('chan',chan)
   worker.port.emit('nick',Nick.nick)
   
+  Notifications.initWorker(worker)
   Users.initWorker(worker)
   Messages.initWorker(worker, chan)
   PrivateMessages.initWorker(worker)

@@ -40,15 +40,3 @@ window.app.controller "ResonanceController", ($scope) ->
         $scope.$apply()
     $scope.active = () ->
         {'active_resonance':$scope.privateActive}
-
-    # Hit him in the face.
-    self.port.on 'announce', (message) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        alert('Resonance : '+message)
-
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        alert('IRC error : '+error)
