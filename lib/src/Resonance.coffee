@@ -31,7 +31,7 @@ init = (VERSION) ->
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
 
-  client = require('./Client.js').startClient(VERSION)
+  client = require('./Client.js').startClient(VERSION,workers)
 
   Users.bindClient(client)
   Messages.bindClient(client)

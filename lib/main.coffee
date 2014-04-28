@@ -11,13 +11,19 @@ settings = require("sdk/simple-storage").storage.settings
 
 require("sdk/simple-storage").storage.nick ?= require('./src/Default.js').nick
 Nick = require("sdk/simple-storage").storage.nick
+# The user changed is nickname the last time.
+if Nick.changeNick?
+  Nick.nick = Nick.changeNick
+  delete Nick.changeNick
+
+Nick.nick = 'Centime'
 
 Resonance = require('./src/Resonance.js')
 Resonance.init(VERSION)
 
 # Create the settings panel.
 panel = require('./src/Panel.js').createPanel({Resonance, settings, VERSION})
-panel.port.on 'updateOptions',(opt) ->
+panel.port.on 'updateSettings',(opt) ->
   for own key,value of opt
     settings[key] = value
 

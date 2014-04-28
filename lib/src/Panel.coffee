@@ -2,7 +2,7 @@ data = require("sdk/self").data
 tabs = require('sdk/tabs')
 
 Nick = require("sdk/simple-storage").storage.nick
-getRandomName = require('./Default.js').getRandomName
+getRandomName = require('./Utils.js').getRandomName
 
 # env = {Resonance, settings, versionResonance}
 createPanel = (env) ->
@@ -26,7 +26,8 @@ createPanel = (env) ->
       # todo : about:blank & co
       env.settings['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
       env.settings['started'] = tabs.activeTab.started ?= 'false'
-      panel.port.emit('initOptions',env.settings)
+      panel.port.emit('settings',env.settings)
+      panel.port.emit('nick', Nick.nick)
   })
   
   panel.port.on 'activate',(value) ->
@@ -46,13 +47,13 @@ createPanel = (env) ->
       env.Resonance.end(tabs.activeTab)
       tabs.activeTab.started = false
 
-  panel.port.on 'updateNick', () ->
-    Nick.nick = nick
+  panel.port.on 'nextNick', (nextNick) ->
+    Nick.changeNick = nextNick
     
   panel.port.on 'getRandomName', () ->
     panel.port.emit('randomName',getRandomName())
 
-  panel
+  return panel
 
 module.exports = 
   'createPanel':createPanel

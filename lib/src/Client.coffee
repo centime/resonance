@@ -2,7 +2,7 @@ irc = require('../lib/_irc.js')
 
 Nick = require("sdk/simple-storage").storage.nick
 
-startClient = (version) ->
+startClient = (version,workers) ->
   console.log(Nick.nick)
   client = new irc.Client('chat.freenode.net', Nick.nick, {
       debug: true,
@@ -20,6 +20,7 @@ startClient = (version) ->
     client.say('Resonance-bot','__version '+version)
 
   client.addListener 'nicknameinuse', (oldNick, newNick) ->
+    workers.emitToAll('nick',newNick)
     console.log(oldNick+' > '+newNick)
     Nick.nick = newNick
 
