@@ -18,7 +18,7 @@ window.app.controller "MessagesController", ($scope) ->
                             msg = $scope.newMessage 
                             # Tell the background script to 'say' 'msg' on channel 'IRC.chan'
                             if (msg != '')
-                                self.port.emit('say',IRC.chan, msg)
+                                self.port.emit('message',IRC.chan, msg)
                             # Clear the input.
                             $scope.newMessage = ''
 
@@ -38,12 +38,12 @@ window.app.controller "MessagesController", ($scope) ->
         
     # Set the css class for old messages (history).
     $scope.class = (message) ->
-        classes = {'old_message': message.old}
+        classes = {'old_message_resonance': message.old}
         wordsInMessage = message.message.split(new RegExp(' |:','g'))
         if message.author == $scope.currentnick
-            classes['authorIsMe'] = true
+            classes['authorIsMe_resonance'] = true
         else if $scope.currentnick in wordsInMessage
-            classes['authorToMe'] = true
+            classes['authorToMe_resonance'] = true
         return classes
 
     # Undisplay the messages of the muted user
@@ -59,18 +59,8 @@ window.app.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
 
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        $scope.messages.push({'author':'Error','message':error})
-        # Update the view.
-        $scope.$apply()
-        scrollDown()
-
-
     # Scroll down the messages list.
-    elmt = angular.element('messages > ul') 
+    elmt = angular.element('messages_resonance > ul') 
     scrollDown = ()  ->
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
 

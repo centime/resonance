@@ -13,6 +13,7 @@ window.app.controller 'PrivateUsersController', ($scope)->
     # When a user is selected.
     self.port.on "pmUser", (user, history) ->
         $scope.currentPmUser = user
+        $scope.$apply()
     
     # When the list of private conversations is updated.
     self.port.on "pmUsers", (users) ->
@@ -21,7 +22,7 @@ window.app.controller 'PrivateUsersController', ($scope)->
 
     # Set the css class
     $scope.class = (user)->
-        { 'selected': user == $scope.currentPmUser, 'active':$scope.activePrivateUsers[user]}
+        { 'selected_resonance': user == $scope.currentPmUser, 'active_resonance':$scope.activePrivateUsers[user]}
 
     # Raise the notification when a new private message is waiting.
     $scope.activePrivateUsers = {}

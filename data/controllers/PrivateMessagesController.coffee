@@ -7,6 +7,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
     self.port.on "pmUser", (user, history) ->
         currentPmUser = user
         $scope.messages = history
+        $scope.$apply()
         scrollDown()
     
     # Send a new message.
@@ -19,7 +20,7 @@ window.app.controller "PrivateMessagesController", ($scope) ->
                             $scope.newMessage = ''
 
     # Listen for a 'pm' event : when the client receives or sends a pm.
-    self.port.on "privateMessage", (from,to,message) ->
+    self.port.on "privateMessage", (from,message) ->
         # create the new entry for the message
         entry = 
             'author' : from
@@ -32,19 +33,9 @@ window.app.controller "PrivateMessagesController", ($scope) ->
 
     # Set the css class for old messages (history).
     $scope.oldMessage = (message) ->
-        {'old_message': message.old}
-
-    # Catch errors.
-    self.port.on 'error', (error) ->
-        # Append it to the list of all messages.
-        # todo : what if a user is called Error ?
-        $scope.messages.push({'author':'Error','message':error})
-        # Update the view.
-        $scope.$apply()
-        scrollDown()
-
+        {'old_message_resonance': message.old}
 
     # Scroll down the messages list.
-    elmt = angular.element('privatemessages > ul') 
+    elmt = angular.element('privatemessages_resonance > ul') 
     scrollDown = ()  ->
         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
