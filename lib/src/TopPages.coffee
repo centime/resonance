@@ -1,4 +1,3 @@
-
 self = this
 init = (workers) ->
   self.workers = workers
@@ -43,7 +42,7 @@ topPages = (message) ->
 
 bindClient = (client) ->
   client.addListener 'pm', (from, message) ->
-  # If it comes from the bot.
+    # If it comes from the bot.
     if from == 'Resonance-bot'
       if message.match(/^topPagesMetaData /)
         metaData(message)

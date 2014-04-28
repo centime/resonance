@@ -16,8 +16,6 @@ if Nick.changeNick?
   Nick.nick = Nick.changeNick
   delete Nick.changeNick
 
-Nick.nick = 'Centime'
-
 Resonance = require('./src/Resonance.js')
 Resonance.init(VERSION)
 

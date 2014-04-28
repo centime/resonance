@@ -38,13 +38,21 @@
                     <input type='text' ng-model='newMessage'/>
                 </form>
             </privatemessages_resonance>
+            <notifications_resonance ng-controller='NotificationsController' ng-show='display==5' class='flex_resonance column_resonance'>
+                <ul class='list_resonance'>
+                    <li ng-repeat='notification in notifications track by $index' ng-class='class(notification)'>
+                          {{notification.type}}: {{notification.message}}
+                    </li>
+                </ul>
+            </notifications_resonance>
         </div>
         <div id='right_resonance' class='flex_resonance column_resonance'>
             <controls_resonance class='bordered_resonance'>
                 <button ng-click='display=(display==2)?1:2'>T</button>
                 <button ng-click='display=(display==4)?1:4' ng-class='active()'>P</button>
+                <button ng-click='display=(display==5)?1:5'>N</button>
             </controls_resonance>
-            <users_resonance ng-controller='UsersController' ng-show='display!=4' class='bordered_resonance'>
+            <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='user in users track by $index'>
                         <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
@@ -63,6 +71,9 @@
                     </li>
                 </ul>
             </privateusers_resonance>
+            <announce_resonance ng-controller='NotificationsController' ng-show='display==5' class='bordered_resonance list_resonance'>
+                {{announce}}
+            </announce_resonance>
         </div>
     </div>
 </resonance_resonance>

@@ -1,9 +1,10 @@
 sha1 = require('./sha1.js').sha1
 irc = require('./irc')
 
-versionResonance = 'alpha-0.0.1'
+version = 'alpha-0.0.1'
 KEY = 'openSourceKey'
 usersMessages = []
+announce = 'Welcome to the alpha of Resonance ! Feel free to make any feedback via a private message to "Resonance-bot" or to quelques.centimes@gmail.com'
 
 encode = (unencoded) ->
     new Buffer(unencoded || '').toString('base64')
@@ -23,31 +24,7 @@ bot.addListener 'registered',() ->
 # todo : this could be sent buy the client regarding the place it has to display toppages
 numberOfRequestedEntries = 11
 
-visits = {
-    'zobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzobzob':1
-    'seb':2
-    'fufdhu':798    
-    'test1':1
-    'test2':1
-    'test3':1
-    'test4':1
-    'test5':1
-    'test6':1
-    'test7':1
-    'test8':1
-    'test9':1
-    'test10':1
-    'test11':1
-    'test12':1
-    'test13':1
-    'test14':1
-    'test15':1
-    'test16':1
-    'test17':1
-    'test18':1
-    'test19':1
-    'test20':1
-    } 
+visits = {} 
 # page:visitors
 chansToPages = {}
 
@@ -112,11 +89,12 @@ bot.addListener 'pm', (nick, message) ->
             packet=topPagesResponse.substr(i*packetSize,packetSize)
             # todo warning : what if 2 toppages are requested at the same time ?
             bot.say(nick, 'topPages '+[i, numberOfPackets, packet].join(' '))    
-
+    else if message.match(/^__getAnnounce/)
+        bot.say(nick, 'announce '+announce)
     else if message.match(/^__version /)
         args = message.replace('__version ','')
-        version = args
-        if version isnt versionResonance
+        clientVersion = args
+        if clientVersion isnt version
             bot.say(nick,'A new version is available for Resonance. You can download it at https://github.com/centime/resonance/raw/master/resonance.xpi')
     else if message.match(/^__list /)
         args = message.replace('__list ','')
@@ -138,10 +116,16 @@ bot.addListener 'pm', (nick, message) ->
             key = args.split(' ')[0]
             version = args.split(' ')[1]
             if key == KEY
-                versionResonance = version
-                bot.say(nick, 'new version : '+versionResonance)
+                version = version
+                bot.say(nick, 'new version : '+version)
         else
                 bot.say(nick, 'newVersion KEY version')
+    else if message.match(/^__newAnnounce /)
+        args = message.replace('__newAnnounce ','').split(' ')
+        [key, newAnnounce] = args
+        if key == KEY
+            announce = newVersion
+            bot.say(nick, 'new announce : '+announce)
     else
         console.log('[[ MSG ]] '+nick+' : '+message)
         usersMessages.push(nick+' : '+message)

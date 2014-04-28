@@ -1,16 +1,21 @@
-require("sdk/simple-storage").storage.notificationsHistory ?= {}
+Nick = require("sdk/simple-storage").storage.nick
+
+require("sdk/simple-storage").storage.notificationsHistory ?= []
 notificationsHistory = require("sdk/simple-storage").storage.notificationsHistory
 for notification in notificationsHistory
     notification.old = 'true'
+
+announce = ''
 
 self = this
 init = (workers) ->
     self.workers = workers
 
 initWorker = (worker) ->
-  worker.port.emit('notificationsHistory',notificationsHistory)
-  
-notification = (type, message) ->
+  worker.port.emit('notificationsHistory', notificationsHistory)
+  worker.port.emit('announce', announce)
+
+sendNotification = (type, message) ->
     notification = 
         'type':type
         'message':message
@@ -22,19 +27,21 @@ bindClient = (client) ->
   client.addListener 'error', (message) ->
     console.error('ERROR:', message.command, message.args.join(' '))
     # todo : target only the current active, but can't do it via tab.worker since the error may pop before having assigned a chan to a tab (pm to bot)
-    notification('error', message.command+message.args.join(' '))
+    sendNotification('error', message.command+message.args.join(' '))
 
   client.addListener 'nicknameinuse', (oldNick, newNick) ->
-    console.log(oldNick+' > '+newNick)
     Nick.nick = newNick
-    notification('error', message.command+message.args.join(' '))
+    sendNotification('error', 'Nickname '+oldNick+' in use, changed to '+newNick)
     workers.emitToAll('nick', newNick)
     
   client.addListener 'pm', (from, message) ->
     if (from == 'Resonance-bot')
         if message.match(/^topPages/)
-            return
-      notification('announce', message)
+          return
+        if message.match(/^announce /)
+          message = message.replace('announce ','')
+          announce = message
+          workers.emitToAll('announce',announce)
 
 module.exports =
   'init':init

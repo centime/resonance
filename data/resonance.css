@@ -98,6 +98,14 @@ privateusers_resonance li{
     border-bottom: 1px solid;
     border-bottom-color: gray;
 }
+announce_resonance{
+    flex: 1 6 80%;
+    order: 4;
+}
+announce_resonance li{
+    border-bottom: 1px solid;
+    border-bottom-color: gray;
+}
 .list_resonance{
     overflow: auto;
     height: 100%;
