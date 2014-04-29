@@ -48,8 +48,14 @@ getRandomName = () ->
     post += randomSubString(pickInArray(names.last))
     upperFirst(pre)+'_'+upperFirst(post)
 
+getDate = () ->
+  d = new Date()
+  date = d.getDate()+'/'+(d.getMonth()+1)+' '+d.getHours()+'h'+d.getMinutes()+'m'+d.getSeconds()+'s'
+
+
 module.exports =
     'setUpHistory':setUpHistory
     'getChan':getChan
     'getDomain':getDomain
     'getRandomName':getRandomName
+    'getDate':getDate

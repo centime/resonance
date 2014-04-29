@@ -5,12 +5,15 @@ window.resonance.controller "MessagesController", ($scope) ->
     $scope.currentnick = ''
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
-        $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
+        $scope.messages = messagesHistory
+        for message in $scope.messages
+            message.display = not(message.author in $scope.$parent.mutedUsers)
         $scope.$apply()
         scrollDown()
 
     self.port.on "nick", (currentnick) ->
         $scope.currentnick=currentnick
+        $scope.$apply()
         scrollDown()
 
     # Send a new message.

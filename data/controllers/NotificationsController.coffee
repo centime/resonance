@@ -5,12 +5,7 @@ window.resonance.controller "NotificationsController", ($scope) ->
 
     # Get the history from the background.
     self.port.on "notificationsHistory", (notificationsHistory) ->
-        $scope.notifications = ({ 'type':notification.type, 'notification':notification.message, 'old':notification.old} for notification in notificationsHistory)
-        $scope.$apply()
-        scrollDown()
-
-    self.port.on 'notification', (notification) ->
-        $scope.notifications.push(notification)
+        $scope.notifications = notificationsHistory
         $scope.$apply()
         scrollDown()
     
