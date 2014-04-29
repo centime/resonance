@@ -6,7 +6,7 @@ coffee -c ./lib/main.coffee  ./lib/src/*.coffee
 # Compile injected application.
 coffee -c ./data/controllers/*.coffee 
 # Compile the settings panel.
-coffee -c ./data/panel_controllers/*.coffee
+coffee -c ./data/settings/*.coffee
 # Compile the tests.
 coffee -c ./data/*.coffee 
 

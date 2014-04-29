@@ -7,28 +7,38 @@ getRandomName = require('./Utils.js').getRandomName
 # env = {Resonance, settings, versionResonance}
 createPanel = (env) ->
   panel = require("sdk/panel").Panel({
-    'width':800,
-    'height':200,
     'contentURL': data.url("panel.html"),
     'contentScriptFile':[
       data.url("lib/angular.min.js"),
       data.url("lib/jquery.js"),
-      data.url("panel_controllers/panel.js"),
+      data.url("settings/panel.js"),
       ],
   })
 
-  require("sdk/widget").Widget({
+  widget = require("sdk/widget").Widget({
+  # widget = require('sdk/ui/button/action').actionButton({
     'id': "widget-open-settings",
     'label': "Resonance",
-    'contentURL': data.url("Resonance.png"),
-    'panel': panel,
-    'onClick': () ->
+    'contentURL': data.url("settings/pencil-off.png"),
+    'contentScriptWhen': 'ready',
+    'contentScriptFile': data.url('settings/widget.js')
+  })
+  widget.port.on 'left-click', () ->
+    start( not(tabs.activeTab.started ?= 'false') )
+
+    
+  widget.port.on 'right-click', () ->
       # todo : about:blank & co
+      position = {
+        top: 0,
+        bottom: 0,
+        right: 0
+      }
+      panel.show({'position': position})
       env.settings['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
       env.settings['started'] = tabs.activeTab.started ?= 'false'
       panel.port.emit('settings',env.settings)
       panel.port.emit('nick', Nick.nick)
-  })
   
   panel.port.on 'activate',(value) ->
     # todo : join & display where it should be joined & displayed
@@ -37,7 +47,7 @@ createPanel = (env) ->
     else
       env.Resonance.closeClient()
 
-  panel.port.on 'start',(value) ->
+  start = (value) ->
     if value
       if not tabs.activeTab.started
         env.Resonance.start(tabs.activeTab)
@@ -46,6 +56,11 @@ createPanel = (env) ->
       tabs.activeTab.worker.port.emit('close')
       env.Resonance.end(tabs.activeTab)
       tabs.activeTab.started = false
+
+
+  panel.port.on 'start',(value) ->
+    start(value)
+
 
   panel.port.on 'nextNick', (nextNick) ->
     Nick.changeNick = nextNick
