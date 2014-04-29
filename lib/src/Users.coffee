@@ -12,15 +12,15 @@ initWorker = (worker) ->
 
 bindClient = (client) ->
   client.addListener 'names', (chan,nicks) ->
-      workers[chan].emit('names',chan,nicks)
+      workers[chan]?.emit('names',chan,nicks)
   
   client.addListener 'join', (chan,nick) ->
-      workers[chan].emit('join',chan,nick)
+      workers[chan]?.emit('join',chan,nick)
 
   # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
   client.addListener 'part', (chan,nick) ->
       if nick isnt Nick.nick
-        workers[chan].emit('part',chan,nick)
+        workers[chan]?.emit('part',chan,nick)
 
 bindWorker = (worker) ->
   # stock the current muted Users

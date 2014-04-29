@@ -27,6 +27,8 @@ bot.addListener 'registered',() ->
 # todo : this could be sent buy the client regarding the place it has to display toppages
 numberOfRequestedEntries = 11
 
+
+# todo : pages -> chan ?
 visits = {} 
 # page:visitors
 chansToPages = {}
@@ -51,8 +53,9 @@ bot.addListener 'pm', (nick, message) ->
                 chansToPages[chan] = page
                 bot.join(chan)
             else 
-                abuses.push(nick+' : '+message)
-                console.log('[[ Abuse ]] '+nick+' : '+message)
+                if chansToPages[chan] isnt page
+                    abuses.push(nick+' : '+message)
+                    console.log('[[ Abuse ? ]] '+nick+' : '+message)
     # If the user asks for the list of most visited pages.
     # todo Slow. Not suited for scaling.
     else if message.match(/^__ask/)
@@ -84,7 +87,6 @@ bot.addListener 'pm', (nick, message) ->
         # Send topPages metadata.
         totalIndices = Math.ceil( sorted.length/numberOfRequestedEntries )
         bot.say(nick,'topPagesMetaData '+[query, indexRequestedTopPages, totalIndices].join(' '))
-        console.log [query, indexRequestedTopPages, totalIndices].join(' ')
 
         # Split the response so it wil go through IRC.
         # todo warning take into account String(i).length
@@ -97,6 +99,7 @@ bot.addListener 'pm', (nick, message) ->
             packet=topPagesResponse.substr(i*packetSize,packetSize)
             # todo warning : what if 2 toppages are requested at the same time ?
             bot.say(nick, 'topPages '+[i, numberOfPackets, packet].join(' '))    
+            # console.log 'topPages '+[i, numberOfPackets, packet].join(' ')
     else if message.match(/^__getAnnounce/)
         bot.say(nick, 'announce '+announce)
     else if message.match(/^__version /)

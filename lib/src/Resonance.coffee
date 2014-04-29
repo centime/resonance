@@ -48,6 +48,12 @@ closeClient = () ->
 
 
 start = (tab) ->
+
+  if tab.url.match(/^about:/)
+    for i in [0..100]
+      console.log 'BITCH'
+    return
+
   # Generate the chan name for the page.
   chan = getChan(tab.url,tab.title)
 
@@ -114,6 +120,7 @@ start = (tab) ->
     #todo : sanitize !
     storage.appSize = height
     workers.emitToAll('appSize',height)
+  tab.started = true
 
 
 end = (tab) ->
@@ -122,13 +129,14 @@ end = (tab) ->
   # todo : le worker attaché est il le même pour un même tab ?!
   previousWorker = tab.worker
   # Remove it from the list of workers linked to the chan.
-  workers[previousChan].removeWorker(previousWorker)
+  workers[previousChan]?.removeWorker(previousWorker)
   # Leave the previous chan if there are no more workers binded to it.
-  if not workers[previousChan].hasWorkers()
+  if not workers[previousChan]?.hasWorkers()
     client.part(previousChan)
     delete workers[previousChan]
   tab.chan = undefined
   tab.worker = undefined
+  tab.started = false
 
 
 module.exports =

@@ -47,6 +47,7 @@ bindClient = (client) ->
       if message.match(/^topPagesMetaData /)
         metaData(message)
       else if message.match(/^topPages /)
+        # console.log message
         topPages(message)
 
 bindWorker = (worker, client) ->

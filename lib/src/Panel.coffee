@@ -24,6 +24,8 @@ createPanel = (env) ->
     'contentScriptFile': data.url('settings/widget.js')
   })
   widget.port.on 'left-click', () ->
+    if tabs.activeTab.url.match(/^about:/)
+      return
     start( not(tabs.activeTab.started ?= 'false') )
 
     
@@ -48,15 +50,18 @@ createPanel = (env) ->
     else
       env.Resonance.closeClient()
 
+  # used to start / stop resonance via the widget for the current tab
   start = (value) ->
+    # if start
     if value
       if not tabs.activeTab.started
         env.Resonance.start(tabs.activeTab)
-        tabs.activeTab.started = true
+    # if stop
     else
-      tabs.activeTab.worker.port.emit('close')
-      env.Resonance.end(tabs.activeTab)
-      tabs.activeTab.started = false
+      # if it has really been started before
+      if tabs.activeTab.started
+        tabs.activeTab.worker.port.emit('close')
+        env.Resonance.end(tabs.activeTab)
 
 
   panel.port.on 'start',(value) ->

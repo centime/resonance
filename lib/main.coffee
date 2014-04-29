@@ -44,9 +44,6 @@ tabs.on 'ready', (tab) ->
     if startByDefault or startForThisDomain
       # Start it (join chan etc...).
       Resonance.start(tab)
-      tab.started = true
-    else tab.started = false
-  else tab.started = false
-
+    
 tabs.on 'close', (tab) ->    
   Resonance.end(tab)

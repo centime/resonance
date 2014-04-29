@@ -28,7 +28,10 @@ container.appendTo(document.body);
 var initMargin = $('body').css('margin-bottom')
 $('body').css('margin-bottom',SIZE)
 
-document.getElementById("resonance_container").innerHTML = content ;
+
+container.html(content)
+// document.getElementById("resonance_container").innerHTML = content ;
+
 
 self.port.on('close',function(){
     $('#resonance_container').remove()

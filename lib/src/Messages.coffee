@@ -17,7 +17,7 @@ receive = (from, to, message) ->
     # (If 'to' is one of the registered chans)
     if to in ( c for own c,C of workers)
       # It goes to the corresponding chan / worker.
-      workers[to].emit('message',from,to,message)
+      workers[to]?.emit('message',from,to,message)
       # Save in history.
       messagesHistory[to] ?= []
       messagesHistory[to].push( {'author':from, 'message': message } )
@@ -30,7 +30,7 @@ bindClient = (client) ->
 say = (client, to, message) ->
       client.say(to,message)
       # Tell back the application that the message has been said.
-      workers[to].emit('message',Nick.nick,to,message)
+      workers[to]?.emit('message',Nick.nick,to,message)
       # Save in history.
       messagesHistory[to] ?= []
       messagesHistory[to].push( {'author':Nick.nick, 'message': message } )
