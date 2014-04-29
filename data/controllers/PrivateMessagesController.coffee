@@ -8,7 +8,7 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
         currentPmUser = user
         $scope.messages = history
         $scope.$apply()
-        scrollDown()
+        scrollDown(true)
     
     # Send a new message.
     $scope.submitNewMessage =  () ->
@@ -37,8 +37,9 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
 
     # Scroll down the messages list.
     elmt = angular.element('privatemessages_resonance > ul') 
-    scrollDown = ()  ->
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+    scrollDown = (full)  ->
+        if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.2)
+            elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
     #focus the input
     $scope.displayPrivateMessage = (displayPrivateMessage) ->
         angular.element('privatemessages_resonance input').focus()

@@ -19,4 +19,5 @@ window.resonance.controller "NotificationsController", ($scope) ->
     # Scroll down the notifications list.
     elmt = angular.element('notifications_resonance > ul') 
     scrollDown = ()  ->
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+        if (elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.2
+            elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)

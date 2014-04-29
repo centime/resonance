@@ -9,12 +9,11 @@ window.resonance.controller "MessagesController", ($scope) ->
         for message in $scope.messages
             message.display = not(message.author in $scope.$parent.mutedUsers)
         $scope.$apply()
-        scrollDown()
+        scrollDown(true)
 
     self.port.on "nick", (currentnick) ->
         $scope.currentnick=currentnick
         $scope.$apply()
-        scrollDown()
 
     # Send a new message.
     $scope.submitNewMessage =  () ->
@@ -75,6 +74,8 @@ window.resonance.controller "MessagesController", ($scope) ->
         return displayMessages
     # Scroll down the messages list.
     elmt = angular.element('messages_resonance > ul') 
-    scrollDown = ()  ->
-        elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+    scrollDown = (full)  ->
+        console.log (elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height'))
+        if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.25)
+            elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
 
