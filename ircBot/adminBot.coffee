@@ -7,6 +7,8 @@ usersMessages = []
 abuses = []
 announce = 'Welcome to the alpha of Resonance ! Feel free to make any feedback via a private message to "Resonance-bot" or to quelques.centimes@gmail.com'
 
+console.log [version, KEY, announce].join('\n\n')
+
 encode = (unencoded) ->
     new Buffer(unencoded || '').toString('base64')
 b64decode = (encoded) ->

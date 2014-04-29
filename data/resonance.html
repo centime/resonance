@@ -2,14 +2,14 @@
     <div id='border_resonance' ng-click='resizing = !resizing'></div>
     <div id='main_resonance' class='flex_resonance row_resonance'>
         <div id='left_resonance' class='bordered_resonance'>
-            <messages_resonance ng-controller='MessagesController' ng-show='display==1' class='flex_resonance column_resonance'>
+            <messages_resonance ng-controller='MessagesController' ng-show='displayMessages(display==1)' class='flex_resonance column_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='message in messages track by $index' ng-if='message.display' ng-class='class(message)'>
                           {{message.author}}: {{message.message}}
                     </li>
                 </ul>
                 <form ng-submit='submitNewMessage()'>
-                    <input type='text' ng-model='newMessage'/>
+                    <input type='text' ng-model='newMessage' autofocus/>
                 </form>
             </messages_resonance>
             <toppages_resonance ng-controller='TopPagesController' ng-show='displayTopPages(display==2)'>
@@ -28,7 +28,7 @@
                     </li>
                 </ul>
             </toppages_resonance>
-           <privatemessages_resonance ng-controller='PrivateMessagesController' ng-show='display==4' class='flex_resonance column_resonance'>
+           <privatemessages_resonance ng-controller='PrivateMessagesController' ng-show='displayPrivateMessage(display==4)' class='flex_resonance column_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='message in messages track by $index' ng-class='oldMessage(message)'>
                           {{message.author}}: {{message.message}}
@@ -46,11 +46,11 @@
                 </ul>
             </notifications_resonance>
         </div>
-        <div id='right_resonance' class='flex_resonance column_resonance'>
+        <div id='right_resonance'>
             <controls_resonance class='bordered_resonance'>
-                <button ng-click='display=(display==2)?1:2'>T</button>
-                <button ng-click='display=(display==4)?1:4' ng-class='active()'>P</button>
-                <button ng-click='display=(display==5)?1:5'>N</button>
+                <button ng-click='display=(display==2)?1:2'  >TopPages</button>
+                <button ng-click='display=(display==4)?1:4' ng-class='active()'>PrivateMessages</button>
+                <button ng-click='display=(display==5)?1:5'>Notifications</button>
             </controls_resonance>
             <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
                 <ul class='list_resonance'>

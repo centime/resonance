@@ -6,6 +6,7 @@ window.resonance.controller "MessagesController", ($scope) ->
     # Get the histor from the background.
     self.port.on "messagesHistory", (messagesHistory) ->
         $scope.messages = ({ 'author':message.author, 'message':message.message, 'old':message.old, 'display':not(message.author in $scope.$parent.mutedUsers)} for message in messagesHistory)
+        $scope.$apply()
         scrollDown()
 
     self.port.on "nick", (currentnick) ->
@@ -28,29 +29,37 @@ window.resonance.controller "MessagesController", ($scope) ->
             'author' : from
             'message' : message
             'display' : not ( from in $scope.$parent.mutedUsers )
-
+            'marker' : 'standart'
+        #class of message 
+        wordsInMessage = entry.message.split(new RegExp(' |:','g'))
+        if entry.author == 'resonance-bot'
+            entry.marker = 'resonanceToMe'
+        else if entry.author == $scope.currentnick
+            entry.marker = 'authorIsMe'
+        else if $scope.currentnick in wordsInMessage
+            entry.marker = 'authorToMe'
         # Append it to the list of all messages.
         $scope.messages.push(entry)
         # Update the view.
         $scope.$apply()
         scrollDown()
         
-    # Set the css class for old messages (history).
+    # Set the css class for messages.
     $scope.class = (message) ->
+        message.marker ?= ''
         classes = {'old_message_resonance': message.old}
-        wordsInMessage = message.message.split(new RegExp(' |:','g'))
-        if message.author == $scope.currentnick
-            classes['authorIsMe_resonance'] = true
-        else if $scope.currentnick in wordsInMessage
-            classes['authorToMe_resonance'] = true
+        switch message.marker
+            when 'resonanceToMe' then classes['resonanceToMe_resonance'] = true
+            when 'authorIsMe' then classes['authorIsMe_resonance'] = true
+            when 'authorToMe' then classes['authorToMe_resonance'] = true
         return classes
+        
 
     # Undisplay the messages of the muted user
     $scope.$parent.$on "mute", (e,user) ->
         for message in $scope.messages
             if message.author == user
                 message.display = false
-        scrollDown()
         
     # Display the messages of the muted user
     $scope.$parent.$on "unMute", (e,user) ->
@@ -58,6 +67,9 @@ window.resonance.controller "MessagesController", ($scope) ->
             if message.author == user
                 message.display = true
 
+    $scope.displayMessages = (displayMessages) ->
+        angular.element('messages_resonance input').focus()
+        return displayMessages
     # Scroll down the messages list.
     elmt = angular.element('messages_resonance > ul') 
     scrollDown = ()  ->
