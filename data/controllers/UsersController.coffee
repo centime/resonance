@@ -1,4 +1,4 @@
-window.app.controller 'UsersController', ($scope)->
+window.resonance.controller 'UsersController', ($scope)->
     # List of every present user.
     $scope.users = []
     # Listen for the message sent by the server when entering a chan, with the list of present users.

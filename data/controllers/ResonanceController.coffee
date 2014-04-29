@@ -1,4 +1,4 @@
-window.app.controller "ResonanceController", ($scope) ->
+window.resonance.controller "ResonanceController", ($scope) ->
     # Indicates which element of the application has to be displayed.
     # 1 for messages.
     # 2 for features.
@@ -39,4 +39,4 @@ window.app.controller "ResonanceController", ($scope) ->
         $scope.privateActive = ( true in ( active for user, active of users ))
         $scope.$apply()
     $scope.active = () ->
-        {'active':$scope.privateActive}
+        {'active_resonance':$scope.privateActive}

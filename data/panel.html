@@ -1,0 +1,28 @@
+<resonancepanel ng-app='panel' ng-controller='PanelController' class='flex column'>
+    <div ng-show='activated'>
+        Resonance has started for this page
+        <button ng-click='toggleStarted()' ng-show='started'>Yes</button>
+        <button ng-click='toggleStarted()' ng-hide='started'>No</button>
+        <br>
+        <br>
+        Start Resonance for every page of this domain
+        <button ng-click='toggleStartForDomain()' ng-show='startForDomain'>Yes</button>
+        <button ng-click='toggleStartForDomain()' ng-hide='startForDomain'>No</button>
+        <br>
+        Start Resonance for every page by default
+        <button ng-click='toggleStartByDefault()' ng-show='startByDefault'>Yes</button>
+        <button ng-click='toggleStartByDefault()' ng-hide='startByDefault'>No</button>
+        <br>
+    </div>
+    <br>
+    Nickname
+    <form ng-submit='newNick()'>
+        <input type='text' ng-model='nick'/>
+    </form>
+    <button ng-click='getRandomName()' ng-show='startByDefault'>Random</button>
+    <br>
+    Resonance is activated
+    <button ng-click='toggleActivated()' ng-show='activated'>Yes</button>
+    <button ng-click='toggleActivated()' ng-hide='activated'>No</button>
+    <br>
+</resonancepanel>
