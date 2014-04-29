@@ -38,7 +38,8 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
     # Scroll down the messages list.
     elmt = angular.element('privatemessages_resonance > ul') 
     scrollDown = (full)  ->
-        if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.2)
+        # todo : 1.25 ? it needs proper checks.
+        if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.25)
             elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
     #focus the input
     $scope.displayPrivateMessage = (displayPrivateMessage) ->

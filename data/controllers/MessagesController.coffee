@@ -75,7 +75,7 @@ window.resonance.controller "MessagesController", ($scope) ->
     # Scroll down the messages list.
     elmt = angular.element('messages_resonance > ul') 
     scrollDown = (full)  ->
-        console.log (elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height'))
+        # todo : 1.25 ? it needs proper checks.
         if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.25)
             elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
 
