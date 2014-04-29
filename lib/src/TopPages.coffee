@@ -22,11 +22,15 @@ topPages = (message) ->
 
       completeResponse = ''
       receptionCompleted = true
+
       # Check that all packets have been received.
       for i in [0..totalPackets-1]
-        receptionCompleted = topPagesResponse[packetId]?
-        # Concat the packets into one string.
-        completeResponse += topPagesResponse[packetId]
+        if topPagesResponse[i]?
+          # Concat the packets into one string.
+          completeResponse += topPagesResponse[i]
+        else
+          receptionCompleted = false
+          break
 
       # If all have been received.
       if receptionCompleted
@@ -47,7 +51,6 @@ bindClient = (client) ->
       if message.match(/^topPagesMetaData /)
         metaData(message)
       else if message.match(/^topPages /)
-        # console.log message
         topPages(message)
 
 bindWorker = (worker, client) ->

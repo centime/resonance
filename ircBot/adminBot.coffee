@@ -99,7 +99,6 @@ bot.addListener 'pm', (nick, message) ->
             packet=topPagesResponse.substr(i*packetSize,packetSize)
             # todo warning : what if 2 toppages are requested at the same time ?
             bot.say(nick, 'topPages '+[i, numberOfPackets, packet].join(' '))    
-            # console.log 'topPages '+[i, numberOfPackets, packet].join(' ')
     else if message.match(/^__getAnnounce/)
         bot.say(nick, 'announce '+announce)
     else if message.match(/^__version /)
