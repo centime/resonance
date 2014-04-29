@@ -2,7 +2,7 @@ data = require("sdk/self").data
 tabs = require('sdk/tabs')
 
 Nick = require("sdk/simple-storage").storage.nick
-getRandomName = require('./Utils.js').getRandomName
+{ getRandomName, getChan } = require('./Utils.js')
 
 # env = {Resonance, settings, versionResonance}
 createPanel = (env) ->
@@ -39,6 +39,7 @@ createPanel = (env) ->
       env.settings['started'] = tabs.activeTab.started ?= 'false'
       panel.port.emit('settings',env.settings)
       panel.port.emit('nick', Nick.nick)
+      panel.port.emit('chan', getChan(tabs.activeTab.url, tabs.activeTab.title))
   
   panel.port.on 'activate',(value) ->
     # todo : join & display where it should be joined & displayed

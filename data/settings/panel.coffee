@@ -3,6 +3,7 @@ window.app = angular.module('panel',[])
 window.app.controller 'PanelController', ($scope) ->
     settings = {}
     $scope.nick = ''
+    $scope.chan = ''
 
     self.port.on 'settings', (opt) ->
         ( $scope[key] = value for key,value of opt )
@@ -12,6 +13,10 @@ window.app.controller 'PanelController', ($scope) ->
 
     self.port.on 'nick', (nick) ->
         $scope.nick = nick
+        $scope.$apply()
+
+    self.port.on 'chan', (chan) ->
+        $scope.chan = chan
         $scope.$apply()
 
     $scope.toggleStarted = () ->
