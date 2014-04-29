@@ -38,5 +38,13 @@ window.resonance.controller "ResonanceController", ($scope) ->
     self.port.on 'activePrivateUsers', (users) ->
         $scope.privateActive = ( true in ( active for user, active of users ))
         $scope.$apply()
-    $scope.active = () ->
+    $scope.private_active = () ->
         {'active_resonance':$scope.privateActive}
+    
+    $scope.nocitificationActive = false
+    self.port.on 'notificationActive', (bool) ->
+        $scope.notificationActive = bool
+        $scope.$apply()
+    $scope.notification_active = () ->
+        {'active_resonance':$scope.notificationActive}
+    

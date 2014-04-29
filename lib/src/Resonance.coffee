@@ -99,16 +99,16 @@ start = (tab) ->
   worker.port.emit('chan',chan)
   worker.port.emit('nick',Nick.nick)
   
-  Notifications.initWorker(worker)
-  Users.initWorker(worker)
-  Messages.initWorker(worker, chan)
-  PrivateMessages.initWorker(worker)
-
+  Notifications.bindWorker(worker)
   Messages.bindWorker(worker, client)
   PrivateMessages.bindWorker(worker, client)
   TopPages.bindWorker(worker, client)
   Users.bindWorker(worker)
 
+  Notifications.initWorker(worker)
+  Users.initWorker(worker)
+  Messages.initWorker(worker, chan)
+  PrivateMessages.initWorker(worker)
   
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !

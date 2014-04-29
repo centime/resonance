@@ -154,6 +154,9 @@ resonance_resonance * {
     .active_resonance{
         animation: blink_resonance .5s step-end infinite alternate; 
     }
+    .notification_resonance{
+        animation: blink_resonance .5s step-end 2s alternate; 
+    }
 /* Messages colors */
     .old_message_resonance {
         color : gray;

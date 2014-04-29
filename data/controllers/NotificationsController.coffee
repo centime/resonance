@@ -13,6 +13,16 @@ window.resonance.controller "NotificationsController", ($scope) ->
         $scope.announce = announce
         $scope.$apply()
     
+    # Execute when Notifications is shown.
+    alreadyUnactivated = false
+    $scope.displayNotifications = (displayNotifications) ->
+        if displayNotifications
+            if (not alreadyUnactivated)
+                self.port.emit('notificationActive',false)  
+                alreadyUnactivated = true
+        else alreadyUnactivated = false
+        return displayNotifications
+
     $scope.class = (notification) ->
         {'old_message_resonance': notification.old}
         

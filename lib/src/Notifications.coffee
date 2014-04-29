@@ -8,6 +8,8 @@ notificationsHistory = require("sdk/simple-storage").storage.notificationsHistor
 for notification in notificationsHistory
     notification.old = 'true'
 
+notificationActive = false
+
 announce = ''
 
 self = this
@@ -18,6 +20,11 @@ initWorker = (worker) ->
   worker.port.emit('notificationsHistory', notificationsHistory)
   worker.port.emit('announce', announce)
 
+bindWorker = (worker) ->
+  worker.port.on 'notificationActive',(bool) ->
+    notificationActive = bool
+    workers.emitToAll('notificationActive',bool)
+
 updateNotifications = (type, message) ->
     date = getDate()
     console.log date+' '+type+' '+message
@@ -26,7 +33,9 @@ updateNotifications = (type, message) ->
         'type':type
         'message':message
     notificationsHistory.push(notification)
+    notificationActive = true
     workers.emitToAll('notificationsHistory', notificationsHistory)
+    workers.emitToAll('notificationActive', notificationActive)
 
 bindClient = (client) ->
     # Error handling
@@ -58,4 +67,5 @@ bindClient = (client) ->
 module.exports =
   'init':init
   'initWorker':initWorker
+  'bindWorker':bindWorker
   'bindClient':bindClient

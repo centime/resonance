@@ -38,7 +38,7 @@
                     <input type='text' ng-model='newMessage'/>
                 </form>
             </privatemessages_resonance>
-            <notifications_resonance ng-controller='NotificationsController' ng-show='display==5' class='flex_resonance column_resonance'>
+            <notifications_resonance ng-controller='NotificationsController' ng-show='displayNotifications(display==5)' class='flex_resonance column_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='notification in notifications track by $index' ng-class='class(notification)'>
                           {{notification.date}}. {{notification.type}}: {{notification.message}}
@@ -49,8 +49,8 @@
         <div id='right_resonance'>
             <controls_resonance class='bordered_resonance'>
                 <button ng-click='display=(display==2)?1:2'  >TopPages</button>
-                <button ng-click='display=(display==4)?1:4' ng-class='active()'>PrivateMessages</button>
-                <button ng-click='display=(display==5)?1:5'>Notifications</button>
+                <button ng-click='display=(display==4)?1:4' ng-class='private_active()'>PrivateMessages</button>
+                <button ng-click='display=(display==5)?1:5' ng-class='notification_active()'>Notifications</button>
             </controls_resonance>
             <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
                 <ul class='list_resonance'>
