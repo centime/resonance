@@ -67,7 +67,6 @@ createPanel = (env) ->
   panel.port.on 'start',(value) ->
     start(value)
 
-
   panel.port.on 'nextNick', (nextNick) ->
     Nick.changeNick = nextNick
     

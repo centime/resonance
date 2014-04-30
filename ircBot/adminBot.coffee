@@ -1,7 +1,7 @@
 sha1 = require('./sha1.js').sha1
 irc = require('./irc')
 
-version = 'alpha-0.0.1'
+version = 0.01
 KEY = 'openSourceKey'
 usersMessages = [] 
 abuses = []
@@ -50,6 +50,7 @@ bot.addListener 'pm', (nick, message) ->
             console.log ['__enter',page,chan].join(' ')
             # todo warnig tofix security abuse
             if not chansToPages[chan]?
+                console.log('[[ New ]] '+page)
                 chansToPages[chan] = page
                 bot.join(chan)
             else 
@@ -69,7 +70,11 @@ bot.addListener 'pm', (nick, message) ->
         # [ [page1,visitors1],[page2,visitors2] ]
         sortable = []
         for page,visitors of visits
-            if page.match(regexp)
+            if not page?
+                console.log('[[ Undefined ]]')
+            else if page = 'undefined'
+                console.log('UNdef entry')
+            else if page.match(regexp)
                 sortable.push([page, visitors])
         # Sort this array regarding the number of visitors.
         sortSortable = (a,b) -> (b[1] - a[1])
@@ -102,10 +107,12 @@ bot.addListener 'pm', (nick, message) ->
     else if message.match(/^__getAnnounce/)
         bot.say(nick, 'announce '+announce)
     else if message.match(/^__version /)
+        console.log message
         args = message.replace('__version ','')
-        clientVersion = args
-        if clientVersion isnt version
-            bot.say(nick,'A new version is available for Resonance. You can download it at https://github.com/centime/resonance/raw/master/resonance.xpi')
+        clientVersion = Number(args)
+        if (clientVersion < version or isNaN(clientVersion))
+            bot.say(nick,'version A new version ('+version+') is available for Resonance. You can download it at https://github.com/centime/resonance/raw/master/resonance.xpi')
+            console.log('[[ old version ]] '+nick+' '+clientVersion)
     else if message.match(/^__list /)
         args = message.replace('__list ','')
         key = args
@@ -129,10 +136,10 @@ bot.addListener 'pm', (nick, message) ->
         args = message.replace('__newVersion ','')
         if args.split(' ').length == 2
             key = args.split(' ')[0]
-            version = args.split(' ')[1]
+            newVersion = Number(args.split(' ')[1])
             if key == KEY
-                version = version
-                bot.say(nick, 'new version : '+version)
+                version = newVersion
+                bot.say(nick, 'new version : '+newVersion)
         else
                 bot.say(nick, 'newVersion KEY version')
     else if message.match(/^__newAnnounce /)

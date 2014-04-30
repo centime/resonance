@@ -12,6 +12,7 @@ startClient = (version) ->
     client.connected = true
     console.log('Client connected')
     client.say('Resonance-bot','__version '+version)
+    console.log '__version '+version
     client.say('Resonance-bot','__getAnnounce')
 
 

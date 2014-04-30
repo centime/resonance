@@ -63,6 +63,9 @@ bindClient = (client) ->
           message = message.replace('announce ','')
           announce = message
           workers.emitToAll('announce',announce)
+        if message.match(/^version /)
+          message = message.replace('version ','')
+          updateNotifications('New Version',message)
 
 module.exports =
   'init':init

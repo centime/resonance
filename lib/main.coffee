@@ -2,7 +2,11 @@ tabs = require('sdk/tabs')
 
 getDomain = require('./src/Utils.js').getDomain
 
-VERSION = 'alpha-0.0.1'
+VERSION = 'a0.002'
+version = require("sdk/simple-storage").storage.version ?= 0
+if version == 0
+  require("sdk/simple-storage").storage = {}
+require("sdk/simple-storage").storage.version = VERSION
 
 require("sdk/simple-storage").storage.settings ?= require('./src/Default.js').settings
 settings = require("sdk/simple-storage").storage.settings
@@ -18,6 +22,7 @@ if Nick.changeNick?
 
 Resonance = require('./src/Resonance.js')
 Resonance.init(VERSION)
+
 
 # Create the settings panel.
 panel = require('./src/Panel.js').createPanel({Resonance, settings, VERSION})
