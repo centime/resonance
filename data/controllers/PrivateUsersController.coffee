@@ -1,6 +1,6 @@
 window.resonance.controller 'PrivateUsersController', ($scope)->
     # List of every present user.
-    $scope.currentPmUser = 'Resonance-bot'
+    $scope.currentPmUser = IRC.bot
     $scope.pmUsers = []
 
     # When the user clicks on a user in the list.

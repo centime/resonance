@@ -2,7 +2,7 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
     # List of every messages that has been sent or received in the current channel (page).
     $scope.messages = []
     $scope.newMessage = ''
-    currentPmUser = 'Resonance-bot'
+    currentPmUser = IRC.bot
 
     self.port.on "pmUser", (user, history) ->
         currentPmUser = user

@@ -2,7 +2,7 @@ irc = require('../lib/_irc.js')
 
 Nick = require("sdk/simple-storage").storage.nick
 
-startClient = (version) ->
+startClient = (VERSION, BOT) ->
   client = new irc.Client('chat.freenode.net', Nick.nick, {
       debug: false,
   })
@@ -11,9 +11,8 @@ startClient = (version) ->
   client.addListener 'registered', (message) ->
     client.connected = true
     console.log('Client connected')
-    client.say('Resonance-bot','__version '+version)
-    console.log '__version '+version
-    client.say('Resonance-bot','__getAnnounce')
+    client.say(BOT,'__version '+VERSION)
+    client.say(BOT,'__getAnnounce')
 
 
   return client

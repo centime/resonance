@@ -61,6 +61,9 @@ bot.addListener 'pm', (nick, message) ->
     # todo Slow. Not suited for scaling.
     else if message.match(/^__ask/)
     # ask [page index] [keyword]
+        console.log message
+        for k,v of visits
+            console.log k+' '+v
         args = message.replace('__ask ','').split(' ')
         indexRequestedTopPages = Number(args[0])
         query = args[1]
@@ -70,9 +73,10 @@ bot.addListener 'pm', (nick, message) ->
         # [ [page1,visitors1],[page2,visitors2] ]
         sortable = []
         for page,visitors of visits
+            console.log page+' '+visitors
             if not page?
                 console.log('[[ Undefined ]]')
-            else if page = 'undefined'
+            else if page == 'undefined'
                 console.log('UNdef entry')
             else if page.match(regexp)
                 sortable.push([page, visitors])
@@ -107,7 +111,6 @@ bot.addListener 'pm', (nick, message) ->
     else if message.match(/^__getAnnounce/)
         bot.say(nick, 'announce '+announce)
     else if message.match(/^__version /)
-        console.log message
         args = message.replace('__version ','')
         clientVersion = Number(args)
         if (clientVersion < version or isNaN(clientVersion))

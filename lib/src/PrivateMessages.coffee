@@ -7,12 +7,13 @@ setUpHistory = require('./Utils.js').setUpHistory
 setUpHistory(privateMessagesHistory)
 
 activePrivateUsers = {}
-pmUsers = ['Resonance-bot']
-currentPmUser = 'Resonance-bot'
+pmUsers = [BOT]
+currentPmUser = BOT
 
 self = this
-init = (workers) ->
+init = (workers, BOT) ->
   self.workers = workers
+  self.BOT = BOT
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 receive = (from, message) ->
@@ -33,7 +34,7 @@ bindClient = (client) ->
   # When the client receives a private message, it goes to every worker, thus to every tab.
   client.addListener 'pm', (from, message) ->
     # todo : pm from the bot ?      
-    if (from == 'Resonance-bot')
+    if (from == BOT)
       return
     else
       receive(from, message)

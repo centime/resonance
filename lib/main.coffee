@@ -2,7 +2,7 @@ tabs = require('sdk/tabs')
 
 getDomain = require('./src/Utils.js').getDomain
 
-VERSION = 'a0.002'
+VERSION = 0.01
 version = require("sdk/simple-storage").storage.version ?= 0
 if version == 0
   require("sdk/simple-storage").storage = {}

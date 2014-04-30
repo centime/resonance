@@ -1,7 +1,7 @@
 self = this
-init = (workers) ->
+init = (workers, BOT) ->
   self.workers = workers
-
+  self.BOT = BOT
 metaData = (message) ->
     # Extract the arguments from the message.
     args = message.replace('topPagesMetaData ','').split(' ')
@@ -47,7 +47,7 @@ topPages = (message) ->
 bindClient = (client) ->
   client.addListener 'pm', (from, message) ->
     # If it comes from the bot.
-    if from == 'Resonance-bot'
+    if from == BOT
       if message.match(/^topPagesMetaData /)
         metaData(message)
       else if message.match(/^topPages /)
@@ -57,7 +57,8 @@ bindWorker = (worker, client) ->
   # Listen for the application asking for the top pages.
   worker.port.on 'getTopPages', (index,query) ->
     #Ask the bot for top tapes.
-    client.say('Resonance-bot','__ask '+index+' '+query)
+    client.say(BOT,'__ask '+index+' '+query)
+    console.log '__ask '+index+' '+query
     
 module.exports =
   'init':init

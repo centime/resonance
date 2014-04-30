@@ -13,8 +13,9 @@ notificationActive = false
 announce = ''
 
 self = this
-init = (workers) ->
+init = (worker, BOT) ->
     self.workers = workers
+    self.BOT = BOT
 
 initWorker = (worker) ->
   worker.port.emit('notificationsHistory', notificationsHistory)
@@ -27,7 +28,6 @@ bindWorker = (worker) ->
 
 updateNotifications = (type, message) ->
     date = getDate()
-    console.log date+' '+type+' '+message
     notification = 
         'date':date
         'type':type
@@ -41,7 +41,7 @@ bindClient = (client) ->
     # Error handling
   client.addListener 'error', (message) ->
     if message.command == 'err_nosuchnick'
-      if message.args[1] == 'Resonance-bot'
+      if message.args[1] == BOT
         updateNotifications('Resonance', 'Unable to connect to the bot. TopPages will probably be broken. Maybe your Resonance needs to be updated, or maybe we are just down.')
       else
         updateNotifications('Message not sent', message.args[1]+' isn\'t connected')
@@ -56,7 +56,7 @@ bindClient = (client) ->
     workers.emitToAll('nick', newNick)
     
   client.addListener 'pm', (from, message) ->
-    if (from == 'Resonance-bot')
+    if (from == BOT)
         if message.match(/^topPages/)
           return
         if message.match(/^announce /)

@@ -2,6 +2,8 @@ data = require("sdk/self").data
 storage = require("sdk/simple-storage").storage
 Nick = require("sdk/simple-storage").storage.nick
 
+BOT = 'Resonance-bot'
+
 # { sanitizeTitle, getDomain, getChan } = require('./Utils.js')
 getChan = require('./Utils.js').getChan
 Channel = require('./Channel.js').Channel
@@ -25,16 +27,16 @@ self = this
 init = (VERSION) ->
   self.VERSION = VERSION
   
-  Notifications.init(workers)  
+  Notifications.init(workers, BOT)  
   Messages.init(workers)
-  PrivateMessages.init(workers)
-  TopPages.init(workers)
+  PrivateMessages.init(workers, BOT)
+  TopPages.init(workers, BOT)
   Users.init(workers)
 
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
 
-  client = require('./Client.js').startClient(VERSION)
+  client = require('./Client.js').startClient(VERSION, BOT)
 
   Notifications.bindClient(client)
   Users.bindClient(client)
@@ -69,7 +71,7 @@ start = (tab) ->
   # title = sanitizeTitle(tab.title)
   #client.say('Resonance-bot','__enter '+tab.url+' '+domain+' '+title)
   # todo warnig tofix security abuse
-  client.say('Resonance-bot','__enter '+tab.url+' '+chan)
+  client.say(BOT,'__enter '+tab.url+' '+chan)
 
   
   # Inject the application code into the page.
@@ -101,6 +103,7 @@ start = (tab) ->
   else workers[chan] = new Channel(chan, worker)  
 
   # Send the application some init values.
+  worker.port.emit('bot', BOT)
   worker.port.emit('appSize', storage.appSize ? '100')
   worker.port.emit('chan',chan)
   worker.port.emit('nick',Nick.nick)

@@ -8,11 +8,11 @@ It will allow you to talk instantly with the other people reading the page you'r
 
 Install
 -------
-**Download the extension file :**
+**1) Download the extension file :**
 ```
 https://github.com/centime/resonance/raw/master/resonance.xpi
 ```
-**Install from Firefox :**
+**2) Install from Firefox :**
 ```
 Ctrl + O , and select the file.
 ```
@@ -20,7 +20,9 @@ Ctrl + O , and select the file.
 Usage
 -----    
 **Display the Add-on bar**
+
 `View > Toolbars > Add-on bar` or `Ctrl + Maj + /`
+
 
 **Start Resonance on a page**
 ```
