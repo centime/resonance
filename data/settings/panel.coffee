@@ -4,6 +4,7 @@ window.app.controller 'PanelController', ($scope) ->
     settings = {}
     $scope.nick = ''
     $scope.chan = ''
+    $scope.started = false
 
     self.port.on 'settings', (opt) ->
         ( $scope[key] = value for key,value of opt )
@@ -19,11 +20,17 @@ window.app.controller 'PanelController', ($scope) ->
         $scope.chan = chan
         $scope.$apply()
 
-    $scope.toggleStarted = () ->
-        $scope.started = not $scope.started
-        settings['started'] = $scope.started
-        self.port.emit('updateSettings',settings)
-        self.port.emit('start',$scope.started)
+    self.port.on 'started', (started) ->
+        $scope.started = started
+        $scope.$apply()
+
+    $scope.start = () ->
+        $scope.started = true
+        self.port.emit('start')
+
+    $scope.stop = () ->
+        $scope.started = false
+        self.port.emit('stop')
 
     $scope.toggleActivated = () ->
         $scope.activated = not $scope.activated

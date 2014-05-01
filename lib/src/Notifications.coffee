@@ -13,7 +13,7 @@ notificationActive = false
 announce = ''
 
 self = this
-init = (worker, BOT) ->
+init = (workers, BOT) ->
     self.workers = workers
     self.BOT = BOT
 

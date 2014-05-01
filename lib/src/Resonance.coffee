@@ -50,10 +50,7 @@ closeClient = () ->
 
 
 start = (tab) ->
-
   if tab.url.match(/^about:/)
-    for i in [0..100]
-      console.log 'BITCH'
     return
 
   # Generate the chan name for the page.

@@ -1,8 +1,8 @@
 <resonancepanel ng-app='panel' ng-controller='PanelController' class='flex column'>
     <div ng-show='activated'>
         Resonance has started for this page
-        <button ng-click='toggleStarted()' ng-show='started'>Yes</button>
-        <button ng-click='toggleStarted()' ng-hide='started'>No</button>
+        <button ng-click='stop()' ng-show='started'>Yes</button>
+        <button ng-click='start()' ng-hide='started'>No</button>
         <br>
         Chan generated for this page : 
         <input type='text' ng-model='chan'/>
@@ -22,7 +22,7 @@
     <form ng-submit='newNick()'>
         <input type='text' ng-model='nick'/>
     </form>
-    <button ng-click='getRandomName()' ng-show='startByDefault'>Get a random name</button>
+    <button ng-click='getRandomName()'>Get a random name</button>
     <br>
     <br>
     <br>

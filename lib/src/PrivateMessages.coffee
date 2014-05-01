@@ -7,13 +7,16 @@ setUpHistory = require('./Utils.js').setUpHistory
 setUpHistory(privateMessagesHistory)
 
 activePrivateUsers = {}
-pmUsers = [BOT]
-currentPmUser = BOT
+pmUsers = []
+currentPmUser = ''
 
 self = this
 init = (workers, BOT) ->
   self.workers = workers
   self.BOT = BOT
+  pmUsers = [BOT]
+  currentPmUser = BOT
+
 
 # When the client receives a private message, it goes to every worker, thus to every tab.
 receive = (from, message) ->

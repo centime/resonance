@@ -26,8 +26,9 @@ createPanel = (env) ->
   widget.port.on 'left-click', () ->
     if tabs.activeTab.url.match(/^about:/)
       return
-    start( not(tabs.activeTab.started ?= 'false') )
-
+    tabs.activeTab.started ?= false
+    start(not tabs.activeTab.started)
+    
     
   widget.port.on 'right-click', () ->
       # todo : about:blank & co
@@ -38,10 +39,10 @@ createPanel = (env) ->
       }
       panel.show({'position': position})
       env.settings['domain'] = tabs.activeTab.url.match(/^(https?\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)(\/[^?#]*)(\?[^#]*|)(#.*|)$/)?[2] ?= ''
-      env.settings['started'] = tabs.activeTab.started ?= 'false'
       panel.port.emit('settings',env.settings)
       panel.port.emit('nick', Nick.nick)
       panel.port.emit('chan', getChan(tabs.activeTab.url, tabs.activeTab.title))
+      panel.port.emit('started', tabs.activeTab.started ?= false)
   
   panel.port.on 'activate',(value) ->
     # todo : join & display where it should be joined & displayed
@@ -50,22 +51,24 @@ createPanel = (env) ->
     else
       env.Resonance.closeClient()
 
-  # used to start / stop resonance via the widget for the current tab
+  # Used to start / stop resonance via the widget for the current tab.
   start = (value) ->
-    # if start
+    # If start.
     if value
-      if not tabs.activeTab.started
         env.Resonance.start(tabs.activeTab)
-    # if stop
+    # If stop.
     else
-      # if it has really been started before
-      if tabs.activeTab.started
+        # Remove the injected html
         tabs.activeTab.worker.port.emit('close')
+        # Part from the chan, update the workers & tabs..
         env.Resonance.end(tabs.activeTab)
 
 
-  panel.port.on 'start',(value) ->
-    start(value)
+  panel.port.on 'start',() ->
+    start(true)
+
+  panel.port.on 'stop',() ->
+    start(false)
 
   panel.port.on 'nextNick', (nextNick) ->
     Nick.changeNick = nextNick

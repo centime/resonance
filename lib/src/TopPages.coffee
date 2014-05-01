@@ -58,7 +58,6 @@ bindWorker = (worker, client) ->
   worker.port.on 'getTopPages', (index,query) ->
     #Ask the bot for top tapes.
     client.say(BOT,'__ask '+index+' '+query)
-    console.log '__ask '+index+' '+query
     
 module.exports =
   'init':init

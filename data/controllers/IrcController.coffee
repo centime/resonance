@@ -10,5 +10,4 @@ self.port.on 'chan',(c) ->
 
 self.port.on 'bot',(b) ->
     IRC.bot = b
-    
 
