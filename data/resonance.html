@@ -45,12 +45,15 @@
                     </li>
                 </ul>
             </notifications_resonance>
+            <follow_resonance ng-controller='FollowController' ng-show='display==6' class='flex_resonance column_resonance'>
+            </follow_resonance>
         </div>
         <div id='right_resonance'>
             <controls_resonance class='bordered_resonance'>
                 <button ng-click='display=(display==2)?1:2'  >TopPages</button>
                 <button ng-click='display=(display==4)?1:4' ng-class='active()'>PrivateMessages</button>
                 <button ng-click='display=(display==5)?1:5'>Notifications</button>
+                <button ng-click='display=(display==6)?1:6'>Follow</button>
             </controls_resonance>
             <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
                 <ul class='list_resonance'>
@@ -60,6 +63,7 @@
                             <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
                             <button ng-click='unMute(user)' ng-hide='!isMute(user)'>unMute</button>
                             <button ng-click='startPm(user)' ng-hide='isClient(user)'>private message</button>
+                            <button ng-click='follow(user)' ng-hide='isClient(user)'>follow</button>
                         </actions>
                     </li>
                 </ul>

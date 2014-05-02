@@ -9,7 +9,7 @@
     }
     if (msg === 'App displayed, ~full ?') {
       displayed = $('#resonance_container') != null;
-      fullSize = $('#resonance_container').width() > window.innerWidth * 9 / 10;
+      fullSize = $('#main').width() > window.innerWidth * 9 / 10;
       self.port.emit('test', msg + ' : ' + (displayed && fullSize));
     }
     if (msg === 'Send message') {

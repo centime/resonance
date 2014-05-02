@@ -46,5 +46,10 @@ window.resonance.controller 'UsersController', ($scope)->
         $scope.$parent.display = 4
         $scope.displayActions[user] = false
 
+    $scope.follow = (user) ->
+        self.port.emit( 'followUser', user)
+        $scope.$parent.display = 6
+        $scope.displayActions[user] = false
+
     $scope.isClient = (user) ->
         user == IRC.nick

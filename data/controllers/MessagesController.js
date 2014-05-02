@@ -2,7 +2,7 @@
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  window.app.controller("MessagesController", function($scope) {
+  window.resonance.controller("MessagesController", function($scope) {
     var elmt, scrollDown;
     $scope.messages = [];
     $scope.newMessage = '';
@@ -34,7 +34,7 @@
       var msg;
       msg = $scope.newMessage;
       if (msg !== '') {
-        self.port.emit('say', IRC.chan, msg);
+        self.port.emit('message', IRC.chan, msg);
       }
       return $scope.newMessage = '';
     };
