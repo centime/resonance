@@ -1,0 +1,20 @@
+<div ng-app='app' ng-controller='AttachedController'>
+     <ul>
+        <li ng-repeat='page in pages track by $index'>
+              {{page.url}}<br>
+              {{page.title}}<br>
+              {{page.chan}}
+              <button ng-click='detach(page)'>Detach</button>
+<!--             <messages ng-controller='AttachedMessagesController'>
+                <ul>
+                    <li ng-repeat='message in messages track by $index'>
+                          {{message.author}}: {{message.message}}
+                    </li>
+                </ul>
+                <form ng-submit='submitNewMessage()'>
+                    <input type='text' ng-model='newMessage'/>
+                </form>
+            </messages> -->
+        </li>
+    </ul>
+</div>
