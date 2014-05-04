@@ -30,6 +30,8 @@ panel.port.on 'updateSettings',(opt) ->
   for own key,value of opt
     settings[key] = value
 
+
+#if false
 # Start the irc client and join the server.
 if settings.activated
   Resonance.startClient()

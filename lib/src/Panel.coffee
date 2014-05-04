@@ -10,7 +10,6 @@ createPanel = (env) ->
     'contentURL': data.url("panel.html"),
     'contentScriptFile':[
       data.url("lib/angular.min.js"),
-      data.url("lib/jquery.js"),
       data.url("settings/panel.js"),
       ],
   })
@@ -75,6 +74,9 @@ createPanel = (env) ->
     
   panel.port.on 'getRandomName', () ->
     panel.port.emit('randomName',getRandomName())
+
+  panel.port.on 'attach', () ->
+    env.Resonance.attach(tabs.activeTab.url, tabs.activeTab.title)
 
   return panel
 

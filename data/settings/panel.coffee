@@ -1,6 +1,6 @@
-window.app = angular.module('panel',[])
+window.panel = angular.module('panel',[])
 
-window.app.controller 'PanelController', ($scope) ->
+window.panel.controller 'PanelController', ($scope) ->
     settings = {}
     $scope.nick = ''
     $scope.chan = ''
@@ -65,3 +65,6 @@ window.app.controller 'PanelController', ($scope) ->
         $scope.nick = randomName
         $scope.$apply()
         $scope.newNick()
+
+    $scope.attach = () ->
+        self.port.emit('attach')

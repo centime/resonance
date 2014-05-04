@@ -1,12 +1,53 @@
-<div ng-app='app' ng-controller='AttachedController'>
+<style>
+    .page {
+        width:100%;
+        height: 200px;
+        border:solid;
+        resize: vertical;
+        overflow: auto;
+    }
+    /* Messages & private messages */
+    .flex_column {
+        display: flex;
+        flex-flow: column;
+        flex-direction: column;
+    }
+    page_infos {
+        flex: 1 6 20%;
+        order: 0;
+    }
+    messages {
+        flex: 1 6 80%;
+        order: 1;
+    }
+    .list {
+        overflow: auto;
+        height: 100%;
+    }
+    messages > ul {
+        flex: 1 6 80%;
+        order: 1;
+        color: #000000;
+    }
+    messages > form {
+        flex: 1 6 20%;
+        order: 2;
+        max-height: 30px ;
+    }
+    messages input {
+        width: 100% ;
+        height: 100% ;
+    }
+</style>
+<div ng-app='attached' ng-controller='AttachedController'>
      <ul>
-        <li ng-repeat='page in pages track by $index'>
-              {{page.url}}<br>
-              {{page.title}}<br>
+        <li ng-repeat='page in pages track by $index' class='page flex_column'>
+            <page_infos>
+              {{page.url}} {{page.title}} <button ng-click='detach(page)'>Detach</button> <br>
               {{page.chan}}
-              <button ng-click='detach(page)'>Detach</button>
-<!--             <messages ng-controller='AttachedMessagesController'>
-                <ul>
+            </page_infos>
+              <messages ng-controller='AttachedMessagesController' class='flex_column'>
+                <ul class='list'>
                     <li ng-repeat='message in messages track by $index'>
                           {{message.author}}: {{message.message}}
                     </li>
@@ -14,7 +55,7 @@
                 <form ng-submit='submitNewMessage()'>
                     <input type='text' ng-model='newMessage'/>
                 </form>
-            </messages> -->
+            </messages>
         </li>
     </ul>
 </div>

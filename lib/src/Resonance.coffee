@@ -20,7 +20,7 @@ Messages = require('./Messages.js')
 PrivateMessages = require('./PrivateMessages.js')
 TopPages = require('./TopPages.js')
 Users = require('./Users.js')
-
+Attached = require('./Attached.js')
 
 self = this
 # env = {VERSION}
@@ -43,6 +43,7 @@ startClient = () ->
   Messages.bindClient(client)
   PrivateMessages.bindClient(client)
   TopPages.bindClient(client)
+  Attached.bindClient(client)
 
 closeClient = () ->
   workers.emitToAll('close')
@@ -50,7 +51,7 @@ closeClient = () ->
 
 
 start = (tab) ->
-  if tab.url.match(/^about:/)
+  if tab.url.match(/^about:/) or tab.url.match(/^resource:/)
     return
 
   # Generate the chan name for the page.
@@ -138,6 +139,10 @@ end = (tab) ->
   tab.worker = undefined
   tab.started = false
 
+attach = (url, title) ->
+  Attached.attach(url, title)
+
+
 
 module.exports =
   'init':init
@@ -145,3 +150,4 @@ module.exports =
   'closeClient':closeClient
   'start' : start
   'end' : end
+  'attach' : attach
