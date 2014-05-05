@@ -37,8 +37,13 @@ tabs.open({
             worker.port.emit('pages',pages)
 
         worker.port.on 'message', (to, message) ->
-           say(client, to, message)
+           say(to, message)
     })
+
+
+self = this
+init = (say) ->
+  self.say = say
 
 attach = (url, title) ->
   chan = getChan(url,title) 
@@ -63,14 +68,10 @@ receive = (from, to, message) ->
       # messagesHistory[to] ?= []
       # messagesHistory[to].push( {'author':from, 'message': message } )
 
-say = (client, to, message) ->
-      client.say(to,message)
+onSay = (to, message) ->
       # Tell back the application that the message has been said.
       worker.port.emit('message',Nick.nick,to,message)
-      # Save in history.
-      messagesHistory[to] ?= []
-      messagesHistory[to].push( {'author':Nick.nick, 'message': message } )
-
+      
 self = this
 bindClient = (client) ->
   client.addListener 'message', (from, to, message) ->
@@ -82,5 +83,7 @@ bindClient = (client) ->
 
 
 module.exports = 
+    'init':init
     'attach':attach
     'bindClient':bindClient
+    'onSay':onSay

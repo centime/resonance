@@ -28,10 +28,11 @@ init = (VERSION) ->
   self.VERSION = VERSION
   
   Notifications.init(workers, BOT)  
-  Messages.init(workers)
+  Messages.init(workers, say)
   PrivateMessages.init(workers, BOT)
   TopPages.init(workers, BOT)
   Users.init(workers)
+  Attached.init(say)
 
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
@@ -142,7 +143,11 @@ end = (tab) ->
 attach = (url, title) ->
   Attached.attach(url, title)
 
-
+say = (to, message) ->
+  console.log('msg, '+to+' '+message)
+  client.say(to,message)
+  Attached.onSay(to, message)
+  Messages.onSay(to, message)
 
 module.exports =
   'init':init
