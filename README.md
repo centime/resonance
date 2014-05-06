@@ -46,6 +46,8 @@ You can select any of them by clicking on it, and then start talking.
 An announce is displayed instead of the list of users. We will use it to keep in touch with you !
 Any error will also be printed there.
 
+**Attach a page**
+When you're on a page, and wish to keep a track of the conversation while closing your browser tab, you can attach the page. The conversation will be displayed on the Resonance main page, and you will stay present in it as long as Resonance is activated.
 
 **Access the settings panel**
 ```
