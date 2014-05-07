@@ -32,7 +32,7 @@ init = (VERSION) ->
   PrivateMessages.init(workers, BOT)
   TopPages.init(workers, BOT)
   Users.init(workers)
-  Attached.init(say)
+  Attached.init(workers, say)
 
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
@@ -112,11 +112,13 @@ start = (tab) ->
   PrivateMessages.bindWorker(worker, client)
   TopPages.bindWorker(worker, client)
   Users.bindWorker(worker)
+  Attached.bindWorker(worker)
 
   Notifications.initWorker(worker)
   Users.initWorker(worker)
   Messages.initWorker(worker, chan)
   PrivateMessages.initWorker(worker)
+  Attached.initWorker(worker, chan)
   
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !
@@ -144,7 +146,6 @@ attach = (url, title) ->
   Attached.attach(url, title)
 
 say = (to, message) ->
-  console.log('msg, '+to+' '+message)
   client.say(to,message)
   Attached.onSay(to, message)
   Messages.onSay(to, message)

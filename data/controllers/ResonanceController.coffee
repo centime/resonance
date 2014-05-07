@@ -47,4 +47,20 @@ window.resonance.controller "ResonanceController", ($scope) ->
         $scope.$apply()
     $scope.notification_active = () ->
         {'active_resonance':$scope.notificationActive}
+
+    $scope.isAttached = false
+    $scope.attach = () ->
+        $scope.isAttached = not $scope.isAttached
+        if $scope.isAttached
+            self.port.emit('attach', document.URL, document.title)
+        else
+            self.port.emit('detach', IRC.chan)
     
+    self.port.on 'attached', () ->
+        $scope.isAttached = true
+
+    self.port.on 'detached', () ->
+        $scope.isAttached = false
+
+    $scope.attached = () ->
+        { 'selected_resonance':$scope.isAttached }

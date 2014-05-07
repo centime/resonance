@@ -29,7 +29,6 @@ bindClient = (client) ->
     receive(from, to, message)
 
 onSay = (to, message) ->
-  console.log('in msg')
   # Tell back the application that the message has been said.
   workers[to]?.emit('message',Nick.nick,to,message)
   # Save in history.

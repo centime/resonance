@@ -51,6 +51,7 @@
                 <button ng-click='display=(display==2)?1:2'  >TopPages</button>
                 <button ng-click='display=(display==4)?1:4' ng-class='private_active()'>PrivateMessages</button>
                 <button ng-click='display=(display==5)?1:5' ng-class='notification_active()'>Notifications</button>
+                <button ng-click='attach()' ng-class='attached()'>Attach</button>
             </controls_resonance>
             <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
                 <ul class='list_resonance'>
