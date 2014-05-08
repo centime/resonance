@@ -2,13 +2,17 @@ tabs = require('sdk/tabs')
 data = require('sdk/self').data 
 getChan = require('./Utils.js').getChan
 
-require("sdk/simple-storage").storage.attachedPages = []
+require("sdk/simple-storage").storage.attachedPages ?= []
 pages = require("sdk/simple-storage").storage.attachedPages
 
 Nick = require("sdk/simple-storage").storage.nick
 
 require("sdk/simple-storage").storage.messagesHistory ?= {}
 messagesHistory = require("sdk/simple-storage").storage.messagesHistory
+
+isAttached = {}
+for p in pages
+  isAttached[p.chan] = true
 
 tab = undefined
 mainWorker = undefined
@@ -37,8 +41,9 @@ tabs.open({
 
 
 self = this
-init = (workers,say) ->
+init = (workers, BOT, say) ->
   self.workers = workers
+  self.BOT = BOT
   self.say = say
 
 attach = (url, title) ->
@@ -51,7 +56,8 @@ attach = (url, title) ->
   mainWorker.port.emit('pages',pages)
   #todo warning asynchronous, what if pages arrives after messagesHistory ?
   mainWorker.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
-  workers[chan].emit('attached')
+  workers[chan]?.emit('attached')
+  isAttached[chan] = true
 
 detach = (chan) ->
      # part from chan ?
@@ -60,7 +66,10 @@ detach = (chan) ->
       pages.splice(i,1)
       break
   mainWorker.port.emit('pages',pages)
-  workers[chan].emit('detached')
+  workers[chan]?.emit('detached')
+  isAttached[chan] = false
+  if not workers[chan]?.hasWorkers()
+    client.part(chan)
 
 # When the client receives a message.
 receive = (from, to, message) ->
@@ -79,12 +88,18 @@ onSay = (to, message) ->
       
 self = this
 bindClient = (client) ->
+  # todo : hy this global ?
+  self.client = client
+  
   client.addListener 'message', (from, to, message) ->
     receive(from, to, message)
-  # todo
-  self.client = client
-  # mainWorker.port.on 'message', (to, message) ->
-  #   say(client, to, message)
+  
+  client.addListener 'registered', () ->
+    for page in pages
+      client.join(page.chan)
+      client.say(BOT,'__enter '+page.url+' '+page.chan)
+
+
 
 bindWorker = (worker) ->
   worker.port.on 'attach',(url, title)->
@@ -105,3 +120,4 @@ module.exports =
     'onSay':onSay
     'bindWorker':bindWorker
     'initWorker':initWorker
+    'isAttached':isAttached

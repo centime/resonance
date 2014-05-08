@@ -32,7 +32,7 @@ init = (VERSION) ->
   PrivateMessages.init(workers, BOT)
   TopPages.init(workers, BOT)
   Users.init(workers)
-  Attached.init(workers, say)
+  Attached.init(workers, BOT, say)
 
 # You need to Resonance.init({VERSION}) first
 startClient = () ->
@@ -135,8 +135,9 @@ end = (tab) ->
   # Remove it from the list of workers linked to the chan.
   workers[previousChan]?.removeWorker(previousWorker)
   # Leave the previous chan if there are no more workers binded to it.
-  if not workers[previousChan]?.hasWorkers()
+  if ( not workers[previousChan]?.hasWorkers()  and not Attached.isAttached[previousChan] )
     client.part(previousChan)
+  if not workers[previousChan]?.hasWorkers()
     delete workers[previousChan]
   tab.chan = undefined
   tab.worker = undefined
