@@ -66,5 +66,5 @@ window.panel.controller 'PanelController', ($scope) ->
         $scope.$apply()
         $scope.newNick()
 
-    $scope.attach = () ->
-        self.port.emit('attach')
+    $scope.openMaster = () ->
+        self.port.emit('openMaster')

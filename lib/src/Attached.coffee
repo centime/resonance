@@ -15,30 +15,36 @@ for p in pages
   isAttached[p.chan] = true
 
 tab = undefined
-mainWorker = undefined
+masterWorker = undefined
 
-tabs.open({
-    'url':data.url('attached.html')
-    'onReady': (t) ->
-        tab = t
-        mainWorker = tab.attach({
-                            contentScriptFile:[
-                              data.url("lib/angular.min.js"),
-                              data.url("attached/attached.js"),
-                              data.url("attached/AttachedMessagesController.js"),
-                            ]
-                        })
-        mainWorker.port.emit('pages',pages)
-        for page in pages
-          mainWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])
+openMaster = () ->
+  tabs.open({
+      'url':data.url('attached.html')
+      'onReady': (t) ->
+          tab = t
+          tab.isMaster = true
+          masterWorker = tab.attach({
+                              contentScriptFile:[
+                                data.url("lib/angular.min.js"),
+                                data.url("attached/attached.js"),
+                                data.url("attached/AttachedMessagesController.js"),
+                              ]
+                          })
+          masterWorker.port.emit('pages',pages)
+          for page in pages
+            masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])
 
-        mainWorker.port.on 'detach', (page) ->
-          detach(page.chan)
+          masterWorker.port.on 'detach', (page) ->
+            detach(page.chan)
 
-        mainWorker.port.on 'message', (to, message) ->
-           say(to, message)
-    })
+          masterWorker.port.on 'message', (to, message) ->
+             say(to, message)
 
+          # Pin it ?
+          tab.pin()
+      })
+
+openMaster()
 
 self = this
 init = (workers, BOT, say) ->
@@ -53,9 +59,9 @@ attach = (url, title) ->
    'title' : title
    'chan' : chan
   pages.push(page)
-  mainWorker.port.emit('pages',pages)
+  masterWorker?.port.emit('pages',pages)
   #todo warning asynchronous, what if pages arrives after messagesHistory ?
-  mainWorker.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
+  masterWorker?.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
   workers[chan]?.emit('attached')
   isAttached[chan] = true
 
@@ -65,7 +71,7 @@ detach = (chan) ->
     if (p.chan == chan)
       pages.splice(i,1)
       break
-  mainWorker.port.emit('pages',pages)
+  masterWorker?.port.emit('pages',pages)
   workers[chan]?.emit('detached')
   isAttached[chan] = false
   if not workers[chan]?.hasWorkers()
@@ -75,8 +81,8 @@ detach = (chan) ->
 receive = (from, to, message) ->
     # todo : refactor history, same structure for pm / chans ? (same 'to')
     if to[0] == '#'
-      # It goes to the corresponding chan / mainWorker.
-      mainWorker.port.emit('message',from,to,message)
+      # It goes to the corresponding chan / masterWorker.
+      masterWorker?.port.emit('message',from,to,message)
       # Save in history.
       # todo refactor : where should messagesHistory be updated ?
       # messagesHistory[to] ?= []
@@ -84,7 +90,7 @@ receive = (from, to, message) ->
 
 onSay = (to, message) ->
       # Tell back the application that the message has been said.
-      mainWorker.port.emit('message',Nick.nick,to,message)
+      masterWorker?.port.emit('message',Nick.nick,to,message)
       
 self = this
 bindClient = (client) ->
@@ -121,3 +127,4 @@ module.exports =
     'bindWorker':bindWorker
     'initWorker':initWorker
     'isAttached':isAttached
+    'openMaster':openMaster

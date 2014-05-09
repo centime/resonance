@@ -75,8 +75,16 @@ createPanel = (env) ->
   panel.port.on 'getRandomName', () ->
     panel.port.emit('randomName',getRandomName())
 
-  panel.port.on 'attach', () ->
-    env.Resonance.attach(tabs.activeTab.url, tabs.activeTab.title)
+  panel.port.on 'openMaster', () ->
+    # If the master is already opened.
+    for tab in tabs
+      if tab.isMaster
+        # Activate it.
+        tab.activate()
+        return
+    # Else, open it.
+    env.Resonance.openMaster()
+
 
   return panel
 

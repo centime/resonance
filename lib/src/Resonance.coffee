@@ -143,8 +143,8 @@ end = (tab) ->
   tab.worker = undefined
   tab.started = false
 
-attach = (url, title) ->
-  Attached.attach(url, title)
+openMaster = () ->
+  Attached.openMaster()
 
 say = (to, message) ->
   client.say(to,message)
@@ -157,4 +157,4 @@ module.exports =
   'closeClient':closeClient
   'start' : start
   'end' : end
-  'attach' : attach
+  'openMaster' : openMaster

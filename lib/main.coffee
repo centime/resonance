@@ -38,19 +38,23 @@ if settings.activated
 
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->
-  # If Resonance was running on the previous page.
-  if tab.chan?
-    # Leave the chan etc...
-    Resonance.end(tab)
-  # If Resonance is activated...
-  activated = settings.activated
-  if activated
-    # ..and if it should start for this page.
-    startByDefault = settings.startByDefault
-    startForThisDomain = (getDomain(tab.url) in settings.startForDomains)
-    if startByDefault or startForThisDomain
-      # Start it (join chan etc...).
-      Resonance.start(tab)
+  # If the tab isn't the master tab.
+  if not tab.isMaster
+    # If Resonance was running on the previous page.
+    if tab.chan?
+      # Leave the chan etc...
+      Resonance.end(tab)
+    # If Resonance is activated...
+    activated = settings.activated
+    if activated
+      # ..and if it should start for this page.
+      startByDefault = settings.startByDefault
+      startForThisDomain = (getDomain(tab.url) in settings.startForDomains)
+      if startByDefault or startForThisDomain
+        # Start it (join chan etc...).
+        Resonance.start(tab)
     
-tabs.on 'close', (tab) ->    
-  Resonance.end(tab)
+tabs.on 'close', (tab) ->
+  # If the tab isn't the master tab.
+  if not tab.isMaster
+    Resonance.end(tab)
