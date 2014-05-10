@@ -24,7 +24,7 @@
                 <ul class='list_resonance'>
                     <li ng-repeat='page in topPages track by $index'>
                         <span>{{page[1]}} </span>
-                        <a href={{page[0]}} target="_newtab">{{page[0]}}</a>
+                        <a href={{page[0]}} target={{page[0]}}>{{page[0]}}</a>
                     </li>
                 </ul>
             </toppages_resonance>
@@ -53,7 +53,7 @@
                 <button ng-click='display=(display==5)?1:5' ng-class='notification_active()'>Notifications</button>
                 <button ng-click='attach()' ng-class='attached()'>Attach</button>
             </controls_resonance>
-            <users_resonance ng-controller='UsersController' ng-show='display<3' class='bordered_resonance'>
+            <users_resonance ng-controller='UsersController' ng-show='display==1' class='bordered_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='user in users track by $index'>
                         <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
@@ -65,6 +65,13 @@
                     </li>
                 </ul>
             </users_resonance>
+            <categories_resonance ng-controller='TopPagesController' ng-show='display==2' class='bordered_resonance'>
+                <ul class='list_resonance'>
+                    <li ng-repeat='category in categories track by $index'>
+                        <div ng-click='selectCategory(category)'>{{category.name}}</div>
+                    </li>
+                </ul>
+            </categories_resonance>
             <privateusers_resonance ng-controller='PrivateUsersController' ng-show='display==4' class='bordered_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='user in pmUsers track by $index'>

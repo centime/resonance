@@ -5,6 +5,12 @@ window.resonance.controller "TopPagesController", ($scope) ->
     $scope.index = 0
     $scope.total = 0
 
+    $scope.categories = [
+        {'name':'Informatique','query':'sebsauvage|news.ycombinator'},
+        {'name':'France','query':'lemonde|rue89'},
+        {'name':'Web comics','query':'xkcd|commitstrip'},
+        ]
+
     self.port.on 'topPages', (topPages) ->
         #Pastes the already recieved string with the new part
         $scope.topPages = topPages
@@ -33,6 +39,12 @@ window.resonance.controller "TopPagesController", ($scope) ->
         #focus the input
         angular.element('toppages_resonance input').focus()
         return displayTopPages
+
+
+    $scope.selectCategory = (category) ->
+        $scope.query = category.query
+        $scope.index = 0
+        $scope.getTopPages()
 
     $scope.previous = () ->
         if $scope.index > 0

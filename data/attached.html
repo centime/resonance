@@ -43,7 +43,7 @@
      <ul>
         <li ng-repeat='page in pages track by $index' class='page flex_column'>
             <page_infos>
-              <a href={{page.url}} target="_newtab">{{page.title}}</a><button ng-click='detach(page)'>Detach</button> <br>
+              <a href={{page.url}} target={{page.url}}>{{page.title}}</a><button ng-click='detach(page)'>Detach</button> <br>
               {{page.chan}}
             </page_infos>
               <messages ng-controller='AttachedMessagesController' class='flex_column'>
