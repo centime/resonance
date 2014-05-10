@@ -1,4 +1,5 @@
 tabs = require('sdk/tabs')
+data = require('sdk/self').data 
 
 getDomain = require('./src/Utils.js').getDomain
 
@@ -35,6 +36,21 @@ panel.port.on 'updateSettings',(opt) ->
 # Start the irc client and join the server.
 if settings.activated
   Resonance.startClient()
+
+  # If the master page isn't already opened.
+  masterTab = undefined
+  for tab in tabs
+      if tab.url.match(/attached.html$/)
+        # Activate it.
+        masterTab = tab
+        break
+  if masterTab?
+    Resonance.openMaster(masterTab)
+  else
+    tabs.open({
+      'url':data.url('attached.html')
+      'onReady': Resonance.openMaster
+      })
 
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->

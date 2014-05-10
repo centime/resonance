@@ -17,34 +17,38 @@ for p in pages
 tab = undefined
 masterWorker = undefined
 
-openMaster = () ->
-  tabs.open({
-      'url':data.url('attached.html')
-      'onReady': (t) ->
-          tab = t
-          tab.isMaster = true
-          masterWorker = tab.attach({
-                              contentScriptFile:[
-                                data.url("lib/angular.min.js"),
-                                data.url("attached/attached.js"),
-                                data.url("attached/AttachedMessagesController.js"),
-                              ]
-                          })
-          masterWorker.port.emit('pages',pages)
-          for page in pages
-            masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])
+setTimeout = require('sdk/timers').setTimeout
+openMaster = (t) ->
+  # tabs.open({
+  #     'url':data.url('attached.html')
+  #     'onReady': (t) ->
+  tab = t
+  if not tab.isPinned
+    tab.pin()
 
-          masterWorker.port.on 'detach', (page) ->
-            detach(page.chan)
+  tab.isMaster = true
+  masterWorker = tab.attach({
+                      contentScriptFile:[
+                        data.url("lib/angular.min.js"),
+                        data.url("attached/attached.js"),
+                        data.url("attached/AttachedMessagesController.js"),
+                      ]
+                  })
+  masterWorker.port.on 'detach', (page) ->
+    detach(page.chan)
 
-          masterWorker.port.on 'message', (to, message) ->
-             say(to, message)
+  masterWorker.port.on 'message', (to, message) ->
+     say(to, message)
 
-          # Pin it ?
-          tab.pin()
-      })
-
-openMaster()
+  # Why do I have to use the setTimeout, here ?
+  initMaster = () ->
+    masterWorker.port.emit('pages',pages) 
+    for page in pages
+      masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])
+  
+  setTimeout( initMaster, 1000 )
+    
+      # })
 
 self = this
 init = (workers, BOT, say) ->

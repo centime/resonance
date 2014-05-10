@@ -143,8 +143,8 @@ end = (tab) ->
   tab.worker = undefined
   tab.started = false
 
-openMaster = () ->
-  Attached.openMaster()
+openMaster = (tab) ->
+  Attached.openMaster(tab)
 
 say = (to, message) ->
   client.say(to,message)

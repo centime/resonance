@@ -1,5 +1,4 @@
 window.attached.controller "AttachedMessagesController", ($scope) ->
-    # List of every messages that has been sent or received in the current channel (page).
 
     # $scope.page.chan
     msgTest = 
