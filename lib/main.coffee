@@ -40,7 +40,7 @@ if settings.activated
   # If the master page isn't already opened.
   masterTab = undefined
   for tab in tabs
-      if tab.url.match(/attached.html$/)
+      if tab.url.match(/^resource:\/\/.*\/resonance\/data\/attached\.html$/)
         # Activate it.
         masterTab = tab
         break

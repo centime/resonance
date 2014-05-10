@@ -17,7 +17,6 @@ for p in pages
 tab = undefined
 masterWorker = undefined
 
-setTimeout = require('sdk/timers').setTimeout
 openMaster = (t) ->
   # tabs.open({
   #     'url':data.url('attached.html')
@@ -41,13 +40,10 @@ openMaster = (t) ->
      say(to, message)
 
   # Why do I have to use the setTimeout, here ?
-  initMaster = () ->
+  masterWorker.port.on 'ready', () ->
     masterWorker.port.emit('pages',pages) 
     for page in pages
-      masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])
-  
-  setTimeout( initMaster, 1000 )
-    
+      masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])    
       # })
 
 self = this
