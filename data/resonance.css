@@ -142,6 +142,14 @@ resonance_resonance * {
         border-bottom-color: gray;
     }
 
+/* Categories */
+    #categories_resonance { /* FUCK IT ! */
+        display: block;
+    }
+    categories_resonance input {
+        width:80%;
+    }
+
 
 /* Colors & co */
 

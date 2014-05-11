@@ -62,6 +62,10 @@ createPanel = (env) ->
         # Part from the chan, update the workers & tabs..
         env.Resonance.end(tabs.activeTab)
 
+  panel.port.on 'updateSettings', (settings) ->
+    for own key, value of env.settings
+      env.settings.key = settings.key
+
 
   panel.port.on 'start',() ->
     start(true)

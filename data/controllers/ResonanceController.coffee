@@ -64,3 +64,6 @@ window.resonance.controller "ResonanceController", ($scope) ->
 
     $scope.attached = () ->
         { 'selected_resonance':$scope.isAttached }
+
+    # Hack for the ng-model binding of topPages
+    $scope.TP = {}

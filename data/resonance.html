@@ -15,7 +15,7 @@
             <toppages_resonance ng-controller='TopPagesController' ng-show='displayTopPages(display==2)'>
                 <div class='flex_resonance row_resonance'>
                     <form ng-submit='getTopPages()'>
-                        <input type='text' ng-model='query'/>
+                        <input type='text' ng-model='TP.query'/>
                     </form>
                     <button ng-click='previous()'>&lt</button>
                     <div>{{index+1}}/{{total}}</div>
@@ -65,10 +65,17 @@
                     </li>
                 </ul>
             </users_resonance>
-            <categories_resonance ng-controller='TopPagesController' ng-show='display==2' class='bordered_resonance'>
+            <categories_resonance ng-controller='TopPagesController' ng-show='display==2' class='bordered_resonance' id='categories_resonance'>
+                <form ng-submit='addCategory()'>
+                    New : <input type='text' ng-model='newCategory'/>
+                </form>
                 <ul class='list_resonance'>
                     <li ng-repeat='category in categories track by $index'>
                         <div ng-click='selectCategory(category)'>{{category.name}}</div>
+                        <actions ng-show='selectedCategory === category.name'>
+                            <button ng-click='setCategoryQuery(category)'>Redefine</button>
+                            <button ng-click='deleteCategory(category)'>Delete</button>
+                        </actions>
                     </li>
                 </ul>
             </categories_resonance>

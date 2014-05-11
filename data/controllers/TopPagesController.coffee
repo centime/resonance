@@ -1,15 +1,17 @@
 window.resonance.controller "TopPagesController", ($scope) ->
     # List of pages {url : visitors}
     $scope.topPages = []
-    $scope.query = ''
+    $scope.TP.query = ''
     $scope.index = 0
     $scope.total = 0
 
-    $scope.categories = [
-        {'name':'Informatique','query':'sebsauvage|news.ycombinator'},
-        {'name':'France','query':'lemonde|rue89'},
-        {'name':'Web comics','query':'xkcd|commitstrip'},
-        ]
+    $scope.categories = []
+    $scope.selectedCategory = ''
+    $scope.newCategory = ''
+
+    self.port.on 'categories', (categories) ->
+        $scope.categories = categories
+        $scope.$apply()
 
     self.port.on 'topPages', (topPages) ->
         #Pastes the already recieved string with the new part
@@ -18,7 +20,7 @@ window.resonance.controller "TopPagesController", ($scope) ->
     
     self.port.on 'topPagesMetaData', (query, index, total) ->
         # What has been requested.
-        $scope.query = query
+        $scope.TP.query = query
         # Which page
         $scope.index = Number(index)
         # Total of pages
@@ -26,34 +28,51 @@ window.resonance.controller "TopPagesController", ($scope) ->
         $scope.$apply()
 
     $scope.getTopPages = () ->
-        self.port.emit('getTopPages',$scope.index,$scope.query)
+        self.port.emit('getTopPages',$scope.index,$scope.TP.query)
                 
     # Execute when TopPages is shown.
-    alreadyRequestedTopPage = false
+    done = false
     $scope.displayTopPages = (displayTopPages) ->
         if displayTopPages
-            if (not alreadyRequestedTopPage)
-                self.port.emit('getTopPages',$scope.index,$scope.query)
-                alreadyRequestedTopPage = true
-        else alreadyRequestedTopPage = false
-        #focus the input
-        angular.element('toppages_resonance input').focus()
+            if (not done)
+                self.port.emit('getTopPages',$scope.index,$scope.TP.query)
+                done = true
+
+                #focus the input
+                angular.element('toppages_resonance input').focus()
+        else done = false
         return displayTopPages
 
-
     $scope.selectCategory = (category) ->
-        $scope.query = category.query
+        $scope.TP.query = category.query
         $scope.index = 0
         $scope.getTopPages()
+        $scope.selectedCategory = category.name
+
+    $scope.setCategoryQuery = (category) ->
+        for c in $scope.categories
+            if c.name == category.name
+                c.query = $scope.TP.query
+                break
+        $scope.selectedCategory = ''
+
+    $scope.deleteCategory = (category) ->
+        $scope.categories = ( c for c in $scope.categories when c.name isnt category.name )
+
+    $scope.addCategory = () ->
+        cat = 
+            'name' : $scope.newCategory
+            'query' : 'keyword1|keyword2|keyword3'
+        $scope.categories.push(cat)
 
     $scope.previous = () ->
         if $scope.index > 0
             $scope.index--
-            self.port.emit('getTopPages',$scope.index,$scope.query)
+            self.port.emit('getTopPages',$scope.index,$scope.TP.query)
     $scope.next = () ->
         if $scope.index+1 < $scope.total
             $scope.index++
-            self.port.emit('getTopPages',$scope.index,$scope.query)
+            self.port.emit('getTopPages',$scope.index,$scope.TP.query)
 
     # It works, but is it really a good feature ?
     numberOfLines = () ->
