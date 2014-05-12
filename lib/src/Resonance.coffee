@@ -119,6 +119,7 @@ start = (tab) ->
   Messages.initWorker(worker, chan)
   PrivateMessages.initWorker(worker)
   Attached.initWorker(worker, chan)
+  TopPages.initWorker(worker)
   
   worker.port.on "newAppSize", (height) ->
     #todo : sanitize !

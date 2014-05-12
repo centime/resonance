@@ -2,12 +2,6 @@
 require("sdk/simple-storage").storage.topPagesCategories ?= []
 topPagesCategories = require("sdk/simple-storage").storage.topPagesCategories
 
-topPagesCategories = [
-        {'name':'Informatique','query':'sebsauvage|news.ycombinator'},
-        {'name':'France','query':'lemonde|rue89'},
-        {'name':'Web comics','query':'xkcd|commitstrip'},
-        ]
-
 self = this
 init = (workers, BOT) ->
   self.workers = workers
@@ -69,9 +63,27 @@ bindWorker = (worker, client) ->
     #Ask the bot for top tapes.
     client.say(BOT,'__ask '+index+' '+query)
 
-  worker.port.emit('categories', topPagesCategories)
-    
+  worker.port.on 'newCategory', (category) ->
+    topPagesCategories.push(category)
+    workers.emitToAll('categories', topPagesCategories)    
+
+  worker.port.on 'setCategory', (category, query) ->
+    for c in topPagesCategories
+      if c.name == category.name
+          c.query =query
+          break
+    workers.emitToAll('categories', topPagesCategories)
+
+  worker.port.on 'deleteCategory', (category) ->
+    topPagesCategories = ( c for c in topPagesCategories when c.name isnt category.name )
+    workers.emitToAll('categories', topPagesCategories)
+
+
+initWorker = (worker) ->
+  worker.port.emit('categories', topPagesCategories)    
+
 module.exports =
   'init':init
   'bindClient':bindClient
   'bindWorker':bindWorker
+  'initWorker':initWorker

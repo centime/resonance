@@ -50,20 +50,17 @@ window.resonance.controller "TopPagesController", ($scope) ->
         $scope.selectedCategory = category.name
 
     $scope.setCategoryQuery = (category) ->
-        for c in $scope.categories
-            if c.name == category.name
-                c.query = $scope.TP.query
-                break
+        self.port.emit('setCategory', category, $scope.TP.query)
         $scope.selectedCategory = ''
 
     $scope.deleteCategory = (category) ->
-        $scope.categories = ( c for c in $scope.categories when c.name isnt category.name )
+        self.port.emit('deleteCategory', category)
 
     $scope.addCategory = () ->
-        cat = 
+        category = 
             'name' : $scope.newCategory
             'query' : 'keyword1|keyword2|keyword3'
-        $scope.categories.push(cat)
+        self.port.emit('newCategory', category)
 
     $scope.previous = () ->
         if $scope.index > 0
