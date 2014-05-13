@@ -1,250 +1,178 @@
-<!DOCTYPE HTML>
-<html lang="en-US" manifest="./manifest.appcache">
-    <head prefix="og: http://ogp.me/ns# book: http://ogp.me/ns/book#">
-        
-        <meta charset="UTF-8">
-        <title>Resonance | Resonance</title>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="robots" content="index, follow">
-        <meta name="author" content="">
-        <meta name="description" content="Resonance is a new way of using the web, closer to the people and content.">
-        <meta name="keywords" content="gitbook,github" >
-        <meta name="generator" content="www.gitbook.io">
-
-        
-        <link rel="next" href="./zob.html" />
-        
-        
-        <link rel="prev" href="./index.html" />
-        
-
-        <meta property="og:title" content="Resonance | Resonance">
-        <meta property="og:site_name" content="Resonance">
-        <meta property="og:type" content="book">
-        <meta property="og:locale" content="en_US">
-
-        <meta property="book:author" content="https://github.com/centime/resonance">
-        <meta property="book:tag" content="GitBook">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
-        
-    </head>
-    <body>
-        
-
-        <link rel="stylesheet" href="gitbook/style.css">
-        
-
-
-        
-    <div class="book"  data-level="1" data-basepath="." data-revision="1399903517129">
-    <div class="book-header">
-    <!-- Actions Left -->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />   
+    <title>Resonance</title>
     
-    <a href="https://github.com/centime/resonance" target="_blank" class="btn pull-left"><i class="fa fa-bookmark-o"></i></a>
-    
-    <a href="#" class="btn pull-left toggle-summary"><i class="fa fa-align-justify"></i></a>
-    <a href="#" class="btn pull-left toggle-search"><i class="fa fa-search"></i></a>
-    <span id="font-settings-wrapper">
-        <a href="#" class="btn pull-left toggle-font-settings"><i class="fa fa-font"></i>
-        </a>
-        <div class="dropdown-menu font-settings">
-	<div class="dropdown-caret">
-  <span class="caret-outer"></span>
-  <span class="caret-inner"></span>
-</div>
-
-	<div class="btn-group btn-block">
-		<button id="reduce-font-size" class="btn btn-default">A</button>
-		<button id="enlarge-font-size" class="btn btn-default">A</button>
-	</div>
-
-	<ul class="list-group font-family-list">
-		<li class="list-group-item" data-font="0">Serif</li>
-		<li class="list-group-item" data-font="1">Sans</li>
-	</ul>
-
-	<div class="btn-group btn-group-xs btn-block color-theme-list">
-	  <button type="button" class="btn btn-default" id="color-theme-preview-0" data-theme="0">White</button>
-	  <button type="button" class="btn btn-default" id="color-theme-preview-1" data-theme="1">Sepia</button>
-	  <button type="button" class="btn btn-default" id="color-theme-preview-2" data-theme="2">Night</button>
-	</div>
-</div>
-
-    </span>
-
-    <!-- Actions Right -->
-    
-    
-    
-    
-    
-    
-    
-    
+    <link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
     
 
-    
+<link rel="stylesheet" href="pure-min.css">
+<link rel="stylesheet" href="reso.css">
+    <!--[if IE]>
+        <script type="text/javascript">
+             var console = { log: function() {} };
+        </script>
+    <![endif]-->
 
-    <!-- Title -->
-    <h1>
-        <i class="fa fa-spinner fa-spin"></i>
-        <a href="./" >Resonance</a>
-    </h1>
-</div>
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>    
 
-    <div class="book-summary">
-    <div class="book-search">
-        <input type="text" placeholder="Search" class="form-control" />
-    </div>
-    <ul class="summary">
-        
+    <script type="text/javascript" src="fullPage.js/vendors/jquery.slimscroll.min.js"></script>
 
-        
+    <script type="text/javascript" src="jquery.fullPage.js"></script>
 
-        
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.fn.fullpage({
+                anchors: ['resonance', 'presentation', 'installation','usage', 'techno', 'contribute'],
+                'scrollOverflow': true,
+                'verticalCentered':false,
+                'menu':'#menu'
+            });
+        });
+    </script>
 
-        
-
-        <li data-level="0" data-path="index.html">
-            <a href="./"><i class="fa "></i> Introduction</a>
+</head>
+<body>
+<div id="menu" class="pure-menu pure-menu-open">
+    <a class="pure-menu-heading" href="#resonance" data-menuanchor="resonance" ><strong>Resonance</strong></a>
+    <ul>
+        <li data-menuanchor="presentation">
+            <a href="#presentation">Presentation</a>
+            <a id="sub-menu">Pourquoi</a>
+            <a id="sub-menu">Comment</a>
+            <a id="sub-menu">On en est où ?</a>
         </li>
-        
-            <li  data-level="1" data-path="index.html">
-                
-                <a href="./index.html">
-                    <i class="fa "></i> <b>1.</b> Resonance
-                </a>
-                
-                
-                <ul class="articles">
-                    
-                        <li  data-level="1.1" data-path="zob.html">
-                            
-                            <a href="./zob.html">
-                                <i class="fa "></i> <b>1.1.</b> Presentation
-                            </a>
-                            
-                        </li>
-                    
-                        <li  data-level="1.2" data-path="HowTo.html">
-                            
-                            <a href="./HowTo.html">
-                                <i class="fa "></i> <b>1.2.</b> Guide d&#39;utilisation
-                            </a>
-                            
-                        </li>
-                    
-                </ul>
-                
-            </li>
-        
-            <li  data-level="2" data-path="section2/README.html">
-                
-                <a href="./section2/README.html">
-                    <i class="fa "></i> <b>2.</b> A propos de nous
-                </a>
-                
-                
-                <ul class="articles">
-                    
-                        <li  data-level="2.1" data-path="section2/example1.html">
-                            
-                            <a href="./section2/example1.html">
-                                <i class="fa "></i> <b>2.1.</b> example 1
-                            </a>
-                            
-                        </li>
-                    
-                </ul>
-                
-            </li>
-        
-
-        
-        <li class="divider"></li>
-        <li>
-            <a href="http://www.gitbook.io/" target="blank">Generated using GitBook</a>
+        <li data-menuanchor="installation">
+            <a href="#installation">Installation</a>
         </li>
-        
+        <li data-menuanchor="usage">
+            <a href="#usage">Usage</a>
+            <a id="sub-menu">Echanger et débattre</a>
+            <a id="sub-menu">Top pages</a>
+            <a id="sub-menu">Attacher</a>
+            <a id="sub-menu">Configurer</a>
+        </li>
+        <!-- <li class="pure-menu-separator"></li> -->
+        <li data-menuanchor="techno">
+            <a href="#techno">Description technique</a>
+            <a id="sub-menu">Architecture</a>
+        <li data-menuanchor="contribute">
+            <a href="#contribute">Contribuer</a>
+        </li>
     </ul>
 </div>
-
-    <div class="book-body">
-        <div class="body-inner">
-            <div class="page-wrapper" tabindex="-1">
-                <div class="book-progress">
-    <div >
-        <div class="inner" style="width: 0%;min-width: 0%;"></div>
+<div id="main">
+    <div class="section " id="section0"> 
+        <div part="resonance">
+            <h1 class='title'>Resonance</h1>
+        </div>
     </div>
-    <div class="chapters">
-    
-        <a href="./index.html" title="Resonance" class="chapter done new-chapter" data-progress="1" style="left: 0%;"></a>
-    
-        <a href="./zob.html" title="Presentation" class="chapter  " data-progress="1.1" style="left: 25%;"></a>
-    
-        <a href="./HowTo.html" title="Guide d&#39;utilisation" class="chapter  " data-progress="1.2" style="left: 50%;"></a>
-    
-        <a href="./section2/README.html" title="A propos de nous" class="chapter  new-chapter" data-progress="2" style="left: 75%;"></a>
-    
-        <a href="./section2/example1.html" title="example 1" class="chapter  " data-progress="2.1" style="left: 100%;"></a>
-    
-    </div>
-</div>
+    <div class="section" id="section1">
+        <div part="presentation">
+            <h1>Presentation</h1>
+            Resonance est un projet pour un web plus ouvert et plus connecté, où les utilisateurs peuvent se recontrer et débattre pendant qu'ils explorent le net et consultent des pages web.
+            <br>
+        <!--     <object type="text/html" data="https://www.youtube.com/embed/QMYfkOtYYlg" style="width:100%;height:500px;"></object>
+    -->
+            <div id="why">
+                <h3>Pourquoi ?</h3>
+                On en a pas assez avec tout ce qui existe déjà ?<br>
+                <b>Non</b>.<br>
 
-                <div class="page-inner">
-                
-                    <section class="normal" id="section-gitbook_2">
-                    
-                        <p>A test</p>
-
-                    
-                    </section>
-                
-                </div>
+                Parceque internet est fait pour <b>permettre à chacun de réagir</b>, mais qu'il faut pour cela en avoir les outils. 
+                <br>Le système classique de commentaires ne convient plus, il est trop rigide et n'incite pas les internautes à vraiment s'y investir.
+                <br>
+                Les grands des réseaux sociaux se sont organises autours de cercles d'amis, et que <b>l'echange doit se recentrer sur l'information</b>.
+            </div>
+            <div id="how">
+                <h3>Comment ?</h3>
+                En créant un <b>canal de discussion instantanée propre à chaque page web</b> où se trouvent des utilisateurs de Resonance. Ils peuvent y discuter directement, en temps réel, à l'endroit même ou ils ont lu l'article ou vu la vidéo dont ils vont parler.
+                <br> Sans inscription nécessaire, sans que tout ce qui soit dit reste sur un espace public des années durant. Sans avoir à se demander ce que deviendront les données privées.
+                <br>
+                Resonance est une extension navigateur, un add-on. Il n'est pour l'instant disponible que pour Firefox.
+                <br>
+                Le projet et son code source sont <a href="https://github.com/centime/resonance">disponible sur github</a>.
+            </div>
+            <div id="where">
+                <h3>On en est où ?</h3>
+                Resonance est encore <b>en plein développement</b>, et on est loin du bout !
+                <br>
+                Si vous le souhaitez, <b>vous êtes tout de même chaudement invités à l'installer en l'état, et à nous faire remonter toute remarque, bug, fonctionalité ou orientation à essayer</b>.
+                Une fois Resonance installé, envoyez tout ça par message privé à Resonance-bot, ou par mail à vincent.delaunay_at_gmail com
             </div>
         </div>
+    </div>
+    <div class="section" id="section2">
+        <div part="install">
+            <h1>Installation</h1>
+            1) Télécharger l'extension Firefox
+            <block><a href="https://github.com/centime/resonance/raw/master/resonance.xpi">https://github.com/centime/resonance/raw/master/resonance.xpi</a>
+            </block>
+            <br>
+            2) L'ouvrir depuis le navigateur
+            <block>File > Open File > resonance.xpi</block>
+            <br>
+            3) (Selon la version de Firefox) Afficher la barre des extensions (add-on)
+            <block>View > Toolbars > Add-on bar</block>
+            ou
+            <block>Ctrl + /</block>
+            L'icone de Resonance [IMG] devrait désormais y être visible.
+        </div>
+    </div>
+    <div class="section" id="section3">
+        <div part="usage">
+            <h1>Usage</h1>
+            <div id="discuss">
+                <h3>Echanger et débattre</h3>
+                Si l'icone de Resonance n'est pas visible, revoir la partie Installation.
+                <br>
+                Sur toute page web, vous pouvez <b>démarrer Resonance avec un clic gauche sur cette icone</b>.
+                <br><br>
+                [ScreenShot]
+                <br><br>
+                <b>[1] Fil de discussion</b><br>
+                Regroupe tous les propos qui ont été tenus pendant que vous étiez présent pour assister à la discussion. De même, un nouvel arrivant rejoignant la discussion en cours n'aura pas accès aux messages antérieurs.
+                <br><br>
+                <b>[2] Nouveau message</b><br>
+                Tapez votre message puis appuyez sur Entrée pour parler.
+                <br><br>
+                <b>[3] Modes</b><br>
+                Ces boutons permettent de basculer entre les différents modes de Resonance. Le mode actuel est <b>Discussion</b>, mais il y a aussi <b>Top Pages</b>, <b>Private Messages</b> et <b>Notifications</b>. Chacun est expliqué plus bas.
+                <br><br>
+                <b>[4] Liste d'utilisateurs</b><br>
 
-        
-        <a href="./index.html" class="navigation navigation-prev "><i class="fa fa-angle-left"></i></a>
-        
-        
-        <a href="./zob.html" class="navigation navigation-next "><i class="fa fa-angle-right"></i></a>
-        
+
+            </div> 
+            <div id="toppages">
+                <h3>Top pages</h3>                     
+            </div>
+            <div id="attach">
+                <h3>Attacher</h3>
+            </div>
+            <div id="configure">
+                <h3>Configurer</h3>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section4">
+        <div part="techno">
+            <h1>Description technique</h1>
+            <div id="archi">
+                <h3>Architecture</h3>
+                Resonance is a IRC client.
+                It uses a custom lib, ff-irc, generated from node-irc.
+                The informations used for TopPages are managed by a IRC bot for now
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section5">
+        <div part="contribute">
+            <h1>Contribuer</h1>
+        </div>
     </div>
 </div>
-
-        
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
-        <script src="gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
-        <script src="gitbook/app.js"></script>
-        
-
-    
-    <script src="gitbook/plugins/gitbook-plugin-mixpanel/plugin.js"></script>
-    
-
-    
-    <script src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-    
-    <script src="gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
-    
-
-<script>
-require(["gitbook"], function(gitbook) {
-    var config = {"fontSettings":{"theme":"white","family":"serif","size":2}};
-    gitbook.start(config);
-});
-</script>
-
-    </body>
+</body>
 </html>
