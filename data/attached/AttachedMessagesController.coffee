@@ -4,7 +4,7 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
     msgTest = 
         'author':'test'
         'message':'msgTest'
-    $scope.messages = []#(msgTest for i in [0..10])
+    $scope.messages = []
     $scope.newMessage = ''
 
     # Get the histor from the background.

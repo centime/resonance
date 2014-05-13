@@ -18,9 +18,6 @@ tab = undefined
 masterWorker = undefined
 
 openMaster = (t) ->
-  # tabs.open({
-  #     'url':data.url('attached.html')
-  #     'onReady': (t) ->
   tab = t
   if not tab.isPinned
     tab.pin()
@@ -39,12 +36,10 @@ openMaster = (t) ->
   masterWorker.port.on 'message', (to, message) ->
      say(to, message)
 
-  # Why do I have to use the setTimeout, here ?
   masterWorker.port.on 'ready', () ->
     masterWorker.port.emit('pages',pages) 
     for page in pages
       masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])    
-      # })
 
 self = this
 init = (workers, BOT, say) ->
