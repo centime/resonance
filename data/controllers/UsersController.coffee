@@ -4,7 +4,7 @@ window.resonance.controller 'UsersController', ($scope)->
     # Listen for the message sent by the server when entering a chan, with the list of present users.
     self.port.on "names",  (channel,nicks) ->
         # Get every nickname. We could maybe use the privileges ?
-        $scope.users = ( nick for nick of nicks when nick isnt IRC.bot).sort()
+        $scope.users = ( nick for nick of nicks when  ((nick isnt $scope.NICK) and (nick isnt $scope.BOT))).sort()
         # Update the view.
         $scope.$apply()
 

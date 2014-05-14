@@ -28,6 +28,7 @@ openMaster = (t) ->
                         data.url("lib/angular.min.js"),
                         data.url("attached/attached.js"),
                         data.url("attached/AttachedMessagesController.js"),
+                        data.url("attached/AttachedUsersController.js"),
                       ]
                   })
   masterWorker.port.on 'detach', (page) ->
@@ -37,6 +38,8 @@ openMaster = (t) ->
      say(to, message)
 
   masterWorker.port.on 'ready', () ->
+    masterWorker.port.emit('nick',Nick.nick)
+    masterWorker.port.emit('bot',BOT)
     masterWorker.port.emit('pages',pages) 
     for page in pages
       masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])    
@@ -99,6 +102,17 @@ bindClient = (client) ->
     for page in pages
       client.join(page.chan)
       client.say(BOT,'__enter '+page.url+' '+page.chan)
+
+  client.addListener 'names', (chan,nicks) ->
+    masterWorker?.port.emit('names',chan, nicks)
+  
+  client.addListener 'join', (chan,nick) ->
+    masterWorker?.port.emit('join',chan, nick)
+
+  # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
+  client.addListener 'part', (chan,nick) ->
+    if nick isnt Nick.nick
+      masterWorker?.port.emit('part',chan, nick)
 
 
 
