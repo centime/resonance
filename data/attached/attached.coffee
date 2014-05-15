@@ -2,6 +2,7 @@ window.attached = angular.module('attached',[])
 
 window.attached.controller 'AttachedController', ($scope) ->
     $scope.pages = []
+    $scope.display = 1
     $scope.NICK = ''
     $scope.BOT = ''
     self.port.on 'pages', (pages) ->

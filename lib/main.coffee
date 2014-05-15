@@ -38,14 +38,17 @@ if settings.activated
   Resonance.startClient()
 
   # If the master page isn't already opened.
-  masterIsOpened = false
-  for tab in tabs
+  setTimeout = require('sdk/timers').setTimeout
+  openMaster = () ->
+    masterIsOpened = false
+    for tab in tabs
       if tab.url.match(/^resource:\/\/.*\/resonance\/data\/attached\.html$/)
         masterIsOpened = true
-  if not masterIsOpened
-    tabs.open({
-      'url':data.url('attached.html')
-    })
+    if not masterIsOpened
+      tabs.open({
+        'url':data.url('attached.html')
+      })
+  setTimeout(openMaster,1000)
 
 # Listen to events from the browser
 tabs.on 'ready', (tab) ->

@@ -19,8 +19,8 @@ masterWorker = undefined
 
 openMaster = (t) ->
   tab = t
-  if not tab.isPinned
-    tab.pin()
+  #if not tab.isPinned
+  #  tab.pin()
 
   tab.isMaster = true
   masterWorker = tab.attach({
