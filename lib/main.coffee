@@ -46,7 +46,7 @@ if settings.activated
         masterIsOpened = true
     if not masterIsOpened
       tabs.open({
-        'url':data.url('attached.html')
+        'url':data.url('attached.html'),inBackground:true
       })
   setTimeout(openMaster,1000)
 
