@@ -93,3 +93,17 @@ the nickname would have to be changed in every of theses files :
     adminBot.coffee
     lib/src/*.coffee
     data/controllers/*.coffee
+
+
+ircdjs :
+--------
+install the dependencies :
+```
+sudo npm install carrier winston bcrypt commander
+```
+maybe you will miss some others, but this is what I hadn't already installed.
+
+start the server with :
+```
+node ircdjs/lib/server.js
+```
