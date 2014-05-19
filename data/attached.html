@@ -1,31 +1,33 @@
 <link rel="stylesheet" type="text/css" href="attached.css">
 <div ng-app='attached' ng-controller='AttachedController'>
-     <ul>
+     <ul class='flex_column'>
         <li ng-repeat='page in pages track by $index' class='page flex_column'>
-            <page_infos>
+            <page_infos class='flex_row'>
                 <a href={{page.url}} target="_newtab">{{page.title}}</a>
                 <button ng-click='detach(page)'>Detach</button>
                 <button ng-show='display==0' ng-click="display=(display==0)?1:0"> Show </button>
                 <button ng-show='display==1' ng-click="display=(display==0)?1:0"> Hide </button>
-                <span class='align_right'>#Chan : {{page.chan}}</span>
+                <span style='color:grey;'>#Chan : {{page.chan}}</span>
             </page_infos>
-            <messages ng-show='display==1' ng-controller='AttachedMessagesController' class='flex_column'>
-                <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
-                          {{message.author}}: {{message.message}}
-                    </li>
-                </ul>
-                <form ng-submit='submitNewMessage()'>
-                    <input type='text' ng-model='newMessage'/>
-                </form>
-            </messages>
-            <users ng-controller='AttachedUsersController'>
-                <ul class='list'>
-                    <li ng-repeat='user in users track by $index'>
-                        <div>{{user}}</div>
-                    </li>
-                </ul>
-            </users>
+            <page_utils class='flex_row'>
+                <messages ng-show='display==1' ng-controller='AttachedMessagesController' class='flex_column'>
+                    <ul class='list'>
+                        <li ng-repeat='message in messages track by $index'>
+                              {{message.author}}: {{message.message}}<br>
+                        </li>
+                    </ul>
+                    <form ng-submit='submitNewMessage()'>
+                        <input type='text' ng-model='newMessage'/>
+                    </form>
+                </messages>
+                <users ng-controller='AttachedUsersController' class='flex_column'>
+                    <ul class='list'>
+                        <li ng-repeat='user in users track by $index'>
+                            {{user}}<br>
+                        </li>
+                    </ul>
+                </users>
+            </page_utils>
         </li>
     </ul>
 </div>

@@ -11,42 +11,45 @@ ul{
 /* Messages & private messages */
 .flex_column {
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
 }
 .flex_row {
     display: flex;
     flex-flow: row wrap;
 }
 page_infos {
-    clear: both;
-    flex: 1 6 20%;
-    order: 0;
-}
-messages {
-    flex: 1 6 80%;
+    flex: 10 1 28%;
     order: 1;
+    justify-content: flex-start;
+}
+page_infos span {
+  margin-left: auto;
+}
+page_utils {
+    flex: 1 10 75%;
+    order: 2;
+}
+messages{
+    flex: 1 3 75%;
+    border:3px solid gray;
+}
+users {
+    flex: 1 3 15%;
+    border:3px solid gray;
 }
 .list {
     list-style-type:none; 
     overflow: auto;
-    height: 100%;
 }
 messages > ul {
-    flex: 1 6 80%;
-    order: 1;
     color: #000000;
 }
 messages > form {
-    flex: 1 6 20%;
-    order: 2;
     max-height: 30px ;
     min-height: 25px ;
+    margin: 0px; 
 }
 messages input {
-    width: 99% ;
+    width: 100% ;
     height: 100% ;
-}
-.align_right{
-    float:right;
-    color:grey;
 }
