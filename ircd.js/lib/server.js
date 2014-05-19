@@ -35,7 +35,7 @@ var net = require('net'),
     winston = require('winston'),
     commander = require('commander')
     exists = fs.exists || path.exists // 0.8 moved exists to fs
-    TopPages = require('./toppages').TopPages
+    TopPageDatabase = require('./storage').TopPageDatabase
     ;
 
 function AbstractConnection(stream) {
@@ -53,7 +53,7 @@ function Server() {
   this.channels = new ChannelDatabase(this);
   this.config = null;
   this.commands = new ServerCommands(this);
-  this.toppages = new TopPages(this);
+  this.topPages = new TopPageDatabase(this);
 }
 
 Server.boot = function() {

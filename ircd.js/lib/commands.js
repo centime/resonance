@@ -8,18 +8,17 @@ function Commands(server) {
 Commands.prototype = {
 
   // TODO : move it to a irc message instead of private message.
+  NEWTOPPAGE: function(user, chan, url) {
+    if ( typeof(this.server.channels.find(chan)) !== 'undefined' ){
+      var topPages = this.server.topPages ;
+      topPages.add(chan, url);
+    };
+  },
+
+  // TODO : move it to a irc message instead of private message.
   TOPPAGES: function(user, filter) {
-    tp = '';
-    registered = this.server.channels.registered ;
-    for (chan in registered){
-      if ( chan.match(new RegExp(filter)) ){
-        tp+=chan+' '+registered[chan].users.length+', ';
-      };
-    }
-    user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + tp);
-    
-    // var topPages = this.server.topPages ;
-    // user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + topPages.get(''));
+    var topPages = this.server.topPages ;
+    user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + topPages.get(filter));
   },
   
   PONG: function(user, hostname) {
