@@ -6,19 +6,13 @@ function TopPageDatabase(server){
   this.pages = {
     'channel1':'#channel1',
     'channel2':'#channel2',
-    // 'channel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-
-    // 'chjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channel2sdjidsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'chnel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'chl2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channedsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channejdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channejdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channeidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channejdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'channeljsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjischannel2sdjidsjidjsdjisjdijsidjisjdjsdjdisjdijsidjis':'#channel2',
-    // 'end':'#end',
+    // 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa':'#channel2',
+    // 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb':'#channel2',
+    // 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc':'#channel2',
+    // 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd':'#channel2',
+    // 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee':'#channel2',
+    'end':'#channel2',
+  
   };
   this.pagesPerResponse = 10;
 }
@@ -27,64 +21,26 @@ TopPageDatabase.prototype = {
   add: function(chan, url) {
     this.pages[url] = chan;
   },
-  get: function(filter, index) {
+  get: function(index, query) {
+    console.log('index : '+index)
+    
     var matchingPages = [];
     registered = this.server.channels.registered ;
     for (page in this.pages){
-      if (page.match(new RegExp(filter)) ){
+      if (page.match(new RegExp(query)) ){
         var chan = this.pages[page];
         matchingPages.push( [page, registered[chan].users.length] );
-        //matchingPages.push( [page].join(':') );
       };
     };
     
-
-    sortedPages = matchingPages.sort(function(a,b){ return (b[1] - a[1]) })
-    selectedPages = sortedPages.splice(index*this.pagesPerResponse, (index+1)*(this.pagesPerResponse-1))
+    var sortedPages = matchingPages.sort(function(a,b){ return (b[1] - a[1]) })
+    console.log(sortedPages)
+    var selectedPages = sortedPages.splice(index*this.pagesPerResponse, (index+1)*(this.pagesPerResponse-1))
     strPages = []
-    sortedPages.forEach(function(p){
+    selectedPages.forEach(function(p){
       strPages.push(p.join(':'));
     });
-    return strPages.join(',')
-
-        //     sortable = []
-        // for page,visitors of visits
-        //     console.log page+' '+visitors
-        //     if not page?
-        //         console.log('[[ Undefined ]]')
-        //     else if page == 'undefined'
-        //         console.log('UNdef entry')
-        //     else if page.match(regexp)
-        //         sortable.push([page, visitors])
-        // # Sort this array regarding the number of visitors.
-        // sortSortable = (a,b) -> (b[1] - a[1])
-        // sorted = sortable.sort(sortSortable)
-
-        // # Select only the entries requested
-        // i = indexRequestedTopPages
-        // n = numberOfRequestedEntries
-        // selectedByIndex = sorted[i*n..(i+1)*n-1]
-
-        // # Construct the complete response for the topPages request.
-        // # [ ['site1',1], ['site2',2] ]   ----->    'site1,1|site2,2'
-        // topPagesResponse = selectedByIndex.join('|')
-
-        // # Send topPages metadata.
-        // totalIndices = Math.ceil( sorted.length/numberOfRequestedEntries )
-        // bot.say(nick,'topPagesMetaData '+[query, indexRequestedTopPages, totalIndices].join(' '))
-
-        // # Split the response so it wil go through IRC.
-        // # todo warning take into account String(i).length
-        // packetSize = 200
-        // numberOfPackets = Math.ceil( topPagesResponse.length/packetSize )
-
-        // numberOfPackets = 1 if (numberOfPackets==0)
-        // # Send every paquet.
-        // for i in [0..numberOfPackets-1]
-        //     packet=topPagesResponse.substr(i*packetSize,packetSize)
-        //     # todo warning : what if 2 toppages are requested at the same time ?
-        //     bot.say(nick, 'topPages '+[i, numberOfPackets, packet].join(' '))    
-
+    return {'total':Math.ceil(sortedPages.length/this.pagesPerResponse), 'str':strPages.join(',')}
   },
 
 }

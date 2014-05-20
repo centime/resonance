@@ -16,9 +16,31 @@ Commands.prototype = {
   },
 
   // TODO : move it to a irc message instead of private message.
-  TOPPAGES: function(user, filter) {
-    var topPages = this.server.topPages ;
-    user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + topPages.get(filter));
+  TOPPAGES: function(user, index, query) {
+    var requestedTopPages, total, metadata, str, msg ;
+    // Get the pages from storage.
+    requestedTopPages = this.server.topPages.get(index, query) ;
+    // Build the metadata.
+    total = requestedTopPages.total ;
+    metadata = [query, index, total].join(' ') ;
+    msg = 'topPagesMetaData '+metadata ;
+    // Send the metadata via pm.
+    user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + msg);
+    // Build the toppages list.
+    str = requestedTopPages.str ;
+    console.log(str)
+    // Split the response so it wil go through IRC.
+    // todo warning take into account String(i).length
+    packetSize = 200
+    numberOfPackets = Math.ceil( str.length/packetSize )
+    if (numberOfPackets==0) numberOfPackets = 1 ;
+    // Send every paquet.
+    for (var i=0; i<numberOfPackets; i++) {
+        packet=str.substr(i*packetSize,packetSize)
+        msg = 'topPages '+[i, numberOfPackets, packet].join(' ') ;
+        // todo warning : what if 2 toppages are requested at the same time ?
+        user.send(':Resonance!Reso@'+this.server.host, 'PRIVMSG', 'Resonance', ':' + msg);
+    }
   },
   
   PONG: function(user, hostname) {
