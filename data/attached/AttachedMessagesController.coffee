@@ -11,8 +11,7 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
             #    message.display = not(message.author in $scope.$parent.mutedUsers)
             $scope.$apply()
             scrollDown(true)
-            console.log(document.getElementById('resonance_messages'))
-
+            
     # Send a new message.
     $scope.submitNewMessage =  () ->
                             msg = $scope.newMessage 
@@ -77,6 +76,6 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
     elmt = document.getElementById('resonance_messages')
     scrollDown = (full)  ->
         # todo : 1.25 ? it needs proper checks.
-        if full or ((elmt.scrollHeight-elmt.prop.scrollTop)/parseInt(elmt.height) < 1.25)
+        if full or ((elmt.scrollHeight-elmt.scrollTop)/parseInt(elmt.offsetHeight) < 1.25)
         #    elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
             elmt.scrollTop=elmt.scrollHeight

@@ -4,6 +4,7 @@ ul{
 .page {
     width:100%;
     min-width: 250px;
+    max-height: 215px;
     border:3px solid gray;
     background-color: #DAE5E6;
     margin: 10 10 0 0;
@@ -18,7 +19,7 @@ ul{
     flex-flow: row wrap;
 }
 page_infos {
-    flex: 10 1 28%;
+    flex: 10 1 22%;
     order: 1;
     justify-content: flex-start;
 }
@@ -29,17 +30,16 @@ page_utils {
     flex: 1 10 75%;
     order: 2;
 }
-messages{
-    flex: 1 3 75%;
-    border:3px solid gray;
-}
 users {
     flex: 1 3 15%;
     border:3px solid gray;
 }
-.list {
-    list-style-type:none; 
-    overflow: auto;
+messages{
+    flex: 1 3 75%;
+    border:3px solid gray;
+}
+#resonance_messages{
+    height: 100px;
 }
 messages > ul {
     color: #000000;
@@ -52,4 +52,8 @@ messages > form {
 messages input {
     width: 100% ;
     height: 100% ;
+}
+.list {
+    list-style-type:none; 
+    overflow: auto;
 }
