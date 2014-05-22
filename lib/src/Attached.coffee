@@ -58,10 +58,13 @@ attach = (url, title) ->
    'chan' : chan
   pages.push(page)
   masterWorker?.port.emit('pages',pages)
+  masterWorker.port.emit('nick',Nick.nick)
+  masterWorker.port.emit('bot',BOT)
   #todo warning asynchronous, what if pages arrives after messagesHistory ?
   masterWorker?.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
   workers[chan]?.emit('attached')
   isAttached[chan] = true
+  client.send('names',chan)
 
 detach = (chan) ->
      # part from chan ?
@@ -89,7 +92,7 @@ receive = (from, to, message) ->
 onSay = (to, message) ->
       # Tell back the application that the message has been said.
       masterWorker?.port.emit('message',Nick.nick,to,message)
-      
+     
 self = this
 bindClient = (client) ->
   # todo : hy this global ?
@@ -105,6 +108,7 @@ bindClient = (client) ->
 
   client.addListener 'names', (chan,nicks) ->
     masterWorker?.port.emit('names',chan, nicks)
+
   
   client.addListener 'join', (chan,nick) ->
     masterWorker?.port.emit('join',chan, nick)
