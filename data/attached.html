@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="attached.css">
-<div ng-app='attached' ng-controller='AttachedController'>
+<attached ng-app='attached' ng-controller='AttachedController'>
      <ul class='flex_column'>
         <li ng-repeat='page in pages track by $index' class='page flex_column'>
             <page_infos class='flex_row'>
@@ -7,7 +7,6 @@
                 <button ng-click='detach(page)'>Detach</button>
                 <button ng-show='display==0' ng-click="display=(display==0)?1:0"> Show </button>
                 <button ng-show='display==1' ng-click="display=(display==0)?1:0"> Hide </button>
-                <span style='color:grey;'>#Chan : {{page.chan}}</span>
             </page_infos>
             <page_utils class='flex_row'>
                 <messages ng-show='display==1' ng-controller='AttachedMessagesController' class='flex_column'>
@@ -30,4 +29,4 @@
             </page_utils>
         </li>
     </ul>
-</div>
+</attached>
