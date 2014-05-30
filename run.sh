@@ -9,8 +9,6 @@ coffee -c ./data/controllers/*.coffee
 coffee -c ./data/settings/*.coffee
 # Compile the attached panel.
 coffee -c ./data/attached/*.coffee
-# Compile the tests.
-coffee -c ./data/*.coffee 
 
 cfx xpi &
 cfx run --profiledir="~/addon-dev/profiles/centime"

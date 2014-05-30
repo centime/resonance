@@ -38,15 +38,15 @@ window.resonance.controller "ResonanceController", ($scope) ->
     self.port.on 'activePrivateUsers', (users) ->
         $scope.privateActive = ( true in ( active for user, active of users ))
         $scope.$apply()
-    $scope.private_active = () ->
-        {'active_resonance':$scope.privateActive}
+    $scope.private_active_or_selected = () ->
+        {'active_resonance':$scope.privateActive, 'selected_resonance':($scope.display==4)}
     
     $scope.nocitificationActive = false
     self.port.on 'notificationActive', (bool) ->
         $scope.notificationActive = bool
         $scope.$apply()
     $scope.notification_active = () ->
-        {'active_resonance':$scope.notificationActive}
+        {'active_resonance':$scope.notificationActive, 'selected_resonance':($scope.display==5)}
 
     $scope.isAttached = false
     $scope.attach = () ->
@@ -64,6 +64,9 @@ window.resonance.controller "ResonanceController", ($scope) ->
 
     $scope.attached = () ->
         { 'selected_resonance':$scope.isAttached }
+
+    $scope.selected = (display) ->
+        { 'selected_resonance':($scope.display==display) }
 
     # Hack for the ng-model binding of topPages
     $scope.TP = {}

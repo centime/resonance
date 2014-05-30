@@ -48,9 +48,13 @@
         </div>
         <div id='right_resonance'>
             <controls_resonance class='bordered_resonance'>
-                <button ng-click='display=(display==2)?1:2'  >TopPages</button>
-                <button ng-click='display=(display==4)?1:4' ng-class='private_active()'>PrivateMessages</button>
-                <button ng-click='display=(display==5)?1:5' ng-class='notification_active()'>Notifications</button>
+                <button ng-click='display=1' ng-class='selected(1)'>Discussion</button>
+                <button ng-click='display=(display==2)?1:2' ng-class='selected(2)'>TopPages</button>
+                <button ng-click='display=(display==4)?1:4' ng-class='private_active_or_selected()'>PrivateMessages</button>
+                <button ng-click='display=(display==5)?1:5' ng-class='notification_active()' ng-class='selected(5)'>Notifications</button>
+
+                <!-- <button ng-click='display=(display==4)?1:4' ng-class='selected(4)'>PrivateMessages</button>
+                <button ng-click='display=(display==5)?1:5' ng-class='selected(5)'>Notifications</button> -->
                 <button ng-click='attach()' ng-class='attached()'>Attach</button>
             </controls_resonance>
             <users_resonance ng-controller='UsersController' ng-show='display==1' class='bordered_resonance'>

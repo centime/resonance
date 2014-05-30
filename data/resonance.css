@@ -155,7 +155,7 @@ resonance_resonance * {
 
 /* Private message notification */
     .selected_resonance {
-        background: white; 
+        background: gray; 
     }
     /* Blink */
     @keyframes blink_resonance { 50% { background-color: gray; }  }
