@@ -9,6 +9,8 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
         $scope.messages = history
         $scope.$apply()
         scrollDown(true)
+        # Focus the input.
+        angular.element('privatemessages_resonance input').focus()
     
     # Send a new message.
     $scope.submitNewMessage =  () ->
@@ -41,7 +43,14 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
         # todo : 1.25 ? it needs proper checks.
         if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.25)
             elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
-    #focus the input
+
+    # Focus the input when PM is shown.
+    done = false
     $scope.displayPrivateMessage = (displayPrivateMessage) ->
-        angular.element('privatemessages_resonance input').focus()
-        return(displayPrivateMessage)
+        if displayPrivateMessage
+            if (not done)
+                done = true
+                # Focus the input.
+                angular.element('privatemessages_resonance input').focus()
+        else done = false
+        return displayPrivateMessage

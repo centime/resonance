@@ -83,7 +83,10 @@
                     </li>
                 </ul>
             </categories_resonance>
-            <privateusers_resonance ng-controller='PrivateUsersController' ng-show='display==4' class='bordered_resonance'>
+            <privateusers_resonance ng-controller='PrivateUsersController' ng-show='display==4' class='bordered_resonance' id='privateusers_resonance'>
+                <form ng-submit='startPmUser()'>
+                    New : <input type='text' ng-model='newPmUser'/>
+                </form>
                 <ul class='list_resonance'>
                     <li ng-repeat='user in pmUsers track by $index'>
                         <div ng-click='selectPmUser(user)' ng-class='class(user)'>{{user}}</div>

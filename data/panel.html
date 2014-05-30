@@ -1,35 +1,42 @@
+<link rel="stylesheet" type="text/css" href="panel.css">
 <resonancepanel ng-app='panel' ng-controller='PanelController' class='flex column'>
     <div ng-show='activated'>
-        Resonance has started for this page
-        <button ng-click='stop()' ng-show='started'>Yes</button>
-        <button ng-click='start()' ng-hide='started'>No</button>
+        <div class='option'>
+            <button ng-click='openMaster()'>Open the master page</button>
+        </div>
         <br>
-        <button ng-click='openMaster()'>Open the master page</button>
+        <div class='option' ng-click='toggleStarted()'>
+            <div class='circle' ng-class='class("started")'></div>
+            Resonance has started for this page
+        </div>
         <br>
-        Chan generated for this page : 
-        <input type='text' ng-model='chan'/>
-        <br>
-        <br>
-        Start Resonance for every page of this domain
-        <button ng-click='toggleStartForDomain()' ng-show='startForDomain'>Yes</button>
-        <button ng-click='toggleStartForDomain()' ng-hide='startForDomain'>No</button>
-        <br>
-        Start Resonance for every page by default
-        <button ng-click='toggleStartByDefault()' ng-show='startByDefault'>Yes</button>
-        <button ng-click='toggleStartByDefault()' ng-hide='startByDefault'>No</button>
-        <br>
+        Start Resonance :
+        <div class='option' ng-click='toggleStartForDomain()'>
+            <div class='circle' ng-class='class("startForDomain")'></div>
+            For every page of this domain
+        </div>
+        <div class='option' ng-click='toggleStartByDefault()'>
+            <div class='circle' ng-class='class("startByDefault")'></div>
+             By default for every page
+        </div>
     </div>
     <br>
-    Nickname
-    <form ng-submit='newNick()'>
-        <input type='text' ng-model='nick'/>
-    </form>
-    <button ng-click='getRandomName()'>Get a random name</button>
+    <div>Nickname :</div>
+    <div class='option'>
+        <form ng-submit='newNick()'>
+            <input type='text' ng-model='nick'/>
+        </form><br>
+        <button ng-click='getRandomName()'>Get a random name</button>
+        <div>{{message}}</div>
+    </div>
     <br>
+    <div class='option' ng-click='toggleActivated()'>
+        <div class='circle' ng-class='class("activated")'></div>
+        Resonance is activated
+    </div> 
     <br>
-    <br>
-    Resonance is activated
-    <button ng-click='toggleActivated()' ng-show='activated'>Yes</button>
-    <button ng-click='toggleActivated()' ng-hide='activated'>No</button>
-    <br>    
+    <div class='option'>
+        Chan generated for this page :<br>
+        <input type='text' ng-model='chan'/>
+    </div>   
 </resonancepanel>

@@ -1,5 +1,3 @@
-echo 'Do not forget to start the bot. \n\tnode admin-bot/bot.js'
-
 python2 concat.py
 # Compile the background script.
 coffee -c ./lib/main.coffee  ./lib/src/*.coffee

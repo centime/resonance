@@ -42,7 +42,7 @@ window.resonance.controller 'UsersController', ($scope)->
 
     # Add the user to the list of users with which a private conversation has been started.
     $scope.startPm = (user) ->
-        self.port.emit( 'startPmUser', user)
+        self.port.emit('startPmUser', user)
         $scope.$parent.display = 4
         $scope.displayActions[user] = false
 

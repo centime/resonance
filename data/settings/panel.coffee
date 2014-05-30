@@ -5,6 +5,7 @@ window.panel.controller 'PanelController', ($scope) ->
     $scope.nick = ''
     $scope.chan = ''
     $scope.started = false
+    $scope.message = ''
 
     self.port.on 'settings', (opt) ->
         ( $scope[key] = value for key,value of opt )
@@ -24,13 +25,13 @@ window.panel.controller 'PanelController', ($scope) ->
         $scope.started = started
         $scope.$apply()
 
-    $scope.start = () ->
-        $scope.started = true
-        self.port.emit('start')
-
-    $scope.stop = () ->
-        $scope.started = false
-        self.port.emit('stop')
+    $scope.toggleStarted = () ->
+        if $scope.started
+            $scope.started = false
+            self.port.emit('stop')
+        else
+            $scope.started = true
+            self.port.emit('start')
 
     $scope.toggleActivated = () ->
         $scope.activated = not $scope.activated
@@ -56,8 +57,9 @@ window.panel.controller 'PanelController', ($scope) ->
 
     $scope.newNick = () ->
         self.port.emit('nextNick',$scope.nick)
-        alert('Your new nick ('+$scope.nick+') will be saved and updated as soon as you restart firefox.')
-
+        $scope.message = $scope.nick+' will be saved and updated as soon as you restart firefox.'
+        $scope.$apply()
+        
     $scope.getRandomName = () ->
         self.port.emit('getRandomName')
         
@@ -68,3 +70,6 @@ window.panel.controller 'PanelController', ($scope) ->
 
     $scope.openMaster = () ->
         self.port.emit('openMaster')
+
+    $scope.class = (param) ->
+        {'green':$scope[param],'red':not $scope[param]}

@@ -142,20 +142,28 @@ resonance_resonance * {
         border-bottom-color: gray;
     }
 
+ /* Private users */
+    #privateusers_resonance { /* FUCK IT ! */
+        display: block;
+    }
+    privateusers_resonance input {
+        width:75%;
+    }
+
+
 /* Categories */
     #categories_resonance { /* FUCK IT ! */
         display: block;
     }
     categories_resonance input {
-        width:80%;
+        width:75%;
     }
-
 
 /* Colors & co */
 
 /* Private message notification */
     .selected_resonance {
-        background: gray; 
+        background-color: gray; 
     }
     /* Blink */
     @keyframes blink_resonance { 50% { background-color: gray; }  }

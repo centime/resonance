@@ -79,7 +79,7 @@ bindWorker = (worker, client) ->
 
   worker.port.on 'unactivePmUser', (user) ->
     unactivePmUser(user)
-    
+
 module.exports =
   'init':init
   'bindClient':bindClient

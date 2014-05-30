@@ -2,6 +2,7 @@ window.resonance.controller 'PrivateUsersController', ($scope)->
     # List of every present user.
     $scope.currentPmUser = IRC.bot
     $scope.pmUsers = []
+    $scope.newPmUser = ''
 
     # When the user clicks on a user in the list.
     $scope.selectPmUser = (user) ->
@@ -29,3 +30,6 @@ window.resonance.controller 'PrivateUsersController', ($scope)->
     self.port.on 'activePrivateUsers', (users) ->
         $scope.activePrivateUsers = users
         $scope.$apply()
+
+    $scope.startPmUser = () ->
+        self.port.emit('startPmUser', $scope.newPmUser)
