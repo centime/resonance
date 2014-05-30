@@ -27,7 +27,7 @@
             <input type='text' ng-model='nick'/>
         </form><br>
         <button ng-click='getRandomName()'>Get a random name</button>
-        <div>{{message}}</div>
+        <div>{{nickMessage}}</div>
     </div>
     <br>
     <div class='option' ng-click='toggleActivated()'>
@@ -38,5 +38,13 @@
     <div class='option'>
         Chan generated for this page :<br>
         <input type='text' ng-model='chan'/>
-    </div>   
+    </div>
+    <br>
+    <div>Clear histories :</div>   
+    <div class='option'>
+        <div>{{clearMessage}}</div>
+        <button ng-click='zob()'>Notifications</button>
+        <button ng-click='clearMessages()'>Messages</button>
+        <button ng-click='clearPrivate()'>Private conversations</button>
+    </div>
 </resonancepanel>

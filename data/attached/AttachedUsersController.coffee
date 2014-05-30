@@ -4,8 +4,6 @@ window.attached.controller 'AttachedUsersController', ($scope)->
     # Listen for the message sent by the server when entering a chan, with the list of present users.
     self.port.on "names",  (chan, nicks) ->
         if chan == $scope.page.chan
-            console.log('nick '+$scope.NICK)
-            console.log('bot '+$scope.BOT)
             # Get every nickname. We could maybe use the privileges ?
             $scope.users = ( nick for nick of nicks when  (nick isnt $scope.BOT)).sort()
             # Update the view.

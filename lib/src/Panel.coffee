@@ -4,6 +4,9 @@ tabs = require('sdk/tabs')
 Nick = require("sdk/simple-storage").storage.nick
 { getRandomName, getChan } = require('./Utils.js')
 
+# Histories may be cleaned from here.
+storage = require("sdk/simple-storage").storage
+
 # env = {Resonance, settings, versionResonance}
 createPanel = (env) ->
   panel = require("sdk/panel").Panel({
@@ -89,6 +92,14 @@ createPanel = (env) ->
     # Else, open it.
     env.Resonance.openMaster()
 
+  panel.port.on 'clearNotifications', () ->
+    delete storage.notificationsHistory
+
+  panel.port.on 'clearMessages', () ->
+    delete storage.messagesHistory
+  
+  panel.port.on 'clearNotifications', () ->
+    delete storage.privateMessagesHistory
 
   return panel
 

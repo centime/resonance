@@ -5,7 +5,8 @@ window.panel.controller 'PanelController', ($scope) ->
     $scope.nick = ''
     $scope.chan = ''
     $scope.started = false
-    $scope.message = ''
+    $scope.nickMessage = ''
+    $scope.clearMessage = ''
 
     self.port.on 'settings', (opt) ->
         ( $scope[key] = value for key,value of opt )
@@ -57,7 +58,7 @@ window.panel.controller 'PanelController', ($scope) ->
 
     $scope.newNick = () ->
         self.port.emit('nextNick',$scope.nick)
-        $scope.message = $scope.nick+' will be saved and updated as soon as you restart firefox.'
+        $scope.nickMessage = $scope.nick+' will be saved and updated as soon as you restart firefox.'
         $scope.$apply()
         
     $scope.getRandomName = () ->
@@ -73,3 +74,16 @@ window.panel.controller 'PanelController', ($scope) ->
 
     $scope.class = (param) ->
         {'green':$scope[param],'red':not $scope[param]}
+
+    $scope.clearNotifications = () ->
+        self.port.emit('clearNotifications')
+        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+    
+    $scope.clearMessages = () ->
+        self.port.emit('clearMessages')
+        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+    
+    $scope.clearPrivate = () ->
+        self.port.emit('clearPrivate')
+        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+    
