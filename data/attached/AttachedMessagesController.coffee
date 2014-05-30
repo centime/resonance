@@ -1,19 +1,17 @@
 window.attached.controller "AttachedMessagesController", ($scope) ->
-
     # $scope.page.chan
-    msgTest = 
-        'author':'test'
-        'message':'msgTest'
-    $scope.messages = []#(msgTest for i in [0..10])
+    $scope.messages = []
     $scope.newMessage = ''
 
     # Get the histor from the background.
     self.port.on "messagesHistory", (chan, messagesHistory) ->
         if chan == $scope.page.chan
             $scope.messages = messagesHistory
+            #for message in $scope.messages
+            #    message.display = not(message.author in $scope.$parent.mutedUsers)
             $scope.$apply()
-            #scrollDown(full=true)
-
+            scrollDown(true)
+            
     # Send a new message.
     $scope.submitNewMessage =  () ->
                             msg = $scope.newMessage 
@@ -30,11 +28,21 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
             entry = 
                 'author' : from
                 'message' : message
+#                'display' : not ( from in $scope.$parent.mutedUsers )
+#                'marker' : 'standart'
+#            #class of message 
+#            wordsInMessage = entry.message.split(new RegExp(' |:','g'))
+#            if entry.author == 'resonance-bot'
+#                entry.marker = 'resonanceToMe'
+#            else if entry.author == $scope.currentnick
+#                entry.marker = 'authorIsMe'
+#            else if $scope.currentnick in wordsInMessage
+#                entry.marker = 'authorToMe'
             # Append it to the list of all messages.
             $scope.messages.push(entry)
             # Update the view.
             $scope.$apply()
-            #scrollDown(full=false)
+            scrollDown(true)
         
     # # Set the css class for messages.
     # $scope.class = (message) ->
@@ -63,10 +71,11 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
     #     angular.element('messages_resonance input').focus()
     #     return displayMessages
 
-    # # Scroll down the messages list.
-    # elmt = angular.element('messages_resonance > ul') 
-    # scrollDown = (full)  ->
-    #     # todo : 1.25 ? it needs proper checks.
-    #     if full or ((elmt.prop('scrollHeight')-elmt.prop('scrollTop'))/parseInt(elmt.css('height')) < 1.25)
-    #         elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
-
+    # Scroll down the messages list.
+    #elmt = angular.element('messages > ul') 
+    elmt = document.getElementById('resonance_messages')
+    scrollDown = (full)  ->
+        # todo : 1.25 ? it needs proper checks.
+        if full or ((elmt.scrollHeight-elmt.scrollTop)/parseInt(elmt.offsetHeight) < 1.25)
+        #    elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
+            elmt.scrollTop=elmt.scrollHeight

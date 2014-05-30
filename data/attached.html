@@ -1,61 +1,34 @@
-<style>
-    .page {
-        width:100%;
-        height: 200px;
-        border:solid;
-        resize: vertical;
-        overflow: auto;
-    }
-    /* Messages & private messages */
-    .flex_column {
-        display: flex;
-        flex-flow: column;
-        flex-direction: column;
-    }
-    page_infos {
-        flex: 1 6 20%;
-        order: 0;
-    }
-    messages {
-        flex: 1 6 80%;
-        order: 1;
-    }
-    .list {
-        overflow: auto;
-        height: 100%;
-    }
-    messages > ul {
-        flex: 1 6 80%;
-        order: 1;
-        color: #000000;
-    }
-    messages > form {
-        flex: 1 6 20%;
-        order: 2;
-        max-height: 30px ;
-    }
-    messages input {
-        width: 100% ;
-        height: 100% ;
-    }
-</style>
-<div ng-app='attached' ng-controller='AttachedController'>
-     <ul>
+<link rel="stylesheet" type="text/css" href="attached.css">
+<attached ng-app='attached' ng-controller='AttachedController'>
+     <ul class='flex_column'>
         <li ng-repeat='page in pages track by $index' class='page flex_column'>
-            <page_infos>
-              <a href={{page.url}} target={{page.url}}>{{page.title}}</a><button ng-click='detach(page)'>Detach</button> <br>
-              {{page.chan}}
+            <page_infos class='flex_row'>
+                <a href={{page.url}} target={{page.url}}>{{page.title}}</a>
+                <button ng-show='display==0' ng-click="display=(display==0)?1:0"> Show </button>
+                <button ng-show='display==1' ng-click="display=(display==0)?1:0"> Hide </button>
+                <button ng-click='detach(page)'>Detach</button>
             </page_infos>
-              <messages ng-controller='AttachedMessagesController' class='flex_column'>
-                <ul class='list'>
-                    <li ng-repeat='message in messages track by $index'>
-                          {{message.author}}: {{message.message}}
-                    </li>
-                </ul>
-                <form ng-submit='submitNewMessage()'>
-                    <input type='text' ng-model='newMessage'/>
-                </form>
-            </messages>
+            <page_utils class='flex_row'>
+                <messages ng-show='display==1' ng-controller='AttachedMessagesController' class='flex_column'>
+                    <ul class='list' id='resonance_messages'>
+                        <li ng-repeat='message in messages track by $index'>
+                              {{message.author}}: {{message.message}}<br>
+                        </li>
+                    </ul>
+                    <form ng-submit='submitNewMessage()'>
+                        <input type='text' ng-model='newMessage'/>
+                    </form>
+                </messages>
+                <users ng-controller='AttachedUsersController' class='flex_column'>
+                    <ul class='list'>
+                        <li ng-repeat='user in users track by $index'>
+                            {{user}}<br>
+                        </li>
+                        <li>test1</li>
+                        <li>test2</li>
+                    </ul>
+                </users>
+            </page_utils>
         </li>
     </ul>
-</div>
+</attached>

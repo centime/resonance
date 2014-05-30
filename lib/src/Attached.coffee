@@ -18,12 +18,9 @@ tab = undefined
 masterWorker = undefined
 
 openMaster = (t) ->
-  # tabs.open({
-  #     'url':data.url('attached.html')
-  #     'onReady': (t) ->
   tab = t
-  if not tab.isPinned
-    tab.pin()
+  #if not tab.isPinned
+  #  tab.pin()
 
   tab.isMaster = true
   masterWorker = tab.attach({
@@ -31,6 +28,7 @@ openMaster = (t) ->
                         data.url("lib/angular.min.js"),
                         data.url("attached/attached.js"),
                         data.url("attached/AttachedMessagesController.js"),
+                        data.url("attached/AttachedUsersController.js"),
                       ]
                   })
   masterWorker.port.on 'detach', (page) ->
@@ -39,12 +37,12 @@ openMaster = (t) ->
   masterWorker.port.on 'message', (to, message) ->
      say(to, message)
 
-  # Why do I have to use the setTimeout, here ?
   masterWorker.port.on 'ready', () ->
+    masterWorker.port.emit('nick',Nick.nick)
+    masterWorker.port.emit('bot',BOT)
     masterWorker.port.emit('pages',pages) 
     for page in pages
       masterWorker.port.emit('messagesHistory', page.chan, messagesHistory[page.chan] ? [])    
-      # })
 
 self = this
 init = (workers, BOT, say) ->
@@ -60,10 +58,13 @@ attach = (url, title) ->
    'chan' : chan
   pages.push(page)
   masterWorker?.port.emit('pages',pages)
+  masterWorker.port.emit('nick',Nick.nick)
+  masterWorker.port.emit('bot',BOT)
   #todo warning asynchronous, what if pages arrives after messagesHistory ?
   masterWorker?.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
   workers[chan]?.emit('attached')
   isAttached[chan] = true
+  client.send('names',chan)
 
 detach = (chan) ->
      # part from chan ?
@@ -91,7 +92,7 @@ receive = (from, to, message) ->
 onSay = (to, message) ->
       # Tell back the application that the message has been said.
       masterWorker?.port.emit('message',Nick.nick,to,message)
-      
+     
 self = this
 bindClient = (client) ->
   # todo : hy this global ?
@@ -104,6 +105,18 @@ bindClient = (client) ->
     for page in pages
       client.join(page.chan)
       client.say(BOT,'__enter '+page.url+' '+page.chan)
+
+  client.addListener 'names', (chan,nicks) ->
+    masterWorker?.port.emit('names',chan, nicks)
+
+  
+  client.addListener 'join', (chan,nick) ->
+    masterWorker?.port.emit('join',chan, nick)
+
+  # The part event is also triggered when the client leaves a channel, thus creating an error because the worker does no longer exist.
+  client.addListener 'part', (chan,nick) ->
+    if nick isnt Nick.nick
+      masterWorker?.port.emit('part',chan, nick)
 
 
 
