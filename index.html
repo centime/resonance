@@ -10,7 +10,7 @@
     <meta property="og:url" content="http://centime.github.io/resonance/">
     <style>
       article{position:relative;top:80px;}
-      .anchor{padding-top: 80px;}
+      .anchor{padding-top: 105px;}
       pre{
         -moz-hyphens: none;
         -moz-tab-size: 4;
@@ -34,6 +34,9 @@
       line{float:left;}
       .separator{background-color: #292F36;padding:0px; padding-top: 20px; padding-bottom: 20px;min-height:60px;}
       .content{max-height:100%; max-width:100%;}
+      p{text-align: justify;}
+      h2{font-size: 2em; padding-top: 10px; text-align: center;}
+      h3{font-weight: bold;padding-top:20px;}
     </style>
 </head>
 <body>
@@ -141,7 +144,7 @@
 <h2><a class="anchor" name="usage"></a>Utilisation</h2>
   <h3>Echanger et débattre</h3>
     <p class="island">
-      Cliquez sur l'icone <img style="height:30px;width:30px;position:relative;top:7px;" src="assets/logo.png"></img> pour démarrer Resonance sur une page web.
+      Cliquez sur l'icone <img style="height:30px;width:30px;position:relative;top:7px;" src="assets/logo.png"></img> pour démarrer Resonance sur une page web. Vous rejoignez alors une conversation regroupant d'autres utilisateurs qui visitent la même page web que vous.
   	</p>
 <!-- Separator-->
 </div>
@@ -151,18 +154,32 @@
     </div></header>
 <div class="container block main" role="main">
 <!-- End of separator -->    
-    <b>[1] Fil de discussion</b><br>
-    Regroupe tous les propos qui ont été tenus pendant que vous avez assisté à la discussion. Un nouvel arrivant rejoignant la discussion en cours n'aura pas accès aux messages antérieurs.
-    <br>
-    <b>[2] Nouveau message</b><br>
-    Tapez votre message puis appuyez sur Entrée pour parler.
-    <br>
-    <b>[3] Modes</b><br>
-    Ces boutons permettent de basculer entre les différents modes de Resonance. Le mode présenté ici est <b>Discussion</b>, mais vous avez aussi accès à <b>Top Pages</b>, <b>Private Messages</b>, <b>Attach</b> et <b>Notifications</b>. Chacun d'entre eux est expliqué plus bas.
-    <br>
-    <b>[4] Liste d'utilisateurs</b><br>
-    La liste des utilisateurs présents avec vous sur cette page. Ils peuvent lire vos messages, et y répondre. En cliquant sur un nom, il est possible d'activer "mute", ce qui désactive l'affichage de tous les messages de cet utilisateur. De la même façon, il est aussi possible d'ouvrir une conversation privée avec cet utilisateur (celle ci est alors accessible via le mode Messages privés)<br><br>
-
+  <div class="grid">
+    <div class="grid__item one-half" >
+      <p>
+          <b>[1] Fil de discussion</b><br>
+          Tous les propos échangés depuis que vous avez rejoins la conversation.
+      </p>
+    </div>
+    <div class="grid__item one-half" >
+        <p>
+          <b>[2] Nouveau message</b><br>
+            Ecrivez ce que vous voulez dire, puis appuyez sur Entrée et tous les participants entendront.
+        </p>
+    </div>
+    <div class="grid__item one-half" >
+        <p>
+          <b>[3] Modes</b><br>
+          Permet de basculer l'affichage entre les différents modes de Resonance : <i>Top Pages, Private Messages, Notifications</i>. Ou d'<i>Attacher</i> la page courante.
+        </p>
+    </div>
+    <div class="grid__item one-half" >
+        <p>
+          <b>[4] Liste d'utilisateurs</b><br>
+          Tous les utilisateurs pouvant participer à la conversation. Cliquer sur l'un d'eux permet soit d'engager une conversation privée, soit de masquer tous ses propos.
+        </p>
+    </div>
+  </div>
   <h3>Top Pages</h3>
     <p class="island">
       Top Pages est une fonctionalité qui permet de rencontrer d'autres utilisateurs de Resonance. Vous pouvez y voir une liste de pages web, et le nombre de personnes qui y sont présentes.
@@ -176,19 +193,33 @@
     </div></header>
 <div class="container block main" role="main">
 <!-- End of separator -->    
-	<b>[1] Filtre</b><br>
-    Dans ce champ, vous pouvez indiquer un filtre. Top Pages vous renverra alors uniquement la liste des pages qui possèdent le mot-clé dans leur url.
-    <br>
-    <b>[2] Liste des Top Pages</b><br>
-    Cliquez sur un de ces liens pour accéder à la page web, et vous pourrez directement discuter avec les personnes présentes si vous y activez Resonance.
-    <br>
-    <b>[2] Catégories (Prochaine version)</b><br>
-    Cliquez sur une des catégories définies pour effectuer la requète Top Page correspondante.
-    Pour créer une nouvelle catégorie, indiquez le nom souhaité et cliquez sur "Add". Vous pouvez ensuite indiquer ses filtres dans le champs Filtre [1], et les valider en cliquant sur "Redefine".<br><br>
+<div class="grid">
+    <div class="grid__item one-half" >
+        <p>
+          <b>[1] Filtre</b><br>
+        Entrez un ou plusieurs mot-clés (séparés par |), validez, et vous recevrez en réponses les pages contenant ces mot-clés dans leurs urls.<br>
+        <i style="font-size:0.7em;">(en fait, vous pouvez entrer une expression régulière...)</i>
+        </p>
+    </div>
+    <div class="grid__item one-half" >
+        <p>
+            <b>[2] Liste des Top Pages</b><br>
+            Cliquez sur un de ces liens pour accéder à la page web, et vous pourrez directement discuter avec les personnes présentes si vous y activez Resonance.
+        </p>
+    </div>
+    <div class="grid__item one-whole" >
+        <p>
+            <b>[3] Catégories</b><br>
+            Une catégorie est un ensemble de mot-clés rassemblés sous un même nom. Cliquez sur <i>Add</i> pour en créer une nouvelle. Modifiez son <i>Filtre</i>, puis cliquez sur <i>redefine</i> pour le valider.
+        </p>
+    </div>
 
+</div>
   <h3>Attacher</h3>
-    <p class="island">Resonance possède une page principale, à laquelle vous pouvez attacher une ou plusieurs conversations. Si un article vous intéresse particulièrement, vous pouvez rester présent sur sa discussion sans avoir à conserver sa page ouverte dans votre navigateur. Il suffit pour cela de cliquer sur [Attach].
-    <br>Sur la page principale, vous avez accès à la liste des pages que vous avez attachées.
+    <p class="island">
+        Resonance possède une <i>Page principale</i> : un onglet qui se charge au démarage de Firefox si Resonance est activé. Cette <i>Page principale</i> sert à y <i>attacher</i> des conversations.<br>
+        Vous avez ainsi accès au même endroit aux conversations de toutes les pages que vous souhaitez suivre dans la durée.<br>
+        Il suffit, lorsque vous êtes sur la page, de cliquer sur le bouton <i>A</i>, présent dans les <i>Modes [3]</i>.
     </p>
 <!-- Separator-->
 </div>
@@ -218,8 +249,8 @@
 <h2><a class="anchor" name="techno"></a>Technologies</h2>
   <h3>Application</h3>
     <p class="island">Lorsque Resonance est activé sur une page, l'extension injecte dans la page visitée l'application (html, css, javascript) nécessaire à l'affichage de Resonance.
-    L'application est développée en utilisant AngularJS, et CoffeeScript.<br>
-    Chacune de ces instances, injectées dans les pages web visitées, communique avec le script de l'extension, qui tourne en background au sein du navigateur, et qui s'occupe de la synchronisation entre les différents onglets, de l'enregistrement de l'historique et des réglages, et surtout de la gestion de la communication.</p>
+    L'application est développée en CoffeeScript avec le framework AngularJS.<br>
+    Chacune de ces instances, injectées dans les pages web visitées, communique avec le script de l'extension, qui tourne en background au sein du navigateur, et qui s'occupe de la synchronisation entre les différents onglets, de l'enregistrement des historiques et des réglages, et surtout de la gestion de la communication.</p>
 
   <h3>Communication</h3>
     <p class="island">Resonance utilise le protocole <a href="fr.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> pour permettre à ses utilisateurs de communiquer.<br>
@@ -228,8 +259,11 @@
 
   <h3>Top Pages</h3>
     <p class="island">Top Pages est actuellement géré par un bot présent sur IRC, auquel les différents utilisateurs annoncent lorsqu'ils rejoignent une discussion sur une page. Il maintient une liste que les utilisateurs peuvent ensuite interroger.<br>
-    Lors de la transition sur notre propre serveur IRC avec ircdjs, Top Pages sera disponible grâce à une extension du protocole IRC, le serveur gérant lui-même la liste des pages visitée.<br>
-    Cette évolution impactera positivement Top Page en termes de performances, scalabilité, et fiabilité.</p>
+    Plusieurs évolutions ont été envisagées et sont actuellement testées pour évoluer :
+    <br>- Extension du protocole IRC avec une commande TopPages interprétée par le server
+    <br>- Emancipation vis à vis d'IRC, et transition vers un fonctionnement Event dispatcher
+
+    </p>
 </article>
 
 <script src="assets/main.js"></script>
