@@ -1,233 +1,253 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <title>Resonance</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />   
-    <!--[if IE]>
-        <script type="text/javascript">
-             var console = { log: function() {} };
-        </script>
-    <![endif]-->
-    
-    <link rel="stylesheet" href="lib/pure-min.css">
-    
-    <script type="text/javascript" src="lib/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/jquery-ui.min.js"></script>    
-    
-    <link rel="stylesheet" type="text/css" href="lib/jquery.fullPage.css" />
-    <script type="text/javascript" src="lib/jquery.slimscroll.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.fullPage.js"></script>
-        
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.fn.fullpage({
-                anchors: ['resonance', 'presentation', 'installation','usage', 'techno', 'contribute'],
-                'scrollOverflow': true,
-                'verticalCentered':false,
-                'menu':'#menu'
-            });
-        });
-    </script>
-
-    <link rel="stylesheet" href="reso.css">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Resonance - focus on content</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="assets/main.css">
+    <meta name="description" content="Resonance is a browser extension for a more connected web, where people can meet and talk freely.">
+    <meta property="og:title" content="Resonance - Focus on content. Meet a new web.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://centime.github.io/resonance/">
+    <style>
+      article{position:relative;top:80px;}
+      .anchor{padding-top: 80px;}
+      pre{
+        -moz-hyphens: none;
+        -moz-tab-size: 4;
+        color: #F8F8F2;
+        direction: ltr;
+        font-family: Consolas,Monaco,'Andale Mono',monospace;
+        text-align: left;
+        text-shadow: 0 1px rgba(0, 0, 0, 0.3);    
+        white-space: pre;
+        word-spacing: normal;
+        font-size: 0.8em;
+        padding : 3px;
+        margin: 0px;
+      }
+      .y{color: #E6DB74;}
+      .g{color: #C7F464;}
+      .r{color: #FF6B6B;}
+      .b{color: #708090;}
+      .container{padding :0;}
+      .header{line-height: 5px;}
+      line{float:left;}
+      .separator{background-color: #292F36;padding:0px; padding-top: 20px; padding-bottom: 20px;min-height:60px;}
+      .content{max-height:100%; max-width:100%;}
+    </style>
 </head>
 <body>
-<div id="menu" class="pure-menu pure-menu-open">
-    <a class="pure-menu-heading" href="#resonance" data-menuanchor="resonance" ><strong>Resonance</strong></a>
-    <ul>
-        <li data-menuanchor="presentation">
-            <a href="#presentation">Presentation</a>
-            <a id="sub-menu">Pourquoi</a>
-            <a id="sub-menu">Comment</a>
-            <a id="sub-menu">On en est où ?</a>
-        </li>
-        <li data-menuanchor="installation">
-            <a href="#installation">Installation</a>
-        </li>
-        <li data-menuanchor="usage">
-            <a href="#usage">Usage</a>
-            <a id="sub-menu">Echanger et débattre</a>
-            <a id="sub-menu">Top Pages</a>
-            <a id="sub-menu">Attacher</a>
-            <a id="sub-menu">Messages privés</a>
-            <a id="sub-menu">Configurer</a>
-        </li>
-        <!-- <li class="pure-menu-separator"></li> -->
-        <li data-menuanchor="techno">
-            <a href="#techno">Description technique</a>
-            <a id="sub-menu">Application</a>
-            <a id="sub-menu">Communication</a>
-            <a id="sub-menu">Top Pages</a>
-        <li data-menuanchor="contribute">
-            <a href="#contribute">Contribuer</a>
-        </li>
-    </ul>
-</div>
-<div id="main">
-    <div class="section " id="section0"> 
-        <div part="resonance">
-            <h1 class='title'>Resonance</h1>
-        </div>
-    </div>
-    <div class="section" id="section1">
-        <div part="presentation">
-            <h1>Presentation</h1>
-            Resonance est un projet pour un web plus ouvert et plus connecté, où les utilisateurs peuvent se recontrer et débattre pendant qu'ils explorent le net et consultent des pages web.
-            <br>
-        <!--     <object type="text/html" data="https://www.youtube.com/embed/QMYfkOtYYlg" style="width:100%;height:500px;"></object>
-    -->
-            <div id="why">
-                <h3>Pourquoi ?</h3>
-                On en a pas assez avec tout ce qui existe déjà ?<br>
-                <b>Non</b>.<br>
 
-                Parceque internet est fait pour <b>permettre à chacun de réagir</b>, mais qu'il faut pour cela en avoir les outils. 
-                <br>Le système classique de commentaires ne convient plus, il est trop rigide et n'incite pas les internautes à vraiment s'y investir.
-                <br>
-                Les grands des réseaux sociaux se sont organises autours de cercles d'amis, et que <b>l'echange doit se recentrer sur l'information</b>.
-            </div>
-            <div id="how">
-                <h3>Comment ?</h3>
-                En créant un <b>canal de discussion instantanée propre à chaque page web</b> où se trouvent des utilisateurs de Resonance. Ils peuvent y discuter directement, en temps réel, à l'endroit même ou ils ont lu l'article ou vu la vidéo dont ils vont parler.
-                <br> Sans inscription nécessaire, sans que tout ce qui soit dit reste sur un espace public des années durant. Sans avoir à se demander ce que deviendront les données privées.
-                <br>
-                Resonance est une extension navigateur, un add-on. Il n'est pour l'instant disponible que pour Firefox.
-                <br>
-                Le projet et son code source sont <a href="https://github.com/centime/resonance">disponible sur github</a>.
-            </div>
-            <div id="where">
-                <h3>On en est où ?</h3>
-                Resonance est encore <b>en plein développement</b>, et on est loin du bout !
-                <br>
-                Si vous le souhaitez, <b>vous êtes tout de même chaudement invités à l'installer en l'état, et à nous faire remonter toute remarque, bug, fonctionalité ou orientation à essayer</b>.
-                Une fois Resonance installé, envoyez tout ça par message privé à Resonance-bot, ou par mail à vincent.delaunay_at_gmail com
-                <br><br>
-                Le développement est fait en suivant la méthode SCRUM. En gras, les étapes principales complétées et leurs poids associés :
-                <ul>
-                    <li><b>50 : Prototype</b></li>
-                    <li><b>80 : Minimum Viable Product</b></li>
-                    <li><b>40 : Fonctionalités avancées</b></li>
-                    <li>25 : Accessibilité</li>
-                    <li>25 : Premium</li>
-                    <li>50 : Evolutions</li>
+<header id="header" class="header header--fixed hide-from-print slide headroom--not-top slide--reset" role="banner">
+    <div class="container">
+        <div>
+            <a href="http://centime.github.io/resonance" class="brand header__link">
+                <img style="height:30px;width:30px;display:inline" src="assets/logo.png"></img>
+                <b class="brand__forename" style="font-size:30px;">Resonance</b>
+            </a>
+            <a style="float:right;position:relative;top:30px;" class="header__link subdued" href="https://www.github.com/centime/resonance">
+                <span aria-hidden="true" class="icon icon--github"></span>
+                <span class="complimentary push--left">GitHub</span>
+            </a>
+        </div>
+        <div style="position:relative;bottom:10px;" class="grid">
+          <nav id="nav" class="nav-wrapper" role="navigation">
+              <ul class="nav" style="float:none;">
+                  <li class="nav__item ">
+                    <a href="#install" class="brand header__link grid__item one-fourth grid__item one-quarter">
+                        <b>Installation</b>
+                    </a>
+                  </li>
+                  <li class="nav__item ">  
+                    <a href="#presentation" class="brand header__link grid__item one-quarter">
+                        <b>Presentation</b>
+                    </a>
+                  </li>
+                  <li class="nav__item ">  
+                    <a href="#usage" class="brand header__link grid__item one-quarter">
+                        <b>Utilisation</b>
+                    </a>
+                  </li>
+                  <li class="nav__item ">  
+                    <a href="#techno" class="brand header__link grid__item one-quarter">
+                        <b>Technologies</b>
+                    </a>
+                  </li>
+              </ul>
+          </nav>
+        </div>
+    </div>
+</header>
 
-                </ul>
-            </div>
-        </div>
+<article>
+<header class="separator feature">
+    <div class="container">
+      <img class="content" src="assets/bandeau.png">
     </div>
-    <div class="section" id="section2">
-        <div part="install">
-            <h1>Installation</h1>
-            1) Télécharger l'extension Firefox
-            <block><a href="https://github.com/centime/resonance/raw/master/resonance.xpi">https://github.com/centime/resonance/raw/master/resonance.xpi</a>
-            </block>
-            <br>
-            2) L'ouvrir depuis le navigateur
-            <block>File > Open File > resonance.xpi</block>
-            <br>
-            3) (Selon la version de Firefox) Afficher la barre des extensions (add-on)
-            <block>View > Toolbars > Add-on bar</block>
-            ou
-            <block>Ctrl + /</block>
-            L'icone de Resonance [IMG] devrait désormais y être visible.
-        </div>
-    </div>
-    <div class="section" id="section3">
-        <div part="usage">
-            <h1>Usage</h1>
-            <div id="discuss">
-                <h3>Echanger et débattre</h3>
-                Si l'icone de Resonance n'est pas visible, revoir la partie Installation.
-                <br>
-                Sur toute page web, vous pouvez <b>démarrer Resonance avec un clic gauche sur cette icone</b>.
-                <br>
-                [ScreenShot principal]
-                <br>
-                <b>[1] Fil de discussion</b><br>
-                Regroupe tous les propos qui ont été tenus pendant que vous étiez présent pour assister à la discussion. De même, un nouvel arrivant rejoignant la discussion en cours n'aura pas accès aux messages antérieurs.
-                <br>
-                <b>[2] Nouveau message</b><br>
-                Tapez votre message puis appuyez sur Entrée pour parler.
-                <br>
-                <b>[3] Modes</b><br>
-                Ces boutons permettent de basculer entre les différents modes de Resonance. Le mode actuel est <b>Discussion</b>, mais il y a aussi <b>Top Pages</b>, <b>Private Messages</b>, <b>Attach</b>(prochaine version) et <b>Notifications</b>. Chacun est expliqué plus bas.
-                <br>
-                <b>[4] Liste d'utilisateurs</b><br>
-                Vous voyez ici la liste des utilisateurs présents avec vous sur cette page. Ils peuvent lire vos messages, et y répondre. En cliquant sur un nom, il est possible d'activer "mute", ce qui désactive l'affichage de tous les messages de cet utilisateur. Il est aussi possible d'ouvrir une conversation privée avec cet utilisateur (celle ci est alors accessible via la mode Messages privés)
+</header>
 
-            </div> 
-            <div id="toppages">
-                <h3>Top Pages</h3>
-                Top Pages est une fonctionalité qui permet de rencontrer d'autres utilisateurs de Resonance. Vous pouvez y voir une liste de pages web, et le nombre de personnes qui y sont présentes.
-                <br>
-                [Screenshot toppages]
-                <br>
-                <b>[1] Filtre</b><br>
-                Dans ce champs, vous pouvez indiquer un filtre. Top Pages vous renverra alors uniquement les pages qui possèdent le mot-clé dans leur url.
-                <br>
-                <b>[2] Liste des Top Pages</b><br>
-                Cliquez sur un de ces liens pour accéder à la page web, et vous pourrez directement discuter avec les gens présents si vous y activez Resonance.
-                <br>
-                <b>[2] Catégories (Prochaine version)</b><br>
-                Cliquez sur une des catégories définies pour effectuer la requëte Top Page correspondante.
-                Pour créer une nouvelle catégorie, indiquez le nom souhaité et cliquez sur "Add". Vous pouvez ensuite indiquer ses filtres dans le champs Filtre [1], et les valider en cliquant sur "redefine".             
-            </div>
-            <div id="attach">
-                <h3>Attacher</h3>
-                (Disponible dans la prochaine version)
-                Resonance possède une page principale, à laquelle vous pouvez attacher une ou plusieurs conversations. Si un article vous interesse particulièrement, vous pouvez rester présent sur sa discussion sans avoir à conserver sa page ouverte dans votre navigateur. Il suffit pour cela de cliquer sur [Attach].
-                <br>
-                [Screenshot page principale]
-                <br>
-                Sur la page principale, vous avez accès à la liste des pages que vous avez attachées.
-            </div>
-            <div id="privatemessages">
-                <h3>Messages privés</h3>
-                A gauche est affichée la liste des personnes avec qui vous avez une discussion en cours. Démarrer une discussion avec quelqu'un se fait depuis une discussion normale, en cliquant sur l'utilisateur souhaité.
-            </div>
-            <div id="configure">
-                <h3>Configurer</h3>
-                Un clic gauche sur l'icone depuis le navigateur permet d'activer Resonance. Un clic droit ouvre le panneau de configuration.<br>
-                <b>Règles pour le démarrage de Resonance :</b><br>
-                Systematiquement pour un domaine: sur toutes les pages du site web courant, vous rejoindrez la conversation Resonance.<br>
-                Systematiquement : sur toutes les pages visitées, vous rejoindrez la conversation Resonance.<br>
-                <b>Pseudo :</b><br>
-                Indiquez le nouveau nom, puis validez. Il faudra redemarrer Firefox pour que la modification s'applique.<br>
-                <b>Désactiver Resonance :</b><br>
-                Quand Resonance est désactivé, vous ne pouvez être présent sur aucune conversation Resonance.
-            </div>
+<div class="container block main" role="main">
+
+<h2><a class="anchor" name="install"></a>Installation (Firefox uniquement)</h2>
+<div class="island">
+    <div class="grid">
+        <div class="grid__item one-half" >
+          <b>Télécharger l'extension</b>
+          <a style="font-size:20px" class="btn btn--primary btn--full" href="https://github.com/centime/resonance/raw/master/resonance.xpi">Télécharger</a>
         </div>
-    </div>
-    <div class="section" id="section4">
-        <div part="techno">
-            <h1>Description technique</h1>
-            <div>
-                <h3>Application</h3>
-                Lorsque Resonance est activé sur une page, l'extension injecte dans la page visitée l'application (html, css, javascript) nécessaire à l'affichage de Resonance.<br>
-                L'application est développée en utilisant AngularJS, et CoffeeScript.<br>
-                Chacune de ces instances, injectées dans les pages web visitées, communique avec le script de l'extension, qui tourne en background au sein du navigateur, et qui s'occupe de la synchronisation entre les différents onglets, de l'enregistrement de l'historique et des réglages, et surtout de la gestion de la communication.
-            </div>
-            <div>
-                <h3>Communication</h3>
-                Resonance utilise le protocole <a href="fr.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> pour permettre à ses utilisateurs de communiquer.<br>
-                Le script en background instancie un client IRC grâce à une <a href="https://github.com/centime/ff-irc">librairie, baptisée ff-irc</a>, développée pour l'occasion. C'est l'adaptation de la librairie node-irc, afin de pouvoir l'utiliser dans l'environnement de Firefox plutôt que celui de nodejs.<br>
-                Dans la version actuelle, le serveur irc utilisé est freenode, mais une migration sur un serveur à nous est en cours de reflexion grâce au projet ircdjs, implémentation d'un serveur IRC en nodejs.
-            </div>
-            <div>
-                <h3>Top Pages</h3>
-                Top Pages est actuellement géré par un bot présent sur IRC, auquel les différents utilisateurs annoncent lorsqu'ils rejoignent une discussion sur une page. Il maintient une liste que les utilisateurs peuvent ensuite interroger.<br>
-                Lors de la transition sur notre propre serveur IRC avec ircdjs, Top Pages sera disponible grâce à une extension du protocol IRC, le serveur gérant lui-même la liste des pages visitée.<br>
-                Cette évolution impactera positivement Top Page en termes de performances, scalabilité, et fiabilité.
-            </div>
+        <div class="grid__item one-half">
+          <b>L'intégrer à Firefox</b>
+            <pre class=" language-markup"><line><span class="b">Raccourci clavier</span></line><br><line><span class="y">Ctrl</span> + <span class="y">O</span></line><br><line><span class="b">Ou via le menu</span></line><br><line><span class="y">Fichier</span> > <span class="y">Ouvrir</span></line></pre>
         </div>
-    </div>
-    <div class="section" id="section5 ">
-        <div part="contribute">
-            <h1>Contribuer</h1>
-            
+        <div class="grid__item one-whole">
+         <b>Activer les addons</b>
+            <pre class=" language-markup"><line><span class="b">Raccourci clavier</span></line><br><line><span class="y">Ctrl</span> + <span class="y">/</span></line><br><line><span class="b">Ou via le menu</span></line><br><line><span class="y">Affichage</span> > <span class="y">Barres d'outils</span> > <span class="y">Barre d'addons</span></line></pre>
         </div>
     </div>
 </div>
-</body>
-</html>
+<!-- Separator-->
+</div>
+<header class="separator feature">    
+    <div class="container">
+      <object type="text/html" data="https://www.youtube.com/embed/QMYfkOtYYlg" class="content"></object>
+    </div></header>
+<div class="container block main" role="main">
+<!-- End of separator -->
+
+<h2><a class="anchor" name="presentation"></a>Présentation</h2>
+<p class="island">
+  Resonance est un projet pour un web plus ouvert et plus connecté, où les utilisateurs peuvent se rencontrer et débattre pendant qu'ils explorent le net et consultent des pages web.
+</p>
+
+<h3>Pourquoi ?</h3>
+	<p class="island">
+	  Parce qu'Internet est fait pour <b>permettre à chacun de réagir</b>, mais qu'il faut pour cela en avoir les outils.<br>
+	  Parce que le système classique de commentaires ne convient plus, qu'il est trop rigide et qu'il n'incite pas les internautes à s'y investir.<br>
+	  Parce que les grands des réseaux sociaux se sont organisés autours de cercles d'amis, et que <b>l'échange doit se recentrer sur l'information</b>.
+	</p>
+<h3>Comment ?</h3>
+	<p class="island">
+	    En créant un <b>canal de discussion instantanée propre à chaque page web</b> où se trouvent des utilisateurs de Resonance. Ils peuvent y discuter directement, en temps réel, à l'endroit même où ils ont lu l'article ou vu la vidéo dont ils vont parler.
+	    <br> Sans inscription nécessaire. Sans que tout ce qui soit dit reste sur un espace public des années durant. Sans avoir à se demander ce que deviendront les données privées.
+	</p>
+<h3>Avancement du projet</h3>
+	<p class="island">
+	    Resonance est encore <b>en plein développement</b>, mais vous pouvez déjà l'essayer !<br>
+	    Venez partager votre avis, remonter un bug, ou contribuer, <a href="https://github.com/centime/resonance">sur github</a>.
+	    <br>
+	    <pre class=" language-markup"><line><span class="g">50 : Prototype</span></line><br><line><span class="g">80 : Minimum Viable Product</span></line><br><line><span class="g">40 : Fonctionalités avancées</span></line><br><line>25 : Accessibilité</line><br><line>25 : Premium</line><br><line>50 : Evolutions</line><br></pre>
+	</p>
+
+<h2><a class="anchor" name="usage"></a>Utilisation</h2>
+  <h3>Echanger et débattre</h3>
+    <p class="island">
+      Cliquez sur l'icone <img style="height:30px;width:30px;position:relative;top:7px;" src="assets/logo.png"></img> pour démarrer Resonance sur une page web.
+  	</p>
+<!-- Separator-->
+</div>
+<header class="separator feature">    
+    <div class="container">
+      <img class="content" src="assets/Discussion.png"></img>
+    </div></header>
+<div class="container block main" role="main">
+<!-- End of separator -->    
+    <b>[1] Fil de discussion</b><br>
+    Regroupe tous les propos qui ont été tenus pendant que vous avez assisté à la discussion. Un nouvel arrivant rejoignant la discussion en cours n'aura pas accès aux messages antérieurs.
+    <br>
+    <b>[2] Nouveau message</b><br>
+    Tapez votre message puis appuyez sur Entrée pour parler.
+    <br>
+    <b>[3] Modes</b><br>
+    Ces boutons permettent de basculer entre les différents modes de Resonance. Le mode présenté ici est <b>Discussion</b>, mais vous avez aussi accès à <b>Top Pages</b>, <b>Private Messages</b>, <b>Attach</b> et <b>Notifications</b>. Chacun d'entre eux est expliqué plus bas.
+    <br>
+    <b>[4] Liste d'utilisateurs</b><br>
+    La liste des utilisateurs présents avec vous sur cette page. Ils peuvent lire vos messages, et y répondre. En cliquant sur un nom, il est possible d'activer "mute", ce qui désactive l'affichage de tous les messages de cet utilisateur. De la même façon, il est aussi possible d'ouvrir une conversation privée avec cet utilisateur (celle ci est alors accessible via le mode Messages privés)<br><br>
+
+  <h3>Top Pages</h3>
+    <p class="island">
+      Top Pages est une fonctionalité qui permet de rencontrer d'autres utilisateurs de Resonance. Vous pouvez y voir une liste de pages web, et le nombre de personnes qui y sont présentes.
+  	</p>
+
+<!-- Separator-->
+</div>
+<header class="separator feature">    
+    <div class="container">
+      <img class="content" src="assets/TopPages.png"></img>
+    </div></header>
+<div class="container block main" role="main">
+<!-- End of separator -->    
+	<b>[1] Filtre</b><br>
+    Dans ce champ, vous pouvez indiquer un filtre. Top Pages vous renverra alors uniquement la liste des pages qui possèdent le mot-clé dans leur url.
+    <br>
+    <b>[2] Liste des Top Pages</b><br>
+    Cliquez sur un de ces liens pour accéder à la page web, et vous pourrez directement discuter avec les personnes présentes si vous y activez Resonance.
+    <br>
+    <b>[2] Catégories (Prochaine version)</b><br>
+    Cliquez sur une des catégories définies pour effectuer la requète Top Page correspondante.
+    Pour créer une nouvelle catégorie, indiquez le nom souhaité et cliquez sur "Add". Vous pouvez ensuite indiquer ses filtres dans le champs Filtre [1], et les valider en cliquant sur "Redefine".<br><br>
+
+  <h3>Attacher</h3>
+    <p class="island">Resonance possède une page principale, à laquelle vous pouvez attacher une ou plusieurs conversations. Si un article vous intéresse particulièrement, vous pouvez rester présent sur sa discussion sans avoir à conserver sa page ouverte dans votre navigateur. Il suffit pour cela de cliquer sur [Attach].
+    <br>Sur la page principale, vous avez accès à la liste des pages que vous avez attachées.
+    </p>
+<!-- Separator-->
+</div>
+<header class="separator feature">    
+    <div class="container">
+      <img class="content" src="assets/Attach.png"></img>
+    </div></header>
+<div class="container block main" role="main">
+<!-- End of separator -->  
+
+  <h3>Messages privés</h3>
+    <p class="island">
+    A gauche est affichée la liste des personnes avec qui vous avez une discussion en cours. Démarrer une discussion avec quelqu'un se fait depuis une discussion normale, en cliquant sur l'utilisateur souhaité
+    </p>
+
+  <h3>Configurer</h3>
+    <p class="island">
+    Un clic gauche sur l'icone depuis le navigateur permet d'activer Resonance. Un clic droit ouvre le panneau de configuration.<br>
+    <b>Règles pour le démarrage de Resonance :</b><br>
+    Systématiquement pour un domaine: sur toutes les pages du site web courant, vous rejoindrez la conversation Resonance.<br>
+    Systématiquement : sur toutes les pages visitées, vous rejoindrez la conversation Resonance.<br>
+    <b>Pseudo :</b><br>
+    Indiquez le nouveau nom, puis validez. Il faudra redémarrer Firefox pour que la modification s'applique.<br>
+    <b>Désactiver Resonance :</b><br>
+    Quand Resonance est désactivé, vous ne pouvez être présent sur aucune conversation Resonance.
+    </p>
+<h2><a class="anchor" name="techno"></a>Technologies</h2>
+  <h3>Application</h3>
+    <p class="island">Lorsque Resonance est activé sur une page, l'extension injecte dans la page visitée l'application (html, css, javascript) nécessaire à l'affichage de Resonance.
+    L'application est développée en utilisant AngularJS, et CoffeeScript.<br>
+    Chacune de ces instances, injectées dans les pages web visitées, communique avec le script de l'extension, qui tourne en background au sein du navigateur, et qui s'occupe de la synchronisation entre les différents onglets, de l'enregistrement de l'historique et des réglages, et surtout de la gestion de la communication.</p>
+
+  <h3>Communication</h3>
+    <p class="island">Resonance utilise le protocole <a href="fr.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> pour permettre à ses utilisateurs de communiquer.<br>
+    Le script en background instancie un client IRC grâce à une <a href="https://github.com/centime/ff-irc">librairie, baptisée ff-irc</a>, développée pour l'occasion. C'est l'adaptation de la librairie node-irc, afin de pouvoir l'utiliser dans l'environnement de Firefox plutôt que celui de nodejs.<br>
+    Dans la version actuelle, le serveur irc utilisé est freenode, mais une migration sur un serveur à nous est en cours de reflexion grâce au projet ircdjs, implémentation d'un serveur IRC en nodejs.</p>
+
+  <h3>Top Pages</h3>
+    <p class="island">Top Pages est actuellement géré par un bot présent sur IRC, auquel les différents utilisateurs annoncent lorsqu'ils rejoignent une discussion sur une page. Il maintient une liste que les utilisateurs peuvent ensuite interroger.<br>
+    Lors de la transition sur notre propre serveur IRC avec ircdjs, Top Pages sera disponible grâce à une extension du protocole IRC, le serveur gérant lui-même la liste des pages visitée.<br>
+    Cette évolution impactera positivement Top Page en termes de performances, scalabilité, et fiabilité.</p>
+</article>
+
+<script src="assets/main.js"></script>
+<script>
+(function() {
+    new Headroom(document.querySelector("#header"), {
+        tolerance: 10,
+        offset : 205,
+        classes: {
+          initial: "slide",
+          pinned: "slide--reset",
+          unpinned: "slide--up"
+        }
+    }).init();
+
+}());
+</script>
+
+
+
+</body></html>
