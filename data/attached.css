@@ -30,9 +30,11 @@ page_infos {
     align-items:center;
 }
 page_infos > button {
-        height: 100%;
-        min-width: 30px;
-        margin-left: auto;
+    color: #FFF;
+    background-color: #464646;
+    height: 100%;
+    min-width: 30px;
+    margin-left: auto;
 }
 page_utils {
     flex: 1 10 75%;

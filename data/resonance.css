@@ -15,6 +15,7 @@ resonance_resonance * {
 }
 resonance_resonance button {
     background-color: #464646 ;
+    color: white;
 }
 
 /* Various properties */
@@ -79,6 +80,7 @@ resonance_resonance button {
         height: 100% ;
     }
     privatemessages_resonance > ul {
+        padding : 3px 0px 0px 3px; 
         flex: 1 6 80%;
         order: 1;
     }
