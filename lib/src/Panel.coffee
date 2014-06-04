@@ -21,7 +21,7 @@ createPanel = (env) ->
   # widget = require('sdk/ui/button/action').actionButton({
     'id': "widget-open-settings",
     'label': "Resonance",
-    'contentURL': data.url("settings/pencil-off.png"),
+    'contentURL': data.url("logo.png"),
     'contentScriptWhen': 'ready',
     'contentScriptFile': data.url('settings/widget.js')
   })
@@ -93,13 +93,13 @@ createPanel = (env) ->
     env.Resonance.openMaster()
 
   panel.port.on 'clearNotifications', () ->
-    delete storage.notificationsHistory
+    storage.notificationsHistory = []
 
   panel.port.on 'clearMessages', () ->
-    delete storage.messagesHistory
+    storage.messagesHistory = {}
   
   panel.port.on 'clearNotifications', () ->
-    delete storage.privateMessagesHistory
+    storage.privateMessagesHistory = {}
 
   return panel
 

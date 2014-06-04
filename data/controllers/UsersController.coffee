@@ -10,7 +10,7 @@ window.resonance.controller 'UsersController', ($scope)->
 
     # Listen for the message sent by the server when someone enters the chan
     self.port.on "join",  (channel,nick) ->
-        $scope.users.push(nick) if ((nick isnt IRC.nick) and (nick isnt IRC.bot))
+        $scope.users.push(nick) if ((nick isnt IRC.nick) and (nick isnt IRC.bot) and (nick not in $scope.users))
         $scope.users = $scope.users.sort()
         $scope.$apply()
 

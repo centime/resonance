@@ -77,13 +77,13 @@ window.panel.controller 'PanelController', ($scope) ->
 
     $scope.clearNotifications = () ->
         self.port.emit('clearNotifications')
-        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+        $scope.clearMessage = 'Your notifications history will be cleared as soon as your restart Firefox'
     
     $scope.clearMessages = () ->
         self.port.emit('clearMessages')
-        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+        $scope.clearMessage = 'Your messages history will be cleared as soon as your restart Firefox'
     
     $scope.clearPrivate = () ->
         self.port.emit('clearPrivate')
-        $scope.clearMessage = 'Your history will be cleared as soon as your restart Firefox'
+        $scope.clearMessage = 'Your private conversations history will be cleared as soon as your restart Firefox'
     

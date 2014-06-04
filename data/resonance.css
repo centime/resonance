@@ -13,6 +13,10 @@ resonance_resonance * {
     padding : 0px;
     margin : 0px;
 }
+resonance_resonance button {
+    background-color: #464646 ;
+}
+
 /* Various properties */
     .flex_resonance {
         display: flex;
