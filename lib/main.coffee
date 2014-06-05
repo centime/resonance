@@ -3,7 +3,7 @@ data = require('sdk/self').data
 
 getDomain = require('./src/Utils.js').getDomain
 
-VERSION = 0.01
+VERSION = 0.02
 version = require("sdk/simple-storage").storage.version ?= 0
 if version == 0
   require("sdk/simple-storage").storage = {}

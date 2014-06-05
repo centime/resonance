@@ -5,7 +5,7 @@
   "description": "a basic add-on",
   "author": "",
   "license": "MPL 2.0",
-  "version": "0.1",
+  "version": "0.02",
     "permissions" : {
       "tcp-socket" : {
         "description" : "Create TCP sockets and communicate over them."
