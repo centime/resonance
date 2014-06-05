@@ -70,3 +70,7 @@ window.resonance.controller "ResonanceController", ($scope) ->
 
     # Hack for the ng-model binding of topPages
     $scope.TP = {}
+
+
+    # The logo url
+    $scope.logoUrl = self.options.testUrl

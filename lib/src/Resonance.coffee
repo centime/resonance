@@ -104,7 +104,12 @@ start = (tab) ->
           data.url("controllers/NotificationsController.js")
           # USED FOR TESTS ONLY
           #data.url("tests.js"),
-      ]})
+      ],
+      contentScriptOptions: {
+          testUrl: data.url("logo.png");
+      }
+    })
+
   # Save the linked worker.
   tab.worker = worker
 

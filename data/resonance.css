@@ -27,6 +27,9 @@ input[type="text"] {
 ul,a{
     color:black;
 }
+#logo_resonance{
+    height: 30px;
+}
 /* Various properties */
     .flex_resonance {
         display: flex;

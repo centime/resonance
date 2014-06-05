@@ -29,7 +29,10 @@ openMaster = (t) ->
                         data.url("attached/attached.js"),
                         data.url("attached/AttachedMessagesController.js"),
                         data.url("attached/AttachedUsersController.js"),
-                      ]
+                      ],
+                      contentScriptOptions: {
+                          testUrl: data.url("logo.png");
+                      }
                   })
   masterWorker.port.on 'detach', (page) ->
     detach(page.chan)

@@ -1,6 +1,11 @@
-<title> Resonance - Attached pages</title>
+<head>
+    <title> Resonance - Attached pages</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="logo.png">
+</head>
 <link rel="stylesheet" type="text/css" href="attached.css">
 <attached ng-app='attached' ng-controller='AttachedController'>
+    <img id='logo_resonance' src='{{logoUrl}}'></img> <h1>Resonance - Attached pages.</h1>
      <ul class='flex_column'>
         <li ng-repeat='page in pages track by $index' class='page flex_column'>
             <page_infos class='flex_row'>
@@ -20,7 +25,7 @@
                         <input type='text' ng-model='newMessage'/>
                     </form>
                 </messages>
-                <users ng-controller='AttachedUsersController' class='flex_column'>
+                <users ng-show='display==1' ng-controller='AttachedUsersController' class='flex_column'>
                     <ul class='list'>
                         <li ng-repeat='user in users track by $index'>
                             {{user}}<br>

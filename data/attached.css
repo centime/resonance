@@ -67,3 +67,9 @@ messages input {
     overflow: auto;
 }
         
+#logo_resonance{
+    max-height: 50px;
+    max-width: 50px;
+    display: inline;
+}
+h1{display:inline;}
