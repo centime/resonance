@@ -1,6 +1,8 @@
 
 require("sdk/simple-storage").storage.topPagesCategories ?= []
 topPagesCategories = require("sdk/simple-storage").storage.topPagesCategories
+# Quick workaround for removing top pages.
+storage = require("sdk/simple-storage").storage
 
 self = this
 init = (workers, BOT) ->
@@ -77,6 +79,7 @@ bindWorker = (worker, client) ->
   worker.port.on 'deleteCategory', (category) ->
     topPagesCategories = ( c for c in topPagesCategories when c.name isnt category.name )
     workers.emitToAll('categories', topPagesCategories)
+    storage.topPagesCategories = topPagesCategories
 
 
 initWorker = (worker) ->

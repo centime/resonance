@@ -90,7 +90,17 @@ createPanel = (env) ->
         tab.activate()
         return
     # Else, open it.
-    env.Resonance.openMaster()
+    #env.Resonance.openMaster()
+    openNewMaster = () ->
+      masterIsOpened = false
+      for tab in tabs
+        if tab.url.match(/^resource:\/\/.*\/resonance\/data\/attached\.html$/)
+          masterIsOpened = true
+      if not masterIsOpened
+        tabs.open({
+          'url':data.url('attached.html'),inBackground:true
+        })
+    openNewMaster()
 
   panel.port.on 'clearNotifications', () ->
     storage.notificationsHistory = []
