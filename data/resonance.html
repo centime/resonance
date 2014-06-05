@@ -57,7 +57,7 @@
             <users_resonance ng-controller='UsersController' ng-show='display==1' class='bordered_resonance'>
                 <ul class='list_resonance'>
                     <li ng-repeat='user in users track by $index'>
-                        <div ng-click='displayActions[user]=!displayActions[user]'>{{user}}</div>
+                        <div ng-click='displayActions[user]=!displayActions[user]'class='{{user}}_resonance_user'>{{user}}</div>
                         <actions ng-show='displayActions[user]'>
                             <button ng-click='mute(user)' ng-hide='isMute(user)'>mute</button>
                             <button ng-click='unMute(user)' ng-hide='!isMute(user)'>unMute</button>

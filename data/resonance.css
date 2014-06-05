@@ -15,8 +15,18 @@ resonance_resonance * {
 }
 resonance_resonance button {
     background-color: #464646 ;
+    color:white;
 }
-
+resonance_resonance ul {
+    text-align:left;
+}
+input[type="text"] {
+    color:black;
+    background-color: white;
+}
+ul,a{
+    color:black;
+}
 /* Various properties */
     .flex_resonance {
         display: flex;
@@ -74,7 +84,7 @@ resonance_resonance button {
         order: 2;
         max-height: 30px ;
     }
-    messages_resonance input {
+    messages_resonance input[type="text"] {
         width: 100% ;
         height: 100% ;
     }
@@ -87,7 +97,7 @@ resonance_resonance button {
         order: 2;
         max-height: 30px ;
     }
-    privatemessages_resonance input {
+    privatemessages_resonance input[type="text"] {
         width: 100% ;
         height: 100% ;
     }
@@ -104,7 +114,7 @@ resonance_resonance button {
         flex: 1 6 80%;
         order: 0;
     }
-    toppages_resonance input {
+    toppages_resonance input[type="text"] {
         height: 100%;
         width: 99.8%;
     }
@@ -150,8 +160,9 @@ resonance_resonance button {
     #privateusers_resonance { /* FUCK IT ! */
         display: block;
     }
-    privateusers_resonance input {
+    privateusers_resonance input[type="text"] {
         width:75%;
+        height: 30px;
     }
 
 
@@ -159,8 +170,9 @@ resonance_resonance button {
     #categories_resonance { /* FUCK IT ! */
         display: block;
     }
-    categories_resonance input {
+    categories_resonance input[type="text"] {
         width:75%;
+        height: 30px;
     }
 
 /* Colors & co */
