@@ -236,6 +236,7 @@
   <h3>Messages privés</h3>
     <p class="island">
     La liste des personnes avec qui vous avez une discussion en cours est affichée à droite. Vous pouvez démarrer une discussion ne regroupant qu'un utilisateur et vous. Depuis une discussion normale, cliquez sur l'utilisateur souhaité puis sur Message Privé.
+    Si l'utilisateur voulu n'est pas connecté, une notification vous est transmise.
     </p>
 <!-- Separator-->
 </div>
@@ -248,16 +249,24 @@
 
   <h3>Configurer</h3>
     <p class="island">
-    Activez Resonance avec un clic gauche sur l'icone depuis le navigateur. Ouvrez le panneau de configuration avec un clic droit.<br>
-    Les paramètres modifiables sont :
-    <b>Règles pour le démarrage de Resonance :</b><br>
-    Systématiquement pour un domaine: sur toutes les pages du site web courant, vous rejoindrez la conversation Resonance.<br>
-    Systématiquement : sur toutes les pages visitées, vous rejoindrez la conversation Resonance.<br>
-    <b>Pseudo :</b><br>
-    Indiquez le nouveau nom, puis appuyez sur Entrée. Il faudra redémarrer Firefox pour que la modification s'applique.<br>
-    <b>Désactiver Resonance :</b><br>
-    Quand Resonance est désactivé, vous ne pouvez être présent sur aucune conversation Resonance.
-    Les conversations de la page principale restent présentes et dans l'état dans lequel elles étaient quand vous coupez l'application.
+    Clic gauche sur l'icone <img style="height:30px;width:30px;position:relative;top:7px;" src="assets/logo.png"></img> : Ouvre Resonance.
+    <br>Clic droit sur l'icone <img style="height:30px;width:30px;position:relative;top:7px;" src="assets/logo.png"></img> : Ouvre le panneau de configuration.</p>
+
+    <p class="island">
+      <span><b>Démarrage de Resonance :</b><br>
+        -Pour un domaine : Resonance se lance sur toutes les pages du site web courant.
+        -Systématiquement : Resonance se lance sur chaque page visitée.
+      <br></span>
+      <span><b>Pseudo :</b><br>
+        Indiquez le nouveau nom*, puis appuyez sur Entrée.
+      <br></span>
+      <span><b>Désactiver Resonance :</b><br>
+      Vous n'êtes plus présent sur aucune conversation Resonance.
+      <br></span>
+      <span><b>Historiques :</b>
+        Permet de supprimer les messages enregistrés* sur chacun des panneaux de l'application.
+        <br>*<i>Modification prise en compte au redémarrage de Firefox</i>
+      <br></span>
     </p>
     <!-- Separator-->
 </div>
@@ -270,24 +279,24 @@
 
 <h2><a class="anchor" name="techno"></a>Technologies</h2>
   <h3>Application</h3>
-    <p class="island">Lorsque Resonance est activé sur une page, l'extension injecte dans la page visitée l'application (html, css, javascript) nécessaire à l'affichage de Resonance.
-    L'application est développée en CoffeeScript avec le framework AngularJS.<br>
-    Chacune de ces instances, injectées dans les pages web visitées, communique avec le script de l'extension, qui tourne en background au sein du navigateur, et qui s'occupe de la synchronisation entre les différents onglets, de l'enregistrement des historiques et des réglages, et surtout de la gestion de la communication.</p>
+    <p class="island">
+      L'application est développée en <a href="https://coffeescript.org">CoffeeScript</a> avec le framework <a href="https://angularjs.org/">AngularJS.</a><br>
+      Lorsque Resonance est activé sur une page, l'extension y injecte l'application nécessaire à l'affichage de Resonance (html, css, javascript).<br>
+      Chacune des instances de l'application communique avec le script de l'extension. Celui-ci s'exécute au sein du navigateur, et est chargé de la synchronisation entre onglets, de l'enregistrement des historiques et des réglages, et gère la communication.
+    </p>
 
   <h3>Communication</h3>
     <p class="island">Resonance utilise le protocole <a href="fr.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> pour permettre à ses utilisateurs de communiquer.<br>
-    Le script en background instancie un client IRC grâce à une <a href="https://github.com/centime/ff-irc">librairie, baptisée ff-irc</a>, développée pour l'occasion. C'est l'adaptation de la librairie node-irc, afin de pouvoir l'utiliser dans l'environnement de Firefox plutôt que celui de nodejs.<br>
-    Dans la version actuelle, le serveur irc utilisé est freenode, mais une migration sur un serveur à nous est en cours de reflexion grâce au projet ircdjs, implémentation d'un serveur IRC en nodejs.</p>
+    Le script de l'extension instancie un client IRC grâce à une librairie, baptisée <a href="https://github.com/centime/ff-irc">ff-irc</a>. Cette adaptation spécifique de node-irc permet de l'utiliser dans l'environnement de Firefox plutôt que celui de nodejs.<br>
+    <i>Actuellement, le serveur irc utilisé est freenode, mais une migration sur un serveur spécifique au projet est en cours de réflexion. (grâce au projet ircdjs, implémentation d'un serveur IRC en nodejs)</i></p>
 
   <h3>Top Pages</h3>
-    <p class="island">Top Pages est actuellement géré par un bot présent sur IRC, auquel les différents utilisateurs annoncent lorsqu'ils rejoignent une discussion sur une page. Il maintient une liste que les utilisateurs peuvent ensuite interroger.<br>
-    Plusieurs évolutions ont été envisagées et sont actuellement testées pour évoluer :
+    <p class="island">Top Pages est géré par un bot présent sur IRC, auquel les différents utilisateurs s'annoncent lorsqu'ils rejoignent une discussion. Le bot maintient à jour une liste que les utilisateurs peuvent interroger à tout moment.<br>
+    <i>Plusieurs évolutions ont été envisagées et sont actuellement testées pour évoluer :
     <br>- Extension du protocole IRC avec une commande TopPages interprétée par le server
-    <br>- Emancipation vis à vis d'IRC, et transition vers un fonctionnement Event dispatcher
-
-    </p>
+    <br>- Emancipation vis à vis d'IRC, et transition vers un fonctionnement Event dispatcher</i>
+    </p><br>
 </article>
-
 <script src="assets/main.js"></script>
 <script>
 (function() {
