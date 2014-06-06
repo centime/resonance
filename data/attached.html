@@ -16,7 +16,7 @@
             </page_infos>
             <page_utils class='flex_row'>
                 <messages ng-show='display==1' ng-controller='AttachedMessagesController' class='flex_column'>
-                    <ul class='list' id='resonance_messages'>
+                    <ul class='list' id='{{$parent.page.chan}}'>
                         <li ng-repeat='message in messages track by $index'>
                               {{message.author}}: {{message.message}}<br>
                         </li>

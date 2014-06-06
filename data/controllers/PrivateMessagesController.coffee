@@ -30,8 +30,9 @@ window.resonance.controller "PrivateMessagesController", ($scope) ->
         # Append it to the list of all messages.
         $scope.messages.push(entry)
         # Update the view.
+        full = (from == $scope.currentnick)
         $scope.$apply()
-        scrollDown()
+        scrollDown(full)
 
     # Set the css class for old messages (history).
     $scope.oldMessage = (message) ->

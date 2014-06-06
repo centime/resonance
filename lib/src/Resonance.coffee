@@ -45,22 +45,12 @@ startClient = () ->
   PrivateMessages.bindClient(client)
   TopPages.bindClient(client)
   Attached.bindClient(client)
-  openNewMaster = () ->
-    tabs = require('sdk/tabs')
-    masterIsOpened = false
-    for tab in tabs
-      if tab.url.match(/^resource:\/\/.*\/resonance\/data\/attached\.html$/)
-        masterIsOpened = true
-    if not masterIsOpened
-      tabs.open({
-        'url':data.url('attached.html'),inBackground:true
-      })
-  openNewMaster()
+
 
 closeClient = () ->
   workers.emitToAll('close')
   client.disconnect()
-  for tab in tabs
+  for tab in require('sdk/tabs')
       if tab.url.match(/^resource:\/\/.*\/resonance\/data\/attached\.html$/)
         tab.close()
 

@@ -12,7 +12,7 @@ window.attached.controller 'AttachedUsersController', ($scope)->
     # Listen for the message sent by the server when someone enters the chan
     self.port.on "join",  (chan, nick) ->
         if chan == $scope.page.chan
-            $scope.users.push(nick) if ((nick isnt $scope.NICK) and (nick isnt $scope.BOT))
+            $scope.users.push(nick) if ((nick isnt $scope.NICK) and (nick isnt $scope.BOT)  and (nick not in $scope.users))
             $scope.users = $scope.users.sort()
             $scope.$apply()
 

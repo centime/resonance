@@ -41,8 +41,9 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
             # Append it to the list of all messages.
             $scope.messages.push(entry)
             # Update the view.
+            full = (from == $scope.NICK)
             $scope.$apply()
-            scrollDown(true)
+            scrollDown(full)
         
     # # Set the css class for messages.
     # $scope.class = (message) ->
@@ -72,10 +73,8 @@ window.attached.controller "AttachedMessagesController", ($scope) ->
     #     return displayMessages
 
     # Scroll down the messages list.
-    #elmt = angular.element('messages > ul') 
-    elmt = document.getElementById('resonance_messages')
     scrollDown = (full)  ->
+        elmt = document.getElementById($scope.page.chan)
         # todo : 1.25 ? it needs proper checks.
         if full or ((elmt.scrollHeight-elmt.scrollTop)/parseInt(elmt.offsetHeight) < 1.25)
-        #    elmt.animate({ scrollTop: elmt.prop('scrollHeight')}, 1000)
             elmt.scrollTop=elmt.scrollHeight
