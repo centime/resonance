@@ -60,8 +60,8 @@ attach = (url, title) ->
    'chan' : chan
   pages.push(page)
   masterWorker?.port.emit('pages',pages)
-  masterWorker.port.emit('nick',Nick.nick)
-  masterWorker.port.emit('bot',BOT)
+  masterWorker?.port.emit('nick',Nick.nick)
+  masterWorker?.port.emit('bot',BOT)
   #todo warning asynchronous, what if pages arrives after messagesHistory ?
   masterWorker?.port.emit('messagesHistory', chan, messagesHistory[chan] ? [])
   workers[chan]?.emit('attached')
@@ -83,7 +83,7 @@ detach = (chan) ->
 # When the client receives a message.
 receive = (from, to, message) ->
     # todo : refactor history, same structure for pm / chans ? (same 'to')
-    if to[0] == '#'
+    if to[0] == '#'  
       # It goes to the corresponding chan / masterWorker.
       masterWorker?.port.emit('message',from,to,message)
       # Save in history.

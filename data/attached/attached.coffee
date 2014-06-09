@@ -10,8 +10,12 @@ window.attached.controller 'AttachedController', ($scope) ->
     $scope.NICK = ''
     $scope.BOT = ''
     self.port.on 'pages', (pages) ->
+        # todo : nasty hack because it's easier for now than unbinding the onMessage event when a page is removed (otherwise, the same message gets displayed twice, three times...)
+        if pages.length < $scope.pages.length
+            window.location.reload()
         $scope.pages = pages
         $scope.$apply()
+
 
     self.port.on 'nick', (nick) ->
         $scope.NICK = nick

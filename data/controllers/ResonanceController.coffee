@@ -61,6 +61,7 @@ window.resonance.controller "ResonanceController", ($scope) ->
 
     self.port.on 'detached', () ->
         $scope.isAttached = false
+        $scope.$apply()
 
     $scope.attached = () ->
         { 'selected_resonance':$scope.isAttached }
