@@ -120,6 +120,9 @@ bindClient = (client) ->
     if nick isnt Nick.nick
       masterWorker?.port.emit('part',chan, nick)
 
+  client.addListener 'quit', (nick) ->
+    if nick isnt Nick.nick
+      masterWorker?.port.emit('quit',nick)
 
 
 bindWorker = (worker) ->

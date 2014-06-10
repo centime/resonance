@@ -20,6 +20,11 @@ window.resonance.controller 'UsersController', ($scope)->
         $scope.users = ( user for user in $scope.users when user isnt nick ).sort()
         $scope.$apply()
 
+    # Listen for the message sent by the server when someone leaves the chan.
+    self.port.on "quit",  (nick) ->
+        $scope.users = ( user for user in $scope.users when user isnt nick ).sort()
+        $scope.$apply()
+
     $scope.displayActions = {}
 
     $scope.isMute = (user) ->

@@ -21,6 +21,10 @@ bindClient = (client) ->
   client.addListener 'part', (chan,nick) ->
       if nick isnt Nick.nick
         workers[chan]?.emit('part',chan,nick)
+  
+  client.addListener 'quit', (nick) ->
+      if nick isnt Nick.nick
+        workers.emitToAll('quit',nick)
 
 bindWorker = (worker) ->
   # stock the current muted Users

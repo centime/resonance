@@ -22,3 +22,8 @@ window.attached.controller 'AttachedUsersController', ($scope)->
         if chan == $scope.page.chan
             $scope.users = ( user for user in $scope.users when user isnt nick ).sort()
             $scope.$apply()
+
+    # Listen for the message sent by the server when someone leaves the chan.
+    self.port.on "quit",  (nick) ->
+        $scope.users = ( user for user in $scope.users when user isnt nick ).sort()
+        $scope.$apply()
